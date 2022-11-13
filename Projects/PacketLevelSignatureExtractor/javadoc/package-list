@@ -1,0 +1,13 @@
+edu.uci.iotproject
+edu.uci.iotproject.analysis
+edu.uci.iotproject.comparison.seqalignment
+edu.uci.iotproject.detection
+edu.uci.iotproject.detection.layer2
+edu.uci.iotproject.detection.layer3
+edu.uci.iotproject.evaluation
+edu.uci.iotproject.io
+edu.uci.iotproject.maclayer
+edu.uci.iotproject.test
+edu.uci.iotproject.trafficreassembly.layer2
+edu.uci.iotproject.trafficreassembly.layer3
+edu.uci.iotproject.util

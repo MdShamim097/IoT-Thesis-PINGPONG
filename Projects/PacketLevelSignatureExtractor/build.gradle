@@ -1,0 +1,40 @@
+group 'edu.uci.iotproject'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'application'
+
+// Increase max memory
+applicationDefaultJvmArgs = ["-Xmx300g"]
+
+sourceCompatibility = 1.8
+
+//mainClassName = "edu.uci.iotproject.Main"
+//mainClassName = "edu.uci.iotproject.detection.SignatureDetector"
+//mainClassName = "edu.uci.iotproject.detection.layer2.Layer2SignatureDetector"
+//mainClassName = "edu.uci.iotproject.evaluation.DetectionResultsAnalyzer"
+mainClassName = System.getProperty("mainClass")
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+
+    // pcap4j
+    // Updated to v2 alpha as the stable release does not include packet timestamps
+    // v2 should add support for TCP session reassembly as well, although it does not appear to be part of the lib yet.
+    compile 'org.pcap4j:pcap4j-core:2.0.0-alpha'
+    compile 'org.pcap4j:pcap4j-packetfactory-static:2.0.0-alpha'
+
+    // pcap4j logging dependency
+    compile 'org.slf4j:slf4j-jdk14:1.8.0-beta2'
+
+    // Apache Commons Math for clustering
+    compile 'org.apache.commons:commons-math3:3.6.1'
+
+    // JGraphT: Java Graph library
+    compile 'org.jgrapht:jgrapht-core:1.2.0'
+}

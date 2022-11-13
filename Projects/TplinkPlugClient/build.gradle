@@ -1,0 +1,24 @@
+group 'edu.uci.iotproject.tplinkplug'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = 'edu.uci.iotproject.tplinkplug.Main'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    compile group: 'com.mashape.unirest', name: 'unirest-java', version: '1.4.9'
+
+    compile group: 'javax.ws.rs', name: 'javax.ws.rs-api', version: '2.1'
+    runtime group: 'org.glassfish.jersey.core', name: 'jersey-client', version: '2.27'
+    runtime group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version: '2.27'
+
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}

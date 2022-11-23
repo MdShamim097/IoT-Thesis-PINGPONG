@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-echo "Hello"
+
 ##############################################################################
 ##
 ##  Gradle start up script for UN*X
@@ -156,5 +156,5 @@ function splitJvmOpts() {
 }
 eval splitJvmOpts $DEFAULT_JVM_OPTS $JAVA_OPTS $GRADLE_OPTS
 JVM_OPTS[${#JVM_OPTS[*]}]="-Dorg.gradle.appname=$APP_BASE_NAME"
-echo "JAVACMD=$JAVACMD CLASSPATH=$CLASSPATH DEFAULT_JVM_OPTS=$DEFAULT_JVM_OPTS JAVA_OPTS=$JAVA_OPTS GRADLE_OPTS=$GRADLE_OPTS APP_BASE_NAME=$APP_BASE_NAME" > newFile.txt
+
 exec "$JAVACMD" "${JVM_OPTS[@]}" -classpath "$CLASSPATH" org.gradle.wrapper.GradleWrapperMain "$@"

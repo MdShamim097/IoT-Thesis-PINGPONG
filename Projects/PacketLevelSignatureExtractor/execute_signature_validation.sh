@@ -28,7 +28,6 @@ SIGNATURE_DURATION="4990"
 EPSILON="10.0"
 
 PROGRAM_ARGS="'$PCAP_FILE' '$ON_ANALYSIS' '$OFF_ANALYSIS' '$ON_SIGNATURE' '$OFF_SIGNATURE' '$RESULTS_FILE' '$SIGNATURE_DURATION' '$EPSILON'"
-echo "AMAZON PLUG"
 #./gradlew run -DmainClass=edu.uci.iotproject.detection.layer3.Layer3SignatureDetector --args="$PROGRAM_ARGS"
 # ======================================================================================================================
 # REMOTE
@@ -44,7 +43,6 @@ SIGNATURE_DURATION="1550"
 EPSILON="10.0"
 
 PROGRAM_ARGS="'$PCAP_FILE' '$ON_ANALYSIS' '$OFF_ANALYSIS' '$ON_SIGNATURE' '$OFF_SIGNATURE' '$RESULTS_FILE' '$SIGNATURE_DURATION' '$EPSILON'"
-echo "AMAZON PLUG"
 #./gradlew run -DmainClass=edu.uci.iotproject.detection.layer3.Layer3SignatureDetector --args="$PROGRAM_ARGS"
 # ======================================================================================================================
 
@@ -64,7 +62,6 @@ SIGNATURE_DURATION="548"
 EPSILON="10.0"
 
 PROGRAM_ARGS="'$PCAP_FILE' '$ON_ANALYSIS' '$OFF_ANALYSIS' '$ON_SIGNATURE' '$OFF_SIGNATURE' '$RESULTS_FILE' '$SIGNATURE_DURATION' '$EPSILON'"
-echo "ARLO CAMERA"
 #./gradlew run -DmainClass=edu.uci.iotproject.detection.layer3.Layer3SignatureDetector --args="$PROGRAM_ARGS"
 # ======================================================================================================================
 # IFTTT - start recording feature
@@ -80,7 +77,6 @@ SIGNATURE_DURATION="215"
 EPSILON="10.0"
 
 PROGRAM_ARGS="'$PCAP_FILE' '$ON_ANALYSIS' '$OFF_ANALYSIS' '$ON_SIGNATURE' '$OFF_SIGNATURE' '$RESULTS_FILE' '$SIGNATURE_DURATION' '$EPSILON'"
-echo "ARLO CAMERA"
 #./gradlew run -DmainClass=edu.uci.iotproject.detection.layer3.Layer3SignatureDetector --args="$PROGRAM_ARGS"
 # ======================================================================================================================
 
@@ -661,7 +657,7 @@ SIGNATURE_DURATION="3660"
 EPSILON="10.0"
 
 PROGRAM_ARGS="'$PCAP_FILE' '$ON_ANALYSIS' '$OFF_ANALYSIS' '$ON_SIGNATURE' '$OFF_SIGNATURE' '$RESULTS_FILE' '$SIGNATURE_DURATION' '$EPSILON'"
-./gradlew run -DmainClass=edu.uci.iotproject.detection.layer3.Layer3SignatureDetector --args="$PROGRAM_ARGS"
+#./gradlew run -DmainClass=edu.uci.iotproject.detection.layer3.Layer3SignatureDetector --args="$PROGRAM_ARGS"
 
 PCAP_FILE="$SIGNATURES_BASE_DIR/tplink-plug/wlan1/tplink-plug.wlan1.local.pcap"
 
@@ -886,22 +882,5 @@ SIGNATURE_DURATION="1429"
 EPSILON="10.0"
 
 PROGRAM_ARGS="'$PCAP_FILE' '$ON_ANALYSIS' '$OFF_ANALYSIS' '$ON_SIGNATURE' '$OFF_SIGNATURE' '$RESULTS_FILE' '$SIGNATURE_DURATION' '$EPSILON'"
-echo "BLINK CAMERA PHOTO"
-#./gradlew run -DmainClass=edu.uci.iotproject.detection.layer3.Layer3SignatureDetector --args="$PROGRAM_ARGS"
-# ======================================================================================================================
-
-# ================================================= BLINK CAMERA MOTION =================================================
-PCAP_FILE="$SIGNATURES_BASE_DIR/blink-camera/blink-camera-motion/wlan1/blink-camera-motion.wlan1.local.pcap"
-
-ON_SIGNATURE="$SIGNATURES_BASE_DIR/blink-camera/blink-camera-motion/signatures/blink-camera-motion-onSignature-device-side.sig"
-OFF_SIGNATURE="$SIGNATURES_BASE_DIR/blink-camera/blink-camera-motion/signatures/blink-camera-motion-offSignature-device-side.sig"
-ON_ANALYSIS="$SIGNATURES_BASE_DIR/blink-camera/blink-camera-motion/analyses/blink-camera-motion-onClusters-device-side.cls"
-OFF_ANALYSIS="$SIGNATURES_BASE_DIR/blink-camera/blink-camera-motion/analyses/blink-camera-motion-offClusters-device-side.cls"
-RESULTS_FILE="$SIGNATURES_BASE_DIR/blink-camera/blink-camera-motion/blink-camera-motion.wlan1.validation.pcap___device-side.detectionresults"
-SIGNATURE_DURATION="1429"
-EPSILON="10.0"
-
-PROGRAM_ARGS="'$PCAP_FILE' '$ON_ANALYSIS' '$OFF_ANALYSIS' '$ON_SIGNATURE' '$OFF_SIGNATURE' '$RESULTS_FILE' '$SIGNATURE_DURATION' '$EPSILON'"
-echo "BLINK CAMERA motion"
 #./gradlew run -DmainClass=edu.uci.iotproject.detection.layer3.Layer3SignatureDetector --args="$PROGRAM_ARGS"
 # ======================================================================================================================

@@ -42,7 +42,7 @@ DELETED_SEQUENCES_OFF="-1"
 
 # TODO: Need to change CLUSTER_BOUNDS_MULTIPLIER to 0.2 and INCLUSION_WINDOW_MILLIS = 30_000
 PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$ON_SIGNATURE' '$OFF_SIGNATURE' '$ON_ANALYSIS' '$OFF_ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES_ON' '$DELETED_SEQUENCES_OFF'"
-./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
 # ======================================================================================================================
 
 # ================================================== BLINK HUB WATCH ===================================================

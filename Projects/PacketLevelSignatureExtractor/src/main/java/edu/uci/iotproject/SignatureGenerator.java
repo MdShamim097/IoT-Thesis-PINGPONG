@@ -78,21 +78,22 @@ public class SignatureGenerator {
                             "University of California, Irvine.\n" +
                             "All rights reserved.\n\n" +
                             "Usage: %s inputPcapFile outputPcapFile triggerTimesFile deviceIp" +
-                            " onSignatureFile offSignatureFile onClusterAnalysisFile offClusterAnalysisFile epsilon" +
-                            " deletedSequencesOn deletedSequencesOff" +
+                            " SignatureFile ClusterAnalysisFile epsilon" +
+                            " deletedSequences" +
+                            " eventTypes" +
+                            " eventsOccurred" +
                             "\n  inputPcapFile: the target of the detection" +
                             "\n  outputPcapFile: the processed PCAP file through 15-second window filtering" +
                             "\n  triggerTimesFile: the trigger timestamps" +
                             "\n  deviceIp: the IP address of the device we want to generate a signature for" +
-                            "\n  onSignatureFile: name of the ON signature file" +
-                            "\n  offSignatureFile: name of the OFF signature file" +
-                            "\n  onClusterAnalysisFile: name of the ON signature cluster analysis file" +
-                            "\n  offClusterAnalysisFile: name of the OFF signature cluster analysis file" +
+                            "\n  SignatureFile: prefix of name of the signature file" +
+                            "\n  ClusterAnalysisFile: prefix of name of the signature cluster analysis file" +
                             "\n  epsilon: epsilon value of the DBSCAN algorithm" +
-                            "\n  deletedSequencesOn: sequences to be deleted from the final ON signature" +
+                            "\n  deletedSequences: sequences to be deleted from the final signature" +
                             " (please separate with commas, e.g., 0,1,2, or put '-1' if not needed)" +
-                            "\n  deletedSequencesOff: sequences to be deleted from the final OFF signature" +
-                            " (please separate with commas, e.g., 0,1,2, or put '-1' if not needed)",
+                            "\n  eventTypes: Supported events for a device" +
+                            "\n  eventsOccurred: Types of the events occurred during signature generation; input must be in 0-indexed number"
+                            ,
                     SignatureGenerator.class.getSimpleName());
             System.out.println(errMsg);
             return;
@@ -102,17 +103,19 @@ public class SignatureGenerator {
         final String outputPcapFile = args[1];
         final String triggerTimesFile = args[2];
         final String deviceIp = args[3];
-        final String onSignatureFile = args[4];
-        final String offSignatureFile = args[5];
-        final String onClusterAnalysisFile = args[6];
-        final String offClusterAnalysisFile = args[7];
-        final double eps = Double.parseDouble(args[8]);
-        final String deletedSequencesOn = args[9];
-        final String deletedSequencesOff = args[10];
+        final String SignatureFile = args[4];
+        final String ClusterAnalysisFile = args[5];
+        final double eps = Double.parseDouble(args[6]);
+        final String eventTypes = args[7];
+        final String eventsOccurred = args[8];
         final String logFile = inputPcapFile + LOG_EXTENSION;
 
         // Prepare file outputter.
         File outputFile = new File(logFile);
+        File eventTypesFile = new File(eventTypes);
+        File eventsOccurredFile = new File(eventsOccurred);
+        
+        // Here will be file reader;
         outputFile.getParentFile().mkdirs();
         final PrintWriter resultsWriter = new PrintWriter(new FileWriter(outputFile));
 
@@ -120,10 +123,30 @@ public class SignatureGenerator {
 
         TriggerTimesFileReader ttfr = new TriggerTimesFileReader();
         List<Instant> triggerTimes = ttfr.readTriggerTimes(triggerTimesFile, false);
+        List<String> eventNames = new ArrayList();
+        try (BufferedReader br = new BufferedReader(new FileReader(eventTypesFile))) {
+            String s;
+            while ((s = br.readLine()) != null) {
+                eventNames.add(s);
+            }
+        }
+        List<int> eventsGenerated = new ArrayList();   
+        try (BufferedReader br = new BufferedReader(new FileReader(eventsOccurredFile))) {
+            String s;    
+            while ((s = br.readLine()) != null) {
+                eventsGenerated.add(Integer.parseInt(s));
+            }
+        }
+
+        int n=eventNames.size();
+        if (triggerTimes.size() != eventsGenerated.size()) {
+            throw new IllegalArgumentException("File size mismatch");
+        }
+        
         // Tag each trigger with "ON" or "OFF", assuming that the first trigger is an "ON" and that they alternate.
         List<UserAction> userActions = new ArrayList<>();
         for (int i = 0; i < triggerTimes.size(); i++) {
-            userActions.add(new UserAction(i % 2 == 0 ? Type.TOGGLE_ON : Type.TOGGLE_OFF, triggerTimes.get(i)));
+            userActions.add(new UserAction(eventsGenerated.get(i), triggerTimes.get(i)));
         }
         TriggerTrafficExtractor tte = new TriggerTrafficExtractor(inputPcapFile, triggerTimes, deviceIp);
         final PcapDumper outputter = Pcaps.openDead(DataLinkType.EN10MB, 65536).dumpOpen(outputPcapFile);
@@ -185,11 +208,18 @@ public class SignatureGenerator {
          * We can simply use the UserAction->List<Conversation> map to generate ON/OFF groupings of conversations.
          */
         // Contains all ON events: hostname -> sequence identifier -> list of conversations with that sequence
-        Map<String, Map<String, List<Conversation>>> ons = new HashMap<>();
+        /*Map<String, Map<String, List<Conversation>>> ons = new HashMap<>();
         // Contains all OFF events: hostname -> sequence identifier -> list of conversations with that sequence
         Map<String, Map<String, List<Conversation>>> offs = new HashMap<>();
+        */
+        List<Map<String, Map<String, List<Conversation>>>> eventMaps =  new ArrayList<Map<String, Map<String, List<Conversation>>>>();
+        for(int i=0;i<n;i++){
+                Map<String, Map<String, List<Conversation>>> currentMap = new HashMap<>();   
+                eventMaps.add(currentMap);  
+        }
+
         userActionsToConvsByHostname.forEach((ua, hostnameToConvs) -> {
-            Map<String, Map<String, List<Conversation>>> outer = ua.getType() == Type.TOGGLE_ON ? ons : offs;
+            Map<String, Map<String, List<Conversation>>> outer = eventMaps.get(ua.getType()) ;
             hostnameToConvs.forEach((host, convs) -> {
                 Map<String, List<Conversation>> seqsToConvs = TcpConversationUtils.
                         groupConversationsByPacketSequence(convs, verbose);
@@ -207,6 +237,7 @@ public class SignatureGenerator {
         // TODO: No need to use the more convoluted on/off maps; Can simply use the UserAction->List<Conversation> map
         // TODO: when don't care about hostnames and sequences (see comment earlier).
         // ===========================================================================================================
+        /*
         List<Conversation> onConversations = userActionToConversations.entrySet().stream().
                 filter(e -> e.getKey().getType() == Type.TOGGLE_ON). // drop all OFF events from stream
                 map(e -> e.getValue()). // no longer interested in the UserActions
@@ -217,8 +248,20 @@ public class SignatureGenerator {
                 map(e -> e.getValue()).
                 flatMap(List::stream).
                 collect(Collectors.toList());
+        */
         //Collections.sort(onConversations, (c1, c2) -> c1.getPackets().)
 
+        List<List<Conversation>> Conversations = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            List<Conversation> list = userActionToConversations.entrySet().stream().
+                filter(e -> e.getKey().getType() == i). // drop all ith events from stream
+                map(e -> e.getValue()). // no longer interested in the UserActions
+                flatMap(List::stream). // flatten List<List<T>> to a List<T>
+                collect(Collectors.toList());
+            Conversations.add(list);
+        }
+
+        /*
         List<PcapPacketPair> onPairs = onConversations.stream().
                 map(c -> c.isTls() ? TcpConversationUtils.extractTlsAppDataPacketPairs(c) :
                         TcpConversationUtils.extractPacketPairs(c)).
@@ -229,8 +272,23 @@ public class SignatureGenerator {
                         TcpConversationUtils.extractPacketPairs(c)).
                 flatMap(List::stream). // flatten List<List<>> to List<>
                 collect(Collectors.toList());
+        */
+        List<List<PcapPacketPair>> Pairs = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            List<PcapPacketPair> list = Conversations.get(i).stream().
+                map(c -> c.isTls() ? TcpConversationUtils.extractTlsAppDataPacketPairs(c) :
+                        TcpConversationUtils.extractPacketPairs(c)).
+                flatMap(List::stream). // flatten List<List<>> to List<>
+                collect(Collectors.toList());
+            Conversations.add(list);
+        }
+
+        Stream s=Stream.of(Pairs.get(0));
+        for(int i=1;i<n;i++){
+                Stream.concat(s,Stream.of(Pairs.get(i))).flatMap(List::stream).forEach(p -> p.setDnsMap(dnsMap));
+        }
         // Note: need to update the DnsMap of all PcapPacketPairs if we want to use the IP/hostname-sensitive distance.
-        Stream.concat(Stream.of(onPairs), Stream.of(offPairs)).flatMap(List::stream).forEach(p -> p.setDnsMap(dnsMap));
+        //Stream.concat(Stream.of(onPairs), Stream.of(offPairs)).flatMap(List::stream).forEach(p -> p.setDnsMap(dnsMap));
         // Perform clustering on conversation logged as part of all ON events.
         // Calculate number of events per type (only ON/only OFF), which means half of the number of all timestamps.
         int numberOfEventsPerType = triggerTimes.size() / 2;

@@ -18,7 +18,7 @@ RESULTS_FILE="$RESULTS_BASE_DIR/amazon-plug/amazon-plug.wlan1.validation.pcap___
 ANALYSIS_RESULTS_FILE="$RESULTS_FILE.analysis"
 EXACT_MATCH="true"
 PROGRAM_ARGS="'$TIMESTAMPS_FILE' '$RESULTS_FILE' '$ANALYSIS_RESULTS_FILE' '$EXACT_MATCH'"
-./gradlew run -DmainClass=edu.uci.iotproject.evaluation.DetectionResultsAnalyzer --args="$PROGRAM_ARGS"
+#./gradlew run -DmainClass=edu.uci.iotproject.evaluation.DetectionResultsAnalyzer --args="$PROGRAM_ARGS"
 # ======================================================================================================================
 # REMOTE
 TIMESTAMPS_FILE="$TIMESTAMPS_BASE_DIR/amazon-plug/timestamps/amazon-plug-dec-6-2019.timestamps"

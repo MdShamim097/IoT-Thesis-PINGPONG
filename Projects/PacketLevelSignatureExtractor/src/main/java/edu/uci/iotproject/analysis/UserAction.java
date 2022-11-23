@@ -29,28 +29,29 @@ public class UserAction {
      * @return A {@code UserAction} resulting from deserializing the string.
      */
     public static UserAction fromString(String string) {
-        String[] parts = string.split("@");
+        /*String[] parts = string.split("@");
         if (parts.length != 2) {
             throw new IllegalArgumentException("Invalid string format");
         }
         // If any of these two parses fail, an exception is thrown -- no need to check return values.
         UserAction.Type actionType = UserAction.Type.valueOf(parts[0].trim());
+        */
         Instant timestamp = TIMESTAMP_FORMATTER.parse(parts[1].trim(), Instant::from);
-        return new UserAction(actionType, timestamp);
+        return new UserAction(0, timestamp);
     }
 
 
     /**
      * The specific type of action the user performed.
      */
-    private final Type mType;
+    private final int mType;
 
     /**
      * The time the action took place.
      */
     private final Instant mTimestamp;
 
-    public UserAction(Type typeOfAction, Instant timeOfAction) {
+    public UserAction(int typeOfAction, Instant timeOfAction) {
         mType = typeOfAction;
         mTimestamp = timeOfAction;
     }
@@ -59,7 +60,7 @@ public class UserAction {
      * Get the specific type of action performed by the user.
      * @return the specific type of action performed by the user.
      */
-    public Type getType() {
+    public int getType() {
         return mType;
     }
 
@@ -74,9 +75,9 @@ public class UserAction {
     /**
      * Enum for indicating what type of action the user performed.
      */
-    public enum Type {
+    /*public enum Type {
         TOGGLE_ON, TOGGLE_OFF
-    }
+    }*/
 
 
     @Override

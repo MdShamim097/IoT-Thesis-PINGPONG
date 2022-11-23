@@ -755,24 +755,6 @@ PROGRAM_ARGS="'$PCAP_FILE' '$ON_ANALYSIS' '$OFF_ANALYSIS' '$ON_SIGNATURE' '$OFF_
 #./gradlew run -DmainClass=edu.uci.iotproject.detection.layer2.Layer2SignatureDetector --args="$PROGRAM_ARGS"
 # ======================================================================================================================
 
-# ================================================= BLINK CAMERA MOTION =================================================
-PCAP_FILE="$PCAPS_BASE_DIR/blink-camera/blink-camera-motion/wlan/blink-camera-motion.wlan.pcap"
-
-# DEVICE SIDE
-ON_ANALYSIS="$SIGNATURES_BASE_DIR/blink-camera/blink-camera-motion/analyses/blink-camera-motion-onClusters-device-side.cls"
-OFF_ANALYSIS="$SIGNATURES_BASE_DIR/blink-camera/blink-camera-motion/analyses/blink-camera-motion-offClusters-device-side.cls"
-ON_SIGNATURE="$SIGNATURES_BASE_DIR/blink-camera/blink-camera-motion/signatures/blink-camera-motion-onSignature-device-side.sig"
-OFF_SIGNATURE="$SIGNATURES_BASE_DIR/blink-camera/blink-camera-motion/signatures/blink-camera-motion-offSignature-device-side.sig"
-RESULTS_FILE="$OUTPUT_DIR/blink-camera/blink-camera-motion/blink-camera-motion.wan.detection.pcap___device-side.detectionresults"
-# TODO: We had to relax the duration here
-#SIGNATURE_DURATION="1429"
-SIGNATURE_DURATION="12000"
-EPSILON="10.0"
-
-PROGRAM_ARGS="'$PCAP_FILE' '$ON_ANALYSIS' '$OFF_ANALYSIS' '$ON_SIGNATURE' '$OFF_SIGNATURE' '$RESULTS_FILE' '$SIGNATURE_DURATION' '$EPSILON'"
-./gradlew run -DmainClass=edu.uci.iotproject.detection.layer2.Layer2SignatureDetector --args="$PROGRAM_ARGS"
-# ======================================================================================================================
-
 # ================================================== WEMO INSIGHT PLUG =================================================
 # LOCAL
 PCAP_FILE="$PCAPS_BASE_DIR/wemo-insight-plug/wlan/wemo-insight-plug.wlan.pcap"

@@ -161,8 +161,7 @@ PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$ON_S
 INPUT_PCAP="$SIGNATURES_BASE_DIR/dlink-plug/wlan1/dlink-plug.wlan1.local.pcap"
 OUTPUT_PCAP="$OUTPUT_DIR/dlink-plug/wlan1/dlink-plug-processed.pcap"
 TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/dlink-plug/timestamps/dlink-plug-nov-7-2018.timestamps"
-#DEVICE_IP="192.168.1.199"
-DEVICE_IP="192.168.1.129"
+DEVICE_IP="192.168.1.199"
 ON_SIGNATURE="$OUTPUT_DIR/dlink-plug/signatures/dlink-plug-onSignature-device-side.sig"
 OFF_SIGNATURE="$OUTPUT_DIR/dlink-plug/signatures/dlink-plug-offSignature-device-side.sig"
 ON_ANALYSIS="$OUTPUT_DIR/dlink-plug/analyses/dlink-plug-onClusters-device-side.cls"
@@ -776,7 +775,7 @@ DELETED_SEQUENCES_ON="-1"
 DELETED_SEQUENCES_OFF="-1"
 
 PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$ON_SIGNATURE' '$OFF_SIGNATURE' '$ON_ANALYSIS' '$OFF_ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES_ON' '$DELETED_SEQUENCES_OFF'"
-./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
 
 
 # DEVICE SIDE OUTBOUND (contains only those packets that go through the WAN port, i.e., only the 556, 1293 sequence)
@@ -1092,42 +1091,3 @@ DELETED_SEQUENCES_OFF="-1"
 PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$ON_SIGNATURE' '$OFF_SIGNATURE' '$ON_ANALYSIS' '$OFF_ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES_ON' '$DELETED_SEQUENCES_OFF'"
 #./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
 # ======================================================================================================================
-# ================================================= BLINK CAMERA MOTION =================================================
-INPUT_PCAP="$SIGNATURES_BASE_DIR/blink-camera/blink-camera-motion/wlan1/blink-camera-motion.wlan1.local.pcap"
-
-OUTPUT_PCAP="$OUTPUT_DIR/blink-camera/blink-camera-motion/wlan1/blink-camera-motion-processed.pcap"
-TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/blink-camera/blink-camera-motion/timestamps/blink-cam-01.timestamps"
-DEVICE_IP="192.168.1.129"
-ON_SIGNATURE="$OUTPUT_DIR/blink-camera/blink-camera-motion/signatures/blink-camera-motion-onSignature-device-side.sig"
-OFF_SIGNATURE="$OUTPUT_DIR/blink-camera/blink-camera-motion/signatures/blink-camera-motion-offSignature-device-side.sig"
-ON_ANALYSIS="$OUTPUT_DIR/blink-camera/blink-camera-motion/analyses/blink-camera-motion-onClusters-device-side.cls"
-OFF_ANALYSIS="$OUTPUT_DIR/blink-camera/blink-camera-motion/analyses/blink-camera-motion-offClusters-device-side.cls"
-EPSILON="10.0"
-DELETED_SEQUENCES_ON="-1"
-DELETED_SEQUENCES_OFF="-1"
-
-PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$ON_SIGNATURE' '$OFF_SIGNATURE' '$ON_ANALYSIS' '$OFF_ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES_ON' '$DELETED_SEQUENCES_OFF'"
-#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
-# ======================================================================================================================
-
-# ======================================================================================================================
-
-# ==================================================== TP-LINK PLUG2 ====================================================
-# LOCAL
-# DEVICE SIDE (both the 112, 115 and 556, 1293 sequences)
-INPUT_PCAP="$SIGNATURES_BASE_DIR/tplink-plug2/wlan1/tplink-plug.wlan1.local.pcap"
-
-# LAN signature.
-OUTPUT_PCAP="$OUTPUT_DIR/tplink-plug2/wlan1/tplink-plug-processed.pcap"
-TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/tplink-plug2/timestamps/tplink-plug-nov-8-2018.timestamps"
-DEVICE_IP="192.168.1.227"
-ON_SIGNATURE="$OUTPUT_DIR/tplink-plug2/signatures/tplink-plug-onSignature-device-side.sig"
-OFF_SIGNATURE="$OUTPUT_DIR/tplink-plug2/signatures/tplink-plug-offSignature-device-side.sig"
-ON_ANALYSIS="$OUTPUT_DIR/tplink-plug2/analyses/tplink-plug-onClusters-device-side.cls"
-OFF_ANALYSIS="$OUTPUT_DIR/tplink-plug2/analyses/tplink-plug-offClusters-device-side.cls"
-EPSILON="10.0"
-DELETED_SEQUENCES_ON="-1"
-DELETED_SEQUENCES_OFF="-1"
-
-PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$ON_SIGNATURE' '$OFF_SIGNATURE' '$ON_ANALYSIS' '$OFF_ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES_ON' '$DELETED_SEQUENCES_OFF'"
-#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"

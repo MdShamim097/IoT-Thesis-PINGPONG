@@ -89,7 +89,7 @@ public class SignatureGenerator {
                             "\n  SignatureFile: prefix of name of the signature file" +
                             "\n  ClusterAnalysisFile: prefix of name of the signature cluster analysis file" +
                             "\n  epsilon: epsilon value of the DBSCAN algorithm" +
-                            "\n  deletedSequences: sequences to be deleted from the final signature" +
+                            "\n  deletedSequences: file containing sequences to be deleted from the final signature" +
                             " (please separate with commas, e.g., 0,1,2, or put '-1' if not needed)" +
                             "\n  eventTypes: Supported events for a device" +
                             "\n  eventsOccurred: Types of the events occurred during signature generation; input must be in 0-indexed number"
@@ -106,8 +106,9 @@ public class SignatureGenerator {
         final String SignatureFile = args[4];
         final String ClusterAnalysisFile = args[5];
         final double eps = Double.parseDouble(args[6]);
-        final String eventTypes = args[7];
-        final String eventsOccurred = args[8];
+        final String deletedSequences = args[7];
+        final String eventTypes = args[8];
+        final String eventsOccurred = args[9];
         final String logFile = inputPcapFile + LOG_EXTENSION;
 
         // Prepare file outputter.
@@ -135,8 +136,10 @@ public class SignatureGenerator {
         for(int i=0;i<n;i++)
         {
                 eventCounts[i] = 0;
+                deletedSequencesCount[i] = 0;
         }
-        List<int> eventsGenerated = new ArrayList();   
+        List<int> eventsGenerated = new ArrayList();
+        List<String> deletedSequenceList = new ArrayList<> (); 
         try (BufferedReader br = new BufferedReader(new FileReader(eventsOccurredFile))) {
             String s;    
             while ((s = br.readLine()) != null) {
@@ -146,6 +149,12 @@ public class SignatureGenerator {
             }
         }
 
+        try (BufferedReader br = new BufferedReader(new FileReader(deletedSequences))) {
+            String s;
+            while ((s = br.readLine()) != null) {
+                deletedSequenceList.add(s);
+            }
+        }
         if (triggerTimes.size() != eventsGenerated.size()) {
             throw new IllegalArgumentException("File size mismatch");
         }
@@ -353,7 +362,7 @@ public class SignatureGenerator {
                 int minPts = lowerBound;
                 PrintWriterUtils.println("========================================", resultsWriter,
                 DUPLICATE_OUTPUT_TO_STD_OUT);
-                PrintWriterUtils.println("       Clustering results for "+eventNames[i]+"        ", resultsWriter,
+                PrintWriterUtils.println("       Clustering results for "+eventNames.get(i)+"        ", resultsWriter,
                 DUPLICATE_OUTPUT_TO_STD_OUT);
                 PrintWriterUtils.println("       Number of clusters: " + Clusters.get(i).size(), resultsWriter,
                 DUPLICATE_OUTPUT_TO_STD_OUT);
@@ -402,104 +411,151 @@ public class SignatureGenerator {
 
         // =========================================== SIGNATURE CREATION ===========================================
         // Concatenate
-        ppListOfListListOn = PcapPacketUtils.concatSequences(ppListOfListListOn, sortedAllConversation);
-        // Remove sequences in the list that have overlap
-        StringTokenizer stringTokenizerOn = new StringTokenizer(deletedSequencesOn, ",");
-        while(stringTokenizerOn.hasMoreTokens()) {
-            int sequenceToDelete = Integer.parseInt(stringTokenizerOn.nextToken());
-            if (sequenceToDelete == -1) { // '-1' means there is no removal
-                break;
-            }
-            PcapPacketUtils.removeSequenceFromSignature(ppListOfListListOn, sequenceToDelete);
-        }
-        PrintWriterUtils.println("ON Sequences: ", resultsWriter,
-                DUPLICATE_OUTPUT_TO_STD_OUT);
-        for(List<List<PcapPacket>> listOfList : ppListOfListListOn) {
-            PrintWriterUtils.println(listOfList.get(0).get(0).length() + "...", resultsWriter,
-                    DUPLICATE_OUTPUT_TO_STD_OUT);
-        }
-        ppListOfListListOn = PcapPacketUtils.sortSequences(ppListOfListListOn);
-        PrintWriterUtils.println("Concatenated and sorted ON signature sequences...", resultsWriter,
-                DUPLICATE_OUTPUT_TO_STD_OUT);
+        // ppListOfListListOn = PcapPacketUtils.concatSequences(ppListOfListListOn, sortedAllConversation);
+        // // Remove sequences in the list that have overlap
+        // StringTokenizer stringTokenizerOn = new StringTokenizer(deletedSequencesOn, ",");
+        // while(stringTokenizerOn.hasMoreTokens()) {
+        //     int sequenceToDelete = Integer.parseInt(stringTokenizerOn.nextToken());
+        //     if (sequenceToDelete == -1) { // '-1' means there is no removal
+        //         break;
+        //     }
+        //     PcapPacketUtils.removeSequenceFromSignature(ppListOfListListOn, sequenceToDelete);
+        // }
+        // PrintWriterUtils.println("ON Sequences: ", resultsWriter,
+        //         DUPLICATE_OUTPUT_TO_STD_OUT);
+        // for(List<List<PcapPacket>> listOfList : ppListOfListListOn) {
+        //     PrintWriterUtils.println(listOfList.get(0).get(0).length() + "...", resultsWriter,
+        //             DUPLICATE_OUTPUT_TO_STD_OUT);
+        // }
+        // ppListOfListListOn = PcapPacketUtils.sortSequences(ppListOfListListOn);
+        // PrintWriterUtils.println("Concatenated and sorted ON signature sequences...", resultsWriter,
+        //         DUPLICATE_OUTPUT_TO_STD_OUT);
 
-        // Concatenate
-        ppListOfListListOff = PcapPacketUtils.concatSequences(ppListOfListListOff, sortedAllConversation);
-        // Remove sequences in the list that have overlap
-        StringTokenizer stringTokenizerOff = new StringTokenizer(deletedSequencesOff, ",");
-        while(stringTokenizerOff.hasMoreTokens()) {
-            int sequenceToDelete = Integer.parseInt(stringTokenizerOff.nextToken());
-            if (sequenceToDelete == -1) { // '-1' means there is no removal
-                break;
-            }
-            PcapPacketUtils.removeSequenceFromSignature(ppListOfListListOff, sequenceToDelete);
-        }
-        PrintWriterUtils.println("OFF Sequences: ", resultsWriter,
-                DUPLICATE_OUTPUT_TO_STD_OUT);
-        for(List<List<PcapPacket>> listOfList : ppListOfListListOff) {
-            PrintWriterUtils.println(listOfList.get(0).get(0).length() + "...", resultsWriter,
-                    DUPLICATE_OUTPUT_TO_STD_OUT);
-        }
-        ppListOfListListOff = PcapPacketUtils.sortSequences(ppListOfListListOff);
-        PrintWriterUtils.println("Concatenated and sorted OFF signature sequences...", resultsWriter,
-                DUPLICATE_OUTPUT_TO_STD_OUT);
-
-        // Write the signatures into the screen
-        PrintWriterUtils.println("========================================", resultsWriter,
-                DUPLICATE_OUTPUT_TO_STD_OUT);
-        PrintWriterUtils.println("              ON Signature              ", resultsWriter,
-                DUPLICATE_OUTPUT_TO_STD_OUT);
-        PrintWriterUtils.println("========================================", resultsWriter,
-                DUPLICATE_OUTPUT_TO_STD_OUT);
-        PcapPacketUtils.printSignatures(ppListOfListListOn, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
-        PrintWriterUtils.println("========================================", resultsWriter,
-                DUPLICATE_OUTPUT_TO_STD_OUT);
-        PrintWriterUtils.println("              OFF Signature             ", resultsWriter,
-                DUPLICATE_OUTPUT_TO_STD_OUT);
-        PrintWriterUtils.println("========================================", resultsWriter,
-                DUPLICATE_OUTPUT_TO_STD_OUT);
-        PcapPacketUtils.printSignatures(ppListOfListListOff, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
-        // Clean signatures from null elements
-        PcapPacketUtils.cleanSignature(ppListOfListListOn);
-        PcapPacketUtils.cleanSignature(ppListOfListListOff);
-        // Printing signatures into files
-        PrintUtils.serializeIntoFile(onSignatureFile, ppListOfListListOn);
-        PrintUtils.serializeIntoFile(offSignatureFile, ppListOfListListOff);
-        // Printing cluster analyses into files
-        PrintUtils.serializeIntoFile(onClusterAnalysisFile, corePointRangeSignatureOn);
-        PrintUtils.serializeIntoFile(offClusterAnalysisFile, corePointRangeSignatureOff);
-
-        // =========================================== SIGNATURE DURATIONS =============================================
         List<Instant> firstSignatureTimestamps = new ArrayList<>();
         List<Instant> lastSignatureTimestamps = new ArrayList<>();
-        if (!ppListOfListListOn.isEmpty()) {
-            List<List<PcapPacket>> firstListOnSign = ppListOfListListOn.get(0);
-            List<List<PcapPacket>> lastListOnSign = ppListOfListListOn.get(ppListOfListListOn.size() - 1);
-            // Load ON signature first and last packet's timestamps
-            for (List<PcapPacket> list : firstListOnSign) {
-                // Get timestamp Instant from the last packet
-                firstSignatureTimestamps.add(list.get(0).getTimestamp());
-            }
-            for (List<PcapPacket> list : lastListOnSign) {
-                // Get timestamp Instant from the last packet
-                int lastPacketIndex = list.size() - 1;
-                lastSignatureTimestamps.add(list.get(lastPacketIndex).getTimestamp());
-            }
+        
+        for(int i=0; i<n; i++)
+        {
+                List<List<List<PcapPacket>>> ppListOfListListCurr = PcapPacketUtils.concatSequences(ppListOfListList.get(i), sortedAllConversation);
+                StringTokenizer stringTokenizerCurr = new StringTokenizer(deletedSequenceList.get(i), ",");
+                while(stringTokenizerCurr.hasMoreTokens()) {
+                        int sequenceToDelete = Integer.parseInt(stringTokenizerCurr.nextToken());
+                        if (sequenceToDelete == -1) { // '-1' means there is no removal
+                                break;
+                        }
+                        PcapPacketUtils.removeSequenceFromSignature(ppListOfListListCurr, sequenceToDelete);
+                }
+                PrintWriterUtils.println(eventNames.get(i)+" Sequences: ", resultsWriter,
+                        DUPLICATE_OUTPUT_TO_STD_OUT);
+                for(List<List<PcapPacket>> listOfList : ppListOfListListCurr) {
+                        PrintWriterUtils.println(listOfList.get(0).get(0).length() + "...", resultsWriter,
+                        DUPLICATE_OUTPUT_TO_STD_OUT);
+                }
+                ppListOfListListCurr = PcapPacketUtils.sortSequences(ppListOfListListCurr);
+                PrintWriterUtils.println("Concatenated and sorted "+eventNames.get(i)+" signature sequences...", resultsWriter,
+                        DUPLICATE_OUTPUT_TO_STD_OUT);
+                PrintWriterUtils.println("========================================", resultsWriter,
+                        DUPLICATE_OUTPUT_TO_STD_OUT);
+                PrintWriterUtils.println("              "+eventNames.get(i)+" Signature              ", resultsWriter,
+                        DUPLICATE_OUTPUT_TO_STD_OUT);
+                PrintWriterUtils.println("========================================", resultsWriter,
+                        DUPLICATE_OUTPUT_TO_STD_OUT);
+                PcapPacketUtils.printSignatures(ppListOfListListCurr, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
+                PcapPacketUtils.cleanSignature(ppListOfListListCurr);
+                //PrintUtils.serializeIntoFile(eventNames.get(i)+""+SignatureFile, ppListOfListListOn);
+                //PrintUtils.serializeIntoFile(eventNames.get(i)+""+ClusterAnalysisFile, corePointRangeSignature.get(i));
+                if (!ppListOfListListCurr.isEmpty()) {
+                        List<List<PcapPacket>> firstListCurrSign = ppListOfListListCurr.get(0);
+                        List<List<PcapPacket>> lastListCurrSign = ppListOfListListCurr.get(ppListOfListListCurr.size() - 1);
+                        // Load ON signature first and last packet's timestamps
+                        for (List<PcapPacket> list : firstListCurrSign) {
+                                // Get timestamp Instant from the last packet
+                                firstSignatureTimestamps.add(list.get(0).getTimestamp());
+                        }
+                        for (List<PcapPacket> list : lastListCurrSign) {
+                                // Get timestamp Instant from the last packet
+                                int lastPacketIndex = list.size() - 1;
+                                lastSignatureTimestamps.add(list.get(lastPacketIndex).getTimestamp());
+                        }
+                }
         }
+        // Concatenate
+        // ppListOfListListOff = PcapPacketUtils.concatSequences(ppListOfListListOff, sortedAllConversation);
+        // // Remove sequences in the list that have overlap
+        // StringTokenizer stringTokenizerOff = new StringTokenizer(deletedSequencesOff, ",");
+        // while(stringTokenizerOff.hasMoreTokens()) {
+        //     int sequenceToDelete = Integer.parseInt(stringTokenizerOff.nextToken());
+        //     if (sequenceToDelete == -1) { // '-1' means there is no removal
+        //         break;
+        //     }
+        //     PcapPacketUtils.removeSequenceFromSignature(ppListOfListListOff, sequenceToDelete);
+            
+        // }
+        // PrintWriterUtils.println("OFF Sequences: ", resultsWriter,
+        //         DUPLICATE_OUTPUT_TO_STD_OUT);
+        // for(List<List<PcapPacket>> listOfList : ppListOfListListOff) {
+        //     PrintWriterUtils.println(listOfList.get(0).get(0).length() + "...", resultsWriter,
+        //             DUPLICATE_OUTPUT_TO_STD_OUT);
+        // }
+        // ppListOfListListOff = PcapPacketUtils.sortSequences(ppListOfListListOff);
+        // PrintWriterUtils.println("Concatenated and sorted OFF signature sequences...", resultsWriter,
+        //         DUPLICATE_OUTPUT_TO_STD_OUT);
 
-        if (!ppListOfListListOff.isEmpty()) {
-            List<List<PcapPacket>> firstListOffSign = ppListOfListListOff.get(0);
-            List<List<PcapPacket>> lastListOffSign = ppListOfListListOff.get(ppListOfListListOff.size() - 1);
-            // Load OFF signature first and last packet's timestamps
-            for (List<PcapPacket> list : firstListOffSign) {
-                // Get timestamp Instant from the last packet
-                firstSignatureTimestamps.add(list.get(0).getTimestamp());
-            }
-            for (List<PcapPacket> list : lastListOffSign) {
-                // Get timestamp Instant from the last packet
-                int lastPacketIndex = list.size() - 1;
-                lastSignatureTimestamps.add(list.get(lastPacketIndex).getTimestamp());
-            }
-        }
+        // // Write the signatures into the screen
+        // PrintWriterUtils.println("========================================", resultsWriter,
+        //         DUPLICATE_OUTPUT_TO_STD_OUT);
+        // PrintWriterUtils.println("              ON Signature              ", resultsWriter,
+        //         DUPLICATE_OUTPUT_TO_STD_OUT);
+        // PrintWriterUtils.println("========================================", resultsWriter,
+        //         DUPLICATE_OUTPUT_TO_STD_OUT);
+        // PcapPacketUtils.printSignatures(ppListOfListListOn, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
+        // PrintWriterUtils.println("========================================", resultsWriter,
+        //         DUPLICATE_OUTPUT_TO_STD_OUT);
+        // PrintWriterUtils.println("              OFF Signature             ", resultsWriter,
+        //         DUPLICATE_OUTPUT_TO_STD_OUT);
+        // PrintWriterUtils.println("========================================", resultsWriter,
+        //         DUPLICATE_OUTPUT_TO_STD_OUT);
+        // PcapPacketUtils.printSignatures(ppListOfListListOff, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
+        // // Clean signatures from null elements
+        // PcapPacketUtils.cleanSignature(ppListOfListListOn);
+        // PcapPacketUtils.cleanSignature(ppListOfListListOff);
+        // // Printing signatures into files
+        // PrintUtils.serializeIntoFile(onSignatureFile, ppListOfListListOn);
+        // PrintUtils.serializeIntoFile(offSignatureFile, ppListOfListListOff);
+        // // Printing cluster analyses into files
+        // PrintUtils.serializeIntoFile(onClusterAnalysisFile, corePointRangeSignatureOn);
+        // PrintUtils.serializeIntoFile(offClusterAnalysisFile, corePointRangeSignatureOff);
+
+        // // =========================================== SIGNATURE DURATIONS =============================================
+        // if (!ppListOfListListOn.isEmpty()) {
+        //     List<List<PcapPacket>> firstListOnSign = ppListOfListListOn.get(0);
+        //     List<List<PcapPacket>> lastListOnSign = ppListOfListListOn.get(ppListOfListListOn.size() - 1);
+        //     // Load ON signature first and last packet's timestamps
+        //     for (List<PcapPacket> list : firstListOnSign) {
+        //         // Get timestamp Instant from the last packet
+        //         firstSignatureTimestamps.add(list.get(0).getTimestamp());
+        //     }
+        //     for (List<PcapPacket> list : lastListOnSign) {
+        //         // Get timestamp Instant from the last packet
+        //         int lastPacketIndex = list.size() - 1;
+        //         lastSignatureTimestamps.add(list.get(lastPacketIndex).getTimestamp());
+        //     }
+        // }
+
+        // if (!ppListOfListListOff.isEmpty()) {
+        //     List<List<PcapPacket>> firstListOffSign = ppListOfListListOff.get(0);
+        //     List<List<PcapPacket>> lastListOffSign = ppListOfListListOff.get(ppListOfListListOff.size() - 1);
+        //     // Load OFF signature first and last packet's timestamps
+        //     for (List<PcapPacket> list : firstListOffSign) {
+        //         // Get timestamp Instant from the last packet
+        //         firstSignatureTimestamps.add(list.get(0).getTimestamp());
+        //     }
+        //     for (List<PcapPacket> list : lastListOffSign) {
+        //         // Get timestamp Instant from the last packet
+        //         int lastPacketIndex = list.size() - 1;
+        //         lastSignatureTimestamps.add(list.get(lastPacketIndex).getTimestamp());
+        //     }
+        // }
         // Sort the timestamps
         firstSignatureTimestamps.sort(Comparator.comparing(Instant::toEpochMilli));
         lastSignatureTimestamps.sort(Comparator.comparing(Instant::toEpochMilli));

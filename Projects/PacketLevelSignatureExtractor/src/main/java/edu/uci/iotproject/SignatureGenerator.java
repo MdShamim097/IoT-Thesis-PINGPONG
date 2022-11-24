@@ -130,15 +130,22 @@ public class SignatureGenerator {
                 eventNames.add(s);
             }
         }
+        int n=eventNames.size();
+        int [] eventCounts = new int[n];
+        for(int i=0;i<n;i++)
+        {
+                eventCounts[i] = 0;
+        }
         List<int> eventsGenerated = new ArrayList();   
         try (BufferedReader br = new BufferedReader(new FileReader(eventsOccurredFile))) {
             String s;    
             while ((s = br.readLine()) != null) {
-                eventsGenerated.add(Integer.parseInt(s));
+                int currentEvent = Integer.parseInt(s);
+                eventsGenerated.add(currentEvent);
+                eventCounts[currentEvent]++;
             }
         }
 
-        int n=eventNames.size();
         if (triggerTimes.size() != eventsGenerated.size()) {
             throw new IllegalArgumentException("File size mismatch");
         }
@@ -291,62 +298,107 @@ public class SignatureGenerator {
         //Stream.concat(Stream.of(onPairs), Stream.of(offPairs)).flatMap(List::stream).forEach(p -> p.setDnsMap(dnsMap));
         // Perform clustering on conversation logged as part of all ON events.
         // Calculate number of events per type (only ON/only OFF), which means half of the number of all timestamps.
-        int numberOfEventsPerType = triggerTimes.size() / 2;
-        int lowerBound = numberOfEventsPerType - (int)(numberOfEventsPerType * CLUSTER_BOUNDS_MULTIPLIER);
-        int upperBound = numberOfEventsPerType + (int)(numberOfEventsPerType * CLUSTER_BOUNDS_MULTIPLIER);
-        int minPts = lowerBound;
-        DBSCANClusterer<PcapPacketPair> onClusterer = new DBSCANClusterer<>(eps, minPts);
-        List<Cluster<PcapPacketPair>> onClusters = onClusterer.cluster(onPairs);
-        // Perform clustering on conversation logged as part of all OFF events.
-        DBSCANClusterer<PcapPacketPair> offClusterer = new DBSCANClusterer<>(eps, minPts);
-        List<Cluster<PcapPacketPair>> offClusters = offClusterer.cluster(offPairs);
+        // int numberOfEventsPerType = triggerTimes.size() / 2;
+        // int lowerBound = numberOfEventsPerType - (int)(numberOfEventsPerType * CLUSTER_BOUNDS_MULTIPLIER);
+        // int upperBound = numberOfEventsPerType + (int)(numberOfEventsPerType * CLUSTER_BOUNDS_MULTIPLIER);
+        // int minPts = lowerBound;
+        // DBSCANClusterer<PcapPacketPair> onClusterer = new DBSCANClusterer<>(eps, minPts);
+        // List<Cluster<PcapPacketPair>> onClusters = onClusterer.cluster(onPairs);
+        // // Perform clustering on conversation logged as part of all OFF events.
+        // DBSCANClusterer<PcapPacketPair> offClusterer = new DBSCANClusterer<>(eps, minPts);
+        // List<Cluster<PcapPacketPair>> offClusters = offClusterer.cluster(offPairs);
+        List<List<Cluster<PcapPacketPair>>> Clusters = new ArrayList<>();
+        for(int i=0;i<n;i++)
+        {
+                int numberOfEventsPerType = eventCounts[i];
+                int lowerBound = numberOfEventsPerType - (int)(numberOfEventsPerType * CLUSTER_BOUNDS_MULTIPLIER);
+                int upperBound = numberOfEventsPerType + (int)(numberOfEventsPerType * CLUSTER_BOUNDS_MULTIPLIER);
+                int minPts = lowerBound;
+                DBSCANClusterer<PcapPacketPair> Clusterer = new DBSCANClusterer<>(eps, minPts);
+                Clusters.add(Clusterer.cluster(Pairs));
+        }
         // Sort the conversations as reference
         List<Conversation> sortedAllConversation = TcpConversationUtils.sortConversationList(allConversations);
         // Output clusters
-        PrintWriterUtils.println("========================================", resultsWriter,
+        // PrintWriterUtils.println("========================================", resultsWriter,
+        //         DUPLICATE_OUTPUT_TO_STD_OUT);
+        // PrintWriterUtils.println("       Clustering results for ON        ", resultsWriter,
+        //         DUPLICATE_OUTPUT_TO_STD_OUT);
+        // PrintWriterUtils.println("       Number of clusters: " + onClusters.size(), resultsWriter,
+        //         DUPLICATE_OUTPUT_TO_STD_OUT);
+        // int count = 0;
+        // List<List<List<PcapPacket>>> ppListOfListReadOn = new ArrayList<>();
+        // List<List<List<PcapPacket>>> ppListOfListListOn = new ArrayList<>();
+        // List<List<List<PcapPacket>>> corePointRangeSignatureOn = new ArrayList<>();
+        // for (Cluster<PcapPacketPair> c : onClusters) {
+        //     PrintWriterUtils.println(String.format("<<< Cluster #%02d (%03d points) >>>", ++count, c.getPoints().size()),
+        //             resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
+        //     PrintWriterUtils.println(PrintUtils.toSummaryString(c), resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
+        //     if(c.getPoints().size() > lowerBound && c.getPoints().size() < upperBound) {
+        //         // Print to file
+        //         List<List<PcapPacket>> ppListOfList = PcapPacketUtils.clusterToListOfPcapPackets(c);
+        //         // Check for overlaps and decide whether to do range-based or conservative checking
+        //         corePointRangeSignatureOn.add(PcapPacketUtils.extractRangeCorePoints(ppListOfList, eps, minPts));
+        //         ppListOfListListOn.add(ppListOfList);
+        //     }
+        // }
+        List<List<List<List<PcapPacket>>>> ppListOfListList = new ArrayList<>();
+        List<List<List<List<PcapPacket>>>> corePointRangeSignature = new ArrayList<>();
+
+        for(int i=0; i<n; i++)
+        {
+                int numberOfEventsPerType = eventCounts[i];
+                int lowerBound = numberOfEventsPerType - (int)(numberOfEventsPerType * CLUSTER_BOUNDS_MULTIPLIER);
+                int upperBound = numberOfEventsPerType + (int)(numberOfEventsPerType * CLUSTER_BOUNDS_MULTIPLIER);
+                int minPts = lowerBound;
+                PrintWriterUtils.println("========================================", resultsWriter,
                 DUPLICATE_OUTPUT_TO_STD_OUT);
-        PrintWriterUtils.println("       Clustering results for ON        ", resultsWriter,
+                PrintWriterUtils.println("       Clustering results for "+eventNames[i]+"        ", resultsWriter,
                 DUPLICATE_OUTPUT_TO_STD_OUT);
-        PrintWriterUtils.println("       Number of clusters: " + onClusters.size(), resultsWriter,
+                PrintWriterUtils.println("       Number of clusters: " + Clusters.get(i).size(), resultsWriter,
                 DUPLICATE_OUTPUT_TO_STD_OUT);
-        int count = 0;
-        List<List<List<PcapPacket>>> ppListOfListReadOn = new ArrayList<>();
-        List<List<List<PcapPacket>>> ppListOfListListOn = new ArrayList<>();
-        List<List<List<PcapPacket>>> corePointRangeSignatureOn = new ArrayList<>();
-        for (Cluster<PcapPacketPair> c : onClusters) {
-            PrintWriterUtils.println(String.format("<<< Cluster #%02d (%03d points) >>>", ++count, c.getPoints().size()),
-                    resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
-            PrintWriterUtils.println(PrintUtils.toSummaryString(c), resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
-            if(c.getPoints().size() > lowerBound && c.getPoints().size() < upperBound) {
-                // Print to file
-                List<List<PcapPacket>> ppListOfList = PcapPacketUtils.clusterToListOfPcapPackets(c);
-                // Check for overlaps and decide whether to do range-based or conservative checking
-                corePointRangeSignatureOn.add(PcapPacketUtils.extractRangeCorePoints(ppListOfList, eps, minPts));
-                ppListOfListListOn.add(ppListOfList);
-            }
+                int count = 0;
+                // List<List<List<PcapPacket>>> ppListOfListReadCurr = new ArrayList<>();
+                List<List<List<PcapPacket>>> ppListOfListListCurr = new ArrayList<>();
+                List<List<List<PcapPacket>>> corePointRangeSignatureCurr = new ArrayList<>();
+                for (Cluster<PcapPacketPair> c : Cluster.get(i)) {
+                        PrintWriterUtils.println(String.format("<<< Cluster #%d (%d points) >>>", ++count, c.getPoints().size()),
+                        resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
+                        PrintWriterUtils.println(PrintUtils.toSummaryString(c), resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
+                        if(c.getPoints().size() > lowerBound && c.getPoints().size() < upperBound) {
+                                // Print to file
+                                List<List<PcapPacket>> ppListOfList = PcapPacketUtils.clusterToListOfPcapPackets(c);
+                                // Check for overlaps and decide whether to do range-based or conservative checking
+                                corePointRangeSignatureCurr.add(PcapPacketUtils.extractRangeCorePoints(ppListOfList, eps, minPts));
+                                ppListOfListListCurr.add(ppListOfList);
+                        }
+
+                }
+                ppListOfListList.add(ppListOfListListCurr);
+                corePointRangeSignature.add(corePointRangeSignatureCurr);
         }
-        PrintWriterUtils.println("========================================", resultsWriter,
-                DUPLICATE_OUTPUT_TO_STD_OUT);
-        PrintWriterUtils.println("       Clustering results for OFF        ", resultsWriter,
-                DUPLICATE_OUTPUT_TO_STD_OUT);
-        PrintWriterUtils.println("       Number of clusters: " + offClusters.size(), resultsWriter,
-                DUPLICATE_OUTPUT_TO_STD_OUT);
-        count = 0;
-        List<List<List<PcapPacket>>> ppListOfListReadOff = new ArrayList<>();
-        List<List<List<PcapPacket>>> ppListOfListListOff = new ArrayList<>();
-        List<List<List<PcapPacket>>> corePointRangeSignatureOff = new ArrayList<>();
-        for (Cluster<PcapPacketPair> c : offClusters) {
-            PrintWriterUtils.println(String.format("<<< Cluster #%03d (%06d points) >>>", ++count, c.getPoints().size()),
-                    resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
-            PrintWriterUtils.println(PrintUtils.toSummaryString(c), resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
-            if(c.getPoints().size() > lowerBound && c.getPoints().size() < upperBound) {
-                // Print to file
-                List<List<PcapPacket>> ppListOfList = PcapPacketUtils.clusterToListOfPcapPackets(c);
-                // Check for overlaps and decide whether to do range-based or conservative checking
-                corePointRangeSignatureOff.add(PcapPacketUtils.extractRangeCorePoints(ppListOfList, eps, minPts));
-                ppListOfListListOff.add(ppListOfList);
-            }
-        }
+        // PrintWriterUtils.println("========================================", resultsWriter,
+        //         DUPLICATE_OUTPUT_TO_STD_OUT);
+        // PrintWriterUtils.println("       Clustering results for OFF        ", resultsWriter,
+        //         DUPLICATE_OUTPUT_TO_STD_OUT);
+        // PrintWriterUtils.println("       Number of clusters: " + offClusters.size(), resultsWriter,
+        //         DUPLICATE_OUTPUT_TO_STD_OUT);
+        // count = 0;
+        // List<List<List<PcapPacket>>> ppListOfListReadOff = new ArrayList<>();
+        // List<List<List<PcapPacket>>> ppListOfListListOff = new ArrayList<>();
+        // List<List<List<PcapPacket>>> corePointRangeSignatureOff = new ArrayList<>();
+        // for (Cluster<PcapPacketPair> c : offClusters) {
+        //     PrintWriterUtils.println(String.format("<<< Cluster #%03d (%06d points) >>>", ++count, c.getPoints().size()),
+        //             resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
+        //     PrintWriterUtils.println(PrintUtils.toSummaryString(c), resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
+        //     if(c.getPoints().size() > lowerBound && c.getPoints().size() < upperBound) {
+        //         // Print to file
+        //         List<List<PcapPacket>> ppListOfList = PcapPacketUtils.clusterToListOfPcapPackets(c);
+        //         // Check for overlaps and decide whether to do range-based or conservative checking
+        //         corePointRangeSignatureOff.add(PcapPacketUtils.extractRangeCorePoints(ppListOfList, eps, minPts));
+        //         ppListOfListListOff.add(ppListOfList);
+        //     }
+        // }
 
         // =========================================== SIGNATURE CREATION ===========================================
         // Concatenate

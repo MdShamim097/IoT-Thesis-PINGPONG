@@ -138,31 +138,42 @@ public class SignatureGenerator {
         {
                 eventCounts[i] = 0;
         }
-        List<int> eventsGenerated = new ArrayList();
-        List<String> deletedSequenceList = new ArrayList<> (); 
+        List<String> egen = new ArrayList<> ();
+        List<String> deletedSequenceList = new ArrayList<> ();
+        int m = 0; 
         try (BufferedReader br = new BufferedReader(new FileReader(eventsOccurredFile))) {
             String s;    
             while ((s = br.readLine()) != null) {
                 int currentEvent = Integer.parseInt(s);
-                eventsGenerated.add(currentEvent);
+                egen.add(s);
                 eventCounts[currentEvent]++;
+                m++;
             }
         }
-
+        int []eventsGenerated = new int[m];
+        for(int i=0;i<m;i++)
+        {
+                eventsGenerated[i] = 0;
+        }
+        for(int i=0;i<m;i++)
+        {
+                String s = egen.get(i);
+                eventsGenerated[i] = Integer.parseInt(s);;
+        }
         try (BufferedReader br = new BufferedReader(new FileReader(deletedSequences))) {
             String s;
             while ((s = br.readLine()) != null) {
                 deletedSequenceList.add(s);
             }
         }
-        if (triggerTimes.size() != eventsGenerated.size()) {
+        if (triggerTimes.size() != m) {
             throw new IllegalArgumentException("File size mismatch");
         }
         
         // Tag each trigger with "ON" or "OFF", assuming that the first trigger is an "ON" and that they alternate.
         List<UserAction> userActions = new ArrayList<>();
         for (int i = 0; i < triggerTimes.size(); i++) {
-            userActions.add(new UserAction(eventsGenerated.get(i), triggerTimes.get(i)));
+            userActions.add(new UserAction(eventsGenerated[i], triggerTimes.get(i)));
         }
         TriggerTrafficExtractor tte = new TriggerTrafficExtractor(inputPcapFile, triggerTimes, deviceIp);
         final PcapDumper outputter = Pcaps.openDead(DataLinkType.EN10MB, 65536).dumpOpen(outputPcapFile);

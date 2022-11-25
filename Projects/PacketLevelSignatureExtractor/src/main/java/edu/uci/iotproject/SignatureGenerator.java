@@ -1,8 +1,9 @@
 package edu.uci.iotproject;
 
-import static edu.uci.iotproject.analysis.UserAction.Type;
+import edu.uci.iotproject.analysis.UserAction;
 
 import edu.uci.iotproject.analysis.*;
+import edu.uci.iotproject.filenaming.*;
 import edu.uci.iotproject.io.PrintWriterUtils;
 import edu.uci.iotproject.io.TriggerTimesFileReader;
 import edu.uci.iotproject.trafficreassembly.layer3.Conversation;
@@ -462,8 +463,8 @@ public class SignatureGenerator {
                         DUPLICATE_OUTPUT_TO_STD_OUT);
                 PcapPacketUtils.printSignatures(ppListOfListListCurr, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
                 PcapPacketUtils.cleanSignature(ppListOfListListCurr);
-                //PrintUtils.serializeIntoFile(eventNames.get(i)+""+SignatureFile, ppListOfListListOn);
-                //PrintUtils.serializeIntoFile(eventNames.get(i)+""+ClusterAnalysisFile, corePointRangeSignature.get(i));
+                PrintUtils.serializeIntoFile(Naming.getName(SignatureFile,eventNames.get(i)), ppListOfListListCurr);
+                PrintUtils.serializeIntoFile(Naming.getName(ClusterAnalysisFile,eventNames.get(i)), corePointRangeSignature.get(i));
                 if (!ppListOfListListCurr.isEmpty()) {
                         List<List<PcapPacket>> firstListCurrSign = ppListOfListListCurr.get(0);
                         List<List<PcapPacket>> lastListCurrSign = ppListOfListListCurr.get(ppListOfListListCurr.size() - 1);

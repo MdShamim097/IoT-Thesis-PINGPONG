@@ -45,7 +45,7 @@ public class TrafficLabeler implements PacketListener {
     @Override
     public void gotPacket(PcapPacket packet) {
         // Locate UserAction corresponding to packet, if any.
-        int index = Collections.binarySearch(mActionsSorted, new UserAction(null, packet.getTimestamp()), (listItem, key) -> {
+        int index = Collections.binarySearch(mActionsSorted, new UserAction(0, packet.getTimestamp()), (listItem, key) -> {
             // Start of inclusion interval is the time of the user action
             Instant intervalStart = listItem.getTimestamp();
             // End of inclusion interval is some arbitrary number of milliseconds after the user action.

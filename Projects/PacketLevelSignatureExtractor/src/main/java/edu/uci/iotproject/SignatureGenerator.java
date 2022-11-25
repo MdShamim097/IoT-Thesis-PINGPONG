@@ -137,7 +137,6 @@ public class SignatureGenerator {
         for(int i=0;i<n;i++)
         {
                 eventCounts[i] = 0;
-                deletedSequencesCount[i] = 0;
         }
         List<int> eventsGenerated = new ArrayList();
         List<String> deletedSequenceList = new ArrayList<> (); 

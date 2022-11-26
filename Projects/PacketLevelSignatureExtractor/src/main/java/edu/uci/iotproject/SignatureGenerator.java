@@ -69,6 +69,12 @@ public class SignatureGenerator {
      */
     private static float CLUSTER_BOUNDS_MULTIPLIER = 0.1f;
 
+    public static List<?> flatten(List<?> list){
+        return list.stream()
+                .flatMap(e -> e instanceof List ? flatten((List) e).stream() : Stream.of(e))
+                .collect(Collectors.toList());
+    }
+    
     public static void main(String[] args) throws PcapNativeException, NotOpenException, EOFException,
             TimeoutException, UnknownHostException, IOException {
         // -------------------------------------------------------------------------------------------------------------
@@ -307,12 +313,21 @@ public class SignatureGenerator {
                         TcpConversationUtils.extractPacketPairs(c)).
                 flatMap(List::stream). // flatten List<List<>> to List<>
                 collect(Collectors.toList());
-            Conversations.add(list);
+            Pairs.add(list);        //-------changed on 26/11/2022
         }
 
         Stream s=Stream.of(Pairs.get(0));
         for(int i=1;i<n;i++){
-                Stream.concat(s,Stream.of(Pairs.get(i))).flatMap(List::stream).forEach(p -> p.setDnsMap(dnsMap));
+                //Stream.concat(s,Stream.of(Pairs.get(i))).flatMap(List::stream).forEach(p -> p.setDnsMap(dnsMap));
+                Stream.concat(s,Stream.of(Pairs.get(i))).flatMap(e -> e instanceof List ? flatten((List) e).stream() : Stream.of(e));
+                for(int j=0;j<n;j++){
+                        List<PcapPacketPair> p=Pairs.get(j);
+                        for(int k=0;k<n;k++){
+                                PcapPacketPair p2=p.get(k);
+                                p2.setDnsMap(dnsMap);
+                        }
+                }
+                //-------changed on 26/11/2022
         }
         // Note: need to update the DnsMap of all PcapPacketPairs if we want to use the IP/hostname-sensitive distance.
         //Stream.concat(Stream.of(onPairs), Stream.of(offPairs)).flatMap(List::stream).forEach(p -> p.setDnsMap(dnsMap));
@@ -335,7 +350,8 @@ public class SignatureGenerator {
                 int upperBound = numberOfEventsPerType + (int)(numberOfEventsPerType * CLUSTER_BOUNDS_MULTIPLIER);
                 int minPts = lowerBound;
                 DBSCANClusterer<PcapPacketPair> Clusterer = new DBSCANClusterer<>(eps, minPts);
-                Clusters.add(Clusterer.cluster(Pairs));
+                List<Cluster<PcapPacketPair>> currentCluster=Clusterer.cluster(Pairs.get(i)); //-------changed on 26/11/2022
+                Clusters.add(currentCluster);
         }
         // Sort the conversations as reference
         List<Conversation> sortedAllConversation = TcpConversationUtils.sortConversationList(allConversations);
@@ -381,7 +397,7 @@ public class SignatureGenerator {
                 // List<List<List<PcapPacket>>> ppListOfListReadCurr = new ArrayList<>();
                 List<List<List<PcapPacket>>> ppListOfListListCurr = new ArrayList<>();
                 List<List<List<PcapPacket>>> corePointRangeSignatureCurr = new ArrayList<>();
-                for (Cluster<PcapPacketPair> c : Cluster.get(i)) {
+                for (Cluster<PcapPacketPair> c : Clusters.get(i)) {  //-------changed on 26/11/2022
                         PrintWriterUtils.println(String.format("<<< Cluster #%d (%d points) >>>", ++count, c.getPoints().size()),
                         resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
                         PrintWriterUtils.println(PrintUtils.toSummaryString(c), resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);

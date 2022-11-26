@@ -29,13 +29,13 @@ public class UserAction {
      * @return A {@code UserAction} resulting from deserializing the string.
      */
     public static UserAction fromString(String string) {
-        /*String[] parts = string.split("@");
+        String[] parts = string.split("@");
         if (parts.length != 2) {
             throw new IllegalArgumentException("Invalid string format");
         }
         // If any of these two parses fail, an exception is thrown -- no need to check return values.
-        UserAction.Type actionType = UserAction.Type.valueOf(parts[0].trim());
-        */
+        //UserAction.Type actionType = UserAction.Type.valueOf(parts[0].trim());
+        
         Instant timestamp = TIMESTAMP_FORMATTER.parse(parts[1].trim(), Instant::from);
         return new UserAction(0, timestamp);
     }
@@ -97,13 +97,14 @@ public class UserAction {
     public int hashCode() {
         final int prime = 31;
         int hashCode = 17;
-        hashCode = prime * hashCode + mType.hashCode();
+        String str=Integer.toString(mType); //-------changed on 26/11/2022
+        hashCode = prime * hashCode + str.hashCode();
         hashCode = prime * hashCode + mTimestamp.hashCode();
         return hashCode;
     }
 
     @Override
     public String toString() {
-       return String.format("%s @ %s", mType.name(), TIMESTAMP_FORMATTER.format(mTimestamp));
+       return String.format("%d @ %s", mType, TIMESTAMP_FORMATTER.format(mTimestamp));
     }
 }

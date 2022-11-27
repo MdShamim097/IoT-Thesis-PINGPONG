@@ -17,7 +17,7 @@ public class PcapHandleReader {
 
     private final PcapPacketFilter mPacketFilter;
     private final PcapHandle mHandle;
-    private final PacketListener[] mPacketListeners;
+    private List<PacketListener> mPacketListeners;
     private volatile boolean mTerminated = false;
 
     /**
@@ -33,10 +33,22 @@ public class PcapHandleReader {
     public PcapHandleReader(PcapHandle handle, PcapPacketFilter packetFilter, PacketListener... packetListeners) {
         mHandle = handle;
         mPacketFilter = packetFilter;
-        mPacketListeners = packetListeners;
+        // mPacketListeners = packetListeners;
+        for(PacketListener packetListener:packetListeners)
+        {
+            mPacketListeners.add(packetListener);
+        }
     }
 
-
+    public PcapHandleReader(PcapHandle handle, PcapPacketFilter packetFilter, List<PacketListener> packetListeners) {
+        mHandle = handle;
+        mPacketFilter = packetFilter;
+        // mPacketListeners = packetListeners;
+        for(PacketListener packetListener:packetListeners)
+        {
+            mPacketListeners.add(packetListener);
+        }
+    }
     /**
      * Start reading (and filtering) packets from the provided {@link PcapHandle}.
      * @throws PcapNativeException if an error occurs in the pcap native library.

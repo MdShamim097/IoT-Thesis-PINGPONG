@@ -608,7 +608,7 @@ public final class PcapPacketUtils {
      * @return A boolean that is True when range-based matching is used.
      */
     public static boolean isRangeBasedMatching(List<List<List<PcapPacket>>> signature, double eps,
-                                                List<List<List<PcapPacket>>> ...otherSignatures) {
+                                                List<List<List<List<PcapPacket>>>> otherSignatures) {
         // Check against multiple signatures
         // TODO: Per March 2019 we only support ON and OFF signatures though
         for(List<List<List<PcapPacket>>> otherSig : otherSignatures) {

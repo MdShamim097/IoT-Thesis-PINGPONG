@@ -54,8 +54,9 @@ public class DetectionResultsAnalyzer {
         List<UserAction> triggers = new ArrayList<>();
         for (int i = 0; i < triggerTimestamps.size(); i++) {
             // NOTE: assumes triggers alternate between ON and OFF
-            UserAction.Type actionType = i % 2 == 0 ? UserAction.Type.TOGGLE_ON : UserAction.Type.TOGGLE_OFF;
-            triggers.add(new UserAction(actionType, triggerTimestamps.get(i)));
+            //UserAction.Type actionType = i % 2 == 0 ? UserAction.Type.TOGGLE_ON : UserAction.Type.TOGGLE_OFF;
+            //triggers.add(new UserAction(actionType, triggerTimestamps.get(i))); 
+            triggers.add(new UserAction(i, triggerTimestamps.get(i)));       //-------updated on 27/11/2022
         }
         // Read the detection output file, assuming a format as specified in UserAction.toString()
         List<UserAction> detectedEvents = new ArrayList<>();

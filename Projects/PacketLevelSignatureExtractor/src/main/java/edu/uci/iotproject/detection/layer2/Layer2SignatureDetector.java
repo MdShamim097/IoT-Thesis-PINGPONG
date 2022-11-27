@@ -17,6 +17,7 @@ import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 import org.pcap4j.core.*;
 
+import java.io.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -127,6 +128,7 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
             }
         }
 
+        List<String> eventNames = new ArrayList();
         try (BufferedReader br = new BufferedReader(new FileReader(eventTypesFile))) {
             String s;
             while ((s = br.readLine()) != null) {
@@ -193,7 +195,7 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
         
         for(int i=0;i<n;i++)
         {
-            String fname = Naming.getName(AnalysisFile,eventNames.get(i));
+            String fname = Naming.getName(ClusterAnalysisFile,eventNames.get(i));
             PrintWriterUtils.println("# - " + eventNames.get(i) +"AnalysisFile: " + fname, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
         }
 
@@ -236,6 +238,7 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
         // boolean isRangeBasedForOff = PcapPacketUtils.isRangeBasedMatching(offSignature, eps, onSignature);
         // Update the signature with ranges if it is range-based
         List<Layer2SignatureDetector> Detector = new ArrayList<>();
+        final List<UserAction> detectedEvents = new ArrayList<>(); //---updated on 27/11/2022
         for(int i=0;i<n;i++)
         {
             List<List<List<List<PcapPacket>>>> otherSignatures = new ArrayList<>();
@@ -254,14 +257,17 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
             Layer2SignatureDetector currentDetector = currentSignatureMacFilters == null ?
                     new Layer2SignatureDetector(currentSignature, TRAINING_ROUTER_WLAN_MAC, ROUTER_WLAN_MAC, signatureDuration,
                             isRangeBasedForCurrent, eps, MaxSkippedPackets[i], vpnClientMacAddress, delta, packetSet) :
-                    new Layer2SignatureDetector(onSignature, TRAINING_ROUTER_WLAN_MAC, ROUTER_WLAN_MAC,
+                    new Layer2SignatureDetector(currentSignature, TRAINING_ROUTER_WLAN_MAC, ROUTER_WLAN_MAC,
                             currentSignatureMacFilters, signatureDuration, isRangeBasedForCurrent, eps, MaxSkippedPackets[i],
                             vpnClientMacAddress, delta, packetSet);
+            
+            // final List<UserAction> detectedEvents = new ArrayList<>();
             currentDetector.addObserver((signature, match) -> {
                 UserAction event = new UserAction(i, match.get(0).get(0).getTimestamp());
                 PrintWriterUtils.println(event, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
                 detectedEvents.add(event);
             });
+            
             Detector.add(currentDetector);
         }
         // if (isRangeBasedForOff) {
@@ -290,12 +296,12 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
         // Parse the file
         reader.readFromHandle();
 
-        String resultOff = "# Number of detected events of type " + UserAction.Type.TOGGLE_OFF + ": " +
-                detectedEvents.stream().filter(ua -> ua.getType() == UserAction.Type.TOGGLE_OFF).count();
-        String offMaximumSkippedPackets = "# Maximum number of skipped packets in OFF signature " +
-                Integer.toString(offDetector.getMaxSkippedPackets());
-        PrintWriterUtils.println(resultOn, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
-        PrintWriterUtils.println(resultOff, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
+        // String resultOff = "# Number of detected events of type " + UserAction.Type.TOGGLE_OFF + ": " +
+        //         detectedEvents.stream().filter(ua -> ua.getType() == UserAction.Type.TOGGLE_OFF).count();
+        // String offMaximumSkippedPackets = "# Maximum number of skipped packets in OFF signature " +
+        //         Integer.toString(offDetector.getMaxSkippedPackets());
+        // PrintWriterUtils.println(resultOn, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
+        // PrintWriterUtils.println(resultOff, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
 
         for(int i=0;i<n;i++)
         {
@@ -305,9 +311,12 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
                 detectedEvents.stream().filter(ua -> ua.getType() == i).count();
             String currentMaximumSkippedPackets = "# Maximum number of skipped packets in " + eventNames.get(i) + " signature " +
                 Integer.toString(currentDetector.getMaxSkippedPackets());
+            
+            PrintWriterUtils.println(resultCurrent, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
+            
             if(MaxSkippedPackets[i] != -1)
             {
-                PrintWriterUtils.println(onMaximumSkippedPackets, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
+                PrintWriterUtils.println(MaxSkippedPackets[i], resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
                 for (Integer skippedPackets : currentDetector.getSkippedPackets()) {
                     PrintWriterUtils.println(skippedPackets, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
                 } 

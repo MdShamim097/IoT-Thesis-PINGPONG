@@ -1,5 +1,5 @@
 package edu.uci.iotproject.detection.layer3;
-
+import edu.uci.iotproject.filenaming.*;
 import edu.uci.iotproject.analysis.TriggerTrafficExtractor;
 import edu.uci.iotproject.analysis.UserAction;
 import edu.uci.iotproject.detection.AbstractClusterMatcher;
@@ -16,6 +16,7 @@ import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 import org.pcap4j.core.*;
 
+import java.io.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -55,13 +56,13 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
                         "All rights reserved.\n\n" +
                         "Usage: %s inputPcapFile onAnalysisFile offAnalysisFile onSignatureFile offSignatureFile resultsFile" +
                         "\n  inputPcapFile: the target of the detection" +
-                        "\n  onAnalysisFile: the file that contains the ON clusters analysis" +
-                        "\n  offAnalysisFile: the file that contains the OFF clusters analysis" +
-                        "\n  onSignatureFile: the file that contains the ON signature to search for" +
-                        "\n  offSignatureFile: the file that contains the OFF signature to search for" +
+                        "\n  AnalysisFile: the file that contains the all clusters analysis" +
+                        "\n  SignatureFile: the file that contains the all signature to search for" +
                         "\n  resultsFile: where to write the results of the detection" +
                         "\n  signatureDuration: the maximum duration of signature detection" +
                         "\n  epsilon: the epsilon value for the DBSCAN algorithm\n" +
+                         "\n  eventTypes: Supported events for a device" +
+                        "\n  eventsOccurred: Types of the events occurred during signature generation; input must be in 0-indexed number" +
                         "\n  Additional options (add '-r' before the following two parameters):" +
                         "\n  delta: delta for relaxed matching" +
                         "\n  packetId: packet number in the sequence" +
@@ -73,21 +74,25 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
             return;
         }
         final String pcapFile = args[0];
-        final String onClusterAnalysisFile = args[1];
-        final String offClusterAnalysisFile = args[2];
-        final String onSignatureFile = args[3];
-        final String offSignatureFile = args[4];
-        final String resultsFile = args[5];
+        final String ClusterAnalysisFile = args[1];
+        final String SignatureFile = args[2];
+        final String resultsFile = args[3];
         // TODO: THIS IS TEMPORARILY SET TO DEFAULT SIGNATURE DURATION
         // TODO: WE DO NOT WANT TO BE TOO STRICT AT THIS POINT SINCE LAYER 3 ALREADY APPLIES BACK-TO-BACK REQUIREMENT
         // TODO: FOR PACKETS IN A SIGNATURE
-//        final int signatureDuration = Integer.parseInt(args[6]);
+//        final int signatureDuration = Integer.parseInt(args[6]);    //------- difference with layer2
         final int signatureDuration = TriggerTrafficExtractor.INCLUSION_WINDOW_MILLIS;
-        final double eps = Double.parseDouble(args[7]);
+        final double eps = Double.parseDouble(args[5]);
+        final String eventTypes = args[6];
+        //final String eventsOccurred = args[7]; // ----------we have an unused argumment in [7]
+        
+        File eventTypesFile = new File(eventTypes);
+        //File eventsOccurredFile = new File(eventsOccurred);
+
         // Additional feature---relaxed matching
         int delta = 0;
         final Set<Integer> packetSet = new HashSet<>();
-        if (args.length == 11 && args[8].equals("-r")) {
+        if (args.length == 11 && args[8].equals("-r")) { //------- difference with layer2
             delta = Integer.parseInt(args[9]);
             StringTokenizer stringTokenizerOff = new StringTokenizer(args[10], ",");
             // Add the list of packet IDs
@@ -96,6 +101,16 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
                 packetSet.add(id);
             }
         }
+
+        List<String> eventNames = new ArrayList();
+        try (BufferedReader br = new BufferedReader(new FileReader(eventTypesFile))) {
+            String s;
+            while ((s = br.readLine()) != null) {
+                eventNames.add(s);
+            }
+        }
+        int n=eventNames.size();
+
         // Prepare file outputter.
         File outputFile = new File(resultsFile);
         outputFile.getParentFile().mkdirs();
@@ -103,54 +118,130 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
         // Include metadata as comments at the top
         PrintWriterUtils.println("# Detection results for:", resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
         PrintWriterUtils.println("# - inputPcapFile: " + pcapFile, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
-        PrintWriterUtils.println("# - onAnalysisFile: " + onClusterAnalysisFile, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
-        PrintWriterUtils.println("# - offAnalysisFile: " + offClusterAnalysisFile, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
-        PrintWriterUtils.println("# - onSignatureFile: " + onSignatureFile, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
-        PrintWriterUtils.println("# - offSignatureFile: " + offSignatureFile, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
+        // PrintWriterUtils.println("# - onAnalysisFile: " + onClusterAnalysisFile, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
+        // PrintWriterUtils.println("# - offAnalysisFile: " + offClusterAnalysisFile, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
+        // PrintWriterUtils.println("# - onSignatureFile: " + onSignatureFile, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
+        // PrintWriterUtils.println("# - offSignatureFile: " + offSignatureFile, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
+
+        for(int i=0;i<n;i++)
+        {
+            String fname = Naming.getName(ClusterAnalysisFile,eventNames.get(i));
+            PrintWriterUtils.println("# - " + eventNames.get(i) +"AnalysisFile: " + fname, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
+        }
+
+        for(int i=0;i<n;i++)
+        {
+            String fname = Naming.getName(SignatureFile,eventNames.get(i));
+            PrintWriterUtils.println("# - " + eventNames.get(i) +"SignatureFile: " + fname, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
+        }
+
         resultsWriter.flush();
 
-        // Load signatures
-        List<List<List<PcapPacket>>> onSignature = PrintUtils.deserializeFromFile(onSignatureFile);
-        List<List<List<PcapPacket>>> offSignature = PrintUtils.deserializeFromFile(offSignatureFile);
-        // Load signature analyses
-        List<List<List<PcapPacket>>> onClusterAnalysis = PrintUtils.deserializeFromFile(onClusterAnalysisFile);
-        List<List<List<PcapPacket>>> offClusterAnalysis = PrintUtils.deserializeFromFile(offClusterAnalysisFile);
+        // // Load signatures
+        // List<List<List<PcapPacket>>> onSignature = PrintUtils.deserializeFromFile(onSignatureFile);
+        // List<List<List<PcapPacket>>> offSignature = PrintUtils.deserializeFromFile(offSignatureFile);
+        // // Load signature analyses
+        // List<List<List<PcapPacket>>> onClusterAnalysis = PrintUtils.deserializeFromFile(onClusterAnalysisFile);
+        // List<List<List<PcapPacket>>> offClusterAnalysis = PrintUtils.deserializeFromFile(offClusterAnalysisFile);
+
+        List<List<List<List<PcapPacket>>>> Signature = new ArrayList<> ();
+        for(int i=0;i<n;i++)
+        {
+            String fname = Naming.getName(SignatureFile,eventNames.get(i));
+            List<List<List<PcapPacket>>> curr = PrintUtils.deserializeFromFile(fname);
+            Signature.add(curr);
+
+        }
+
+        List<List<List<List<PcapPacket>>>> ClusterAnalysis = new ArrayList<> ();
+        for(int i=0;i<n;i++)
+        {
+            String fname = Naming.getName(ClusterAnalysisFile,eventNames.get(i));
+            List<List<List<PcapPacket>>> curr = PrintUtils.deserializeFromFile(fname);
+            ClusterAnalysis.add(curr);
+
+        }
 
         // TODO: FOR NOW WE DECIDE PER SIGNATURE AND THEN WE OR THE BOOLEANS
         // TODO: SINCE WE ONLY HAVE 2 SIGNATURES FOR NOW (ON AND OFF), THEN IT IS USUALLY EITHER RANGE-BASED OR
         // TODO: STRICT MATCHING
         // Check if we should use range-based matching
-        boolean isRangeBasedForOn = PcapPacketUtils.isRangeBasedMatching(onSignature, eps, offSignature);
-        boolean isRangeBasedForOff = PcapPacketUtils.isRangeBasedMatching(offSignature, eps, onSignature);
-        // Update the signature with ranges if it is range-based
-        if (isRangeBasedForOn) {
-            onSignature = PcapPacketUtils.useRangeBasedMatching(onSignature, onClusterAnalysis);
+        // boolean isRangeBasedForOn = PcapPacketUtils.isRangeBasedMatching(onSignature, eps, offSignature);
+        // boolean isRangeBasedForOff = PcapPacketUtils.isRangeBasedMatching(offSignature, eps, onSignature);
+        // // Update the signature with ranges if it is range-based
+        // if (isRangeBasedForOn) {
+        //     onSignature = PcapPacketUtils.useRangeBasedMatching(onSignature, onClusterAnalysis);
+        // }
+        // if (isRangeBasedForOff) {
+        //     offSignature = PcapPacketUtils.useRangeBasedMatching(offSignature, offClusterAnalysis);
+        // }
+        // // WAN
+        // Layer3SignatureDetector onDetector = new Layer3SignatureDetector(onSignature, ROUTER_WAN_IP,
+        //         signatureDuration, isRangeBasedForOn, eps, delta, packetSet);
+        // Layer3SignatureDetector offDetector = new Layer3SignatureDetector(offSignature, ROUTER_WAN_IP,
+        //         signatureDuration, isRangeBasedForOff, eps, delta, packetSet);
+
+        List<Layer3SignatureDetector> Detector = new ArrayList<>();
+        final List<UserAction> detectedEvents = new ArrayList<>(); //---updated on 27/11/2022
+        for(int i=0;i<n;i++)
+        {
+            List<List<List<List<PcapPacket>>>> otherSignatures = new ArrayList<>();
+            for(int j=0;j<n;j++)
+            {
+                if(j==i) continue;
+                otherSignatures.add(Signature.get(j));
+            }
+            boolean isRangeBasedForCurrent = PcapPacketUtils.isRangeBasedMatching(Signature.get(i), eps, otherSignatures);
+            List<List<List<PcapPacket>>> currentSignature = Signature.get(i);
+            if (isRangeBasedForCurrent) {
+                currentSignature = PcapPacketUtils.useRangeBasedMatching(currentSignature, ClusterAnalysis.get(i));
+            }
+
+            //WAN    //-------difference with layer2
+            Layer3SignatureDetector currentDetector = new Layer3SignatureDetector(currentSignature, ROUTER_WAN_IP,
+                 signatureDuration, isRangeBasedForCurrent, eps, delta, packetSet);
+            
+            // final List<UserAction> detectedEvents = new ArrayList<>();
+            currentDetector.addObserver((signature, match) -> {
+                UserAction event = new UserAction(i, match.get(0).get(0).getTimestamp());
+                PrintWriterUtils.println(event, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
+                detectedEvents.add(event);
+            });
+
+            //-------difference with layer2 ( for line 273-283)
+            if(isRangeBasedForCurrent){
+                currentDetector.mClusterMatchers.forEach(cm -> cm.performDetectionRangeBased());
+            }
+            else{
+                currentDetector.mClusterMatchers.forEach(cm -> cm.performDetectionConservative());
+            }
+
+            Detector.add(currentDetector);
         }
-        if (isRangeBasedForOff) {
-            offSignature = PcapPacketUtils.useRangeBasedMatching(offSignature, offClusterAnalysis);
-        }
-        // WAN
-        Layer3SignatureDetector onDetector = new Layer3SignatureDetector(onSignature, ROUTER_WAN_IP,
-                signatureDuration, isRangeBasedForOn, eps, delta, packetSet);
-        Layer3SignatureDetector offDetector = new Layer3SignatureDetector(offSignature, ROUTER_WAN_IP,
-                signatureDuration, isRangeBasedForOff, eps, delta, packetSet);
 
         final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).
                 withLocale(Locale.US).withZone(ZoneId.of("America/Los_Angeles"));
 
         // Outputs information about a detected event to std.out
-        final Consumer<UserAction> outputter = ua -> {
+        final Consumer<UserAction> outputter = ua -> {   //-------difference with layer2
             String eventDescription;
-            switch (ua.getType()) {
-                case TOGGLE_ON:
-                    eventDescription = "ON";
-                    break;
-                case TOGGLE_OFF:
-                    eventDescription = "OFF";
-                    break;
-                default:
-                    throw new AssertionError("unhandled event type");
+            int index=ua.getType();
+
+            if(index<0 || index> n){
+                throw new AssertionError("unhandled event type");
             }
+
+            eventDescription=eventNames.get(index);
+            // switch (ua.getType()) {
+            //     case TOGGLE_ON:
+            //         eventDescription = "ON";
+            //         break;
+            //     case TOGGLE_OFF:
+            //         eventDescription = "OFF";
+            //         break;
+            //     default:
+            //         throw new AssertionError("unhandled event type");
+            // }
             // TODO: Uncomment the following if we want the old style print-out messages
             // String output = String.format("%s",
             // dateTimeFormatter.format(ua.getTimestamp()));
@@ -159,18 +250,18 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
         };
 
         // Let's create observers that construct a UserAction representing the detected event.
-        final List<UserAction> detectedEvents = new ArrayList<>();
-        onDetector.addObserver((searched, match) -> {
-            PcapPacket firstPkt = match.get(0).get(0);
-            UserAction event = new UserAction(UserAction.Type.TOGGLE_ON, firstPkt.getTimestamp());
-            detectedEvents.add(event);
-        });
-        offDetector.addObserver((searched, match) -> {
-            PcapPacket firstPkt = match.get(0).get(0);
-            UserAction event = new UserAction(UserAction.Type.TOGGLE_OFF, firstPkt.getTimestamp());
-            //PrintWriterUtils.println(event, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
-            detectedEvents.add(event);
-        });
+        // final List<UserAction> detectedEvents = new ArrayList<>();
+        // onDetector.addObserver((searched, match) -> {
+        //     PcapPacket firstPkt = match.get(0).get(0);
+        //     UserAction event = new UserAction(UserAction.Type.TOGGLE_ON, firstPkt.getTimestamp());
+        //     detectedEvents.add(event);
+        // });
+        // offDetector.addObserver((searched, match) -> {
+        //     PcapPacket firstPkt = match.get(0).get(0);
+        //     UserAction event = new UserAction(UserAction.Type.TOGGLE_OFF, firstPkt.getTimestamp());
+        //     //PrintWriterUtils.println(event, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
+        //     detectedEvents.add(event);
+        // });
 
         PcapHandle handle;
         try {
@@ -178,20 +269,20 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
         } catch (PcapNativeException pne) {
             handle = Pcaps.openOffline(pcapFile);
         }
-        PcapHandleReader reader = new PcapHandleReader(handle, p -> true, onDetector, offDetector);
+        PcapHandleReader reader = new PcapHandleReader(handle, p -> true, Detector);
         reader.readFromHandle();
 
-        // TODO: need a better way of triggering detection than this...
-        if (isRangeBasedForOn) {
-            onDetector.mClusterMatchers.forEach(cm -> cm.performDetectionRangeBased());
-        } else {
-            onDetector.mClusterMatchers.forEach(cm -> cm.performDetectionConservative());
-        }
-        if (isRangeBasedForOff) {
-            offDetector.mClusterMatchers.forEach(cm -> cm.performDetectionRangeBased());
-        } else {
-            offDetector.mClusterMatchers.forEach(cm -> cm.performDetectionConservative());
-        }
+        // // TODO: need a better way of triggering detection than this...
+        // if (isRangeBasedForOn) {
+        //     onDetector.mClusterMatchers.forEach(cm -> cm.performDetectionRangeBased());
+        // } else {
+        //     onDetector.mClusterMatchers.forEach(cm -> cm.performDetectionConservative());
+        // }
+        // if (isRangeBasedForOff) {
+        //     offDetector.mClusterMatchers.forEach(cm -> cm.performDetectionRangeBased());
+        // } else {
+        //     offDetector.mClusterMatchers.forEach(cm -> cm.performDetectionConservative());
+        // }
 
         // Sort the list of detected events by timestamp to make it easier to compare it line-by-line with the trigger
         // times file.
@@ -200,12 +291,21 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
         // Output the detected events
         detectedEvents.forEach(outputter);
 
-        String resultOn = "# Number of detected events of type " + UserAction.Type.TOGGLE_ON + ": " +
-                detectedEvents.stream().filter(ua -> ua.getType() == UserAction.Type.TOGGLE_ON).count();
-        String resultOff = "# Number of detected events of type " + UserAction.Type.TOGGLE_OFF + ": " +
-                detectedEvents.stream().filter(ua -> ua.getType() == UserAction.Type.TOGGLE_OFF).count();
-        PrintWriterUtils.println(resultOn, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
-        PrintWriterUtils.println(resultOff, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
+        // String resultOn = "# Number of detected events of type " + UserAction.Type.TOGGLE_ON + ": " +
+        //         detectedEvents.stream().filter(ua -> ua.getType() == UserAction.Type.TOGGLE_ON).count();
+        // String resultOff = "# Number of detected events of type " + UserAction.Type.TOGGLE_OFF + ": " +
+        //         detectedEvents.stream().filter(ua -> ua.getType() == UserAction.Type.TOGGLE_OFF).count();
+        // PrintWriterUtils.println(resultOn, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
+        // PrintWriterUtils.println(resultOff, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
+
+        for(int i=0;i<n;i++)   //-------difference with layer2
+        {
+            String resultCurrent = "# Number of detected events of type " + eventNames.get(i) + ": " +
+                detectedEvents.stream().filter(ua -> ua.getType() == i).count();
+            
+            PrintWriterUtils.println(resultCurrent, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
+            
+        }  
 
         // Flush output to results file and close it.
         resultsWriter.flush();

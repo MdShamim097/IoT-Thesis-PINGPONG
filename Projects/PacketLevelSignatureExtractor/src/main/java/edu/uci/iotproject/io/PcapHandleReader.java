@@ -5,6 +5,7 @@ import org.pcap4j.core.*;
 
 import java.io.EOFException;
 import java.util.concurrent.TimeoutException;
+import java.util.*;
 
 /**
  * Reads packets from a {@link PcapHandle} (online or offline) and delivers those packets that pass the test exercised

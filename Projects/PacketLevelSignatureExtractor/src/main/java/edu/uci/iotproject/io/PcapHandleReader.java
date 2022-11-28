@@ -41,10 +41,14 @@ public class PcapHandleReader {
         }
     }
 
-    public PcapHandleReader(PcapHandle handle, PcapPacketFilter packetFilter, List<PacketListener> packetListeners) {
+    public PcapHandleReader(PcapHandle handle, PcapPacketFilter packetFilter) {
         mHandle = handle;
         mPacketFilter = packetFilter;
         // mPacketListeners = packetListeners;
+    }
+
+    void addPacketListener(PacketListener... packetListeners)
+    {
         for(PacketListener packetListener:packetListeners)
         {
             mPacketListeners.add(packetListener);

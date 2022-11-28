@@ -269,7 +269,12 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
         } catch (PcapNativeException pne) {
             handle = Pcaps.openOffline(pcapFile);
         }
-        PcapHandleReader reader = new PcapHandleReader(handle, p -> true, Detector);
+        PcapHandleReader reader = new PcapHandleReader(handle, p -> true);
+        for(int i=0;i<n;i++)
+        {
+            Layer3SignatureDetector curr = Detector.get(i);
+            reader.addPacketListener(curr);
+        }
         reader.readFromHandle();
 
         // // TODO: need a better way of triggering detection than this...

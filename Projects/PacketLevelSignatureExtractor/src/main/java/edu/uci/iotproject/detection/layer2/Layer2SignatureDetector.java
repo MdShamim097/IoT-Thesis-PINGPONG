@@ -240,7 +240,8 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
         List<Layer2SignatureDetector> Detector = new ArrayList<>();
         final List<UserAction> detectedEvents = new ArrayList<>(); //---updated on 27/11/2022
         for(int i=0;i<n;i++)
-        {
+        { 
+            final int var=i;
             List<List<List<List<PcapPacket>>>> otherSignatures = new ArrayList<>();
             for(int j=0;j<n;j++)
             {
@@ -262,8 +263,9 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
                             vpnClientMacAddress, delta, packetSet);
             
             // final List<UserAction> detectedEvents = new ArrayList<>();
+           
             currentDetector.addObserver((signature, match) -> {
-                UserAction event = new UserAction(i, match.get(0).get(0).getTimestamp());
+                UserAction event = new UserAction(var, match.get(0).get(0).getTimestamp());
                 PrintWriterUtils.println(event, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
                 detectedEvents.add(event);
             });
@@ -295,7 +297,7 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
         PcapHandleReader reader = new PcapHandleReader(handle, p -> true);
         for(int i=0;i<n;i++)
         {
-            Layer3SignatureDetector curr = Detector.get(i);
+            Layer2SignatureDetector curr = Detector.get(i);
             reader.addPacketListener(curr);
         }
         // Parse the file
@@ -310,10 +312,10 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
 
         for(int i=0;i<n;i++)
         {
-
+            final int var=i;
             Layer2SignatureDetector currentDetector = Detector.get(i);
             String resultCurrent = "# Number of detected events of type " + eventNames.get(i) + ": " +
-                detectedEvents.stream().filter(ua -> ua.getType() == i).count();
+                detectedEvents.stream().filter(ua -> ua.getType() == var).count();
             String currentMaximumSkippedPackets = "# Maximum number of skipped packets in " + eventNames.get(i) + " signature " +
                 Integer.toString(currentDetector.getMaxSkippedPackets());
             

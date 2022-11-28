@@ -35,6 +35,7 @@ public class PcapHandleReader {
         mHandle = handle;
         mPacketFilter = packetFilter;
         // mPacketListeners = packetListeners;
+        mPacketListeners=new ArrayList<>();
         for(PacketListener packetListener:packetListeners)
         {
             mPacketListeners.add(packetListener);
@@ -47,8 +48,9 @@ public class PcapHandleReader {
         // mPacketListeners = packetListeners;
     }
 
-    void addPacketListener(PacketListener... packetListeners)
+    public void addPacketListener(PacketListener... packetListeners)
     {
+        
         for(PacketListener packetListener:packetListeners)
         {
             mPacketListeners.add(packetListener);

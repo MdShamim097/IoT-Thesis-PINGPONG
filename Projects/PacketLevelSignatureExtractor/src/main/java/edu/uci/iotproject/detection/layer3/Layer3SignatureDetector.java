@@ -185,6 +185,7 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
         final List<UserAction> detectedEvents = new ArrayList<>(); //---updated on 27/11/2022
         for(int i=0;i<n;i++)
         {
+            final int var=i;
             List<List<List<List<PcapPacket>>>> otherSignatures = new ArrayList<>();
             for(int j=0;j<n;j++)
             {
@@ -203,7 +204,7 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
             
             // final List<UserAction> detectedEvents = new ArrayList<>();
             currentDetector.addObserver((signature, match) -> {
-                UserAction event = new UserAction(i, match.get(0).get(0).getTimestamp());
+                UserAction event = new UserAction(var, match.get(0).get(0).getTimestamp());
                 PrintWriterUtils.println(event, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
                 detectedEvents.add(event);
             });
@@ -305,8 +306,9 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
 
         for(int i=0;i<n;i++)   //-------difference with layer2
         {
+            final int var=i;
             String resultCurrent = "# Number of detected events of type " + eventNames.get(i) + ": " +
-                detectedEvents.stream().filter(ua -> ua.getType() == i).count();
+                detectedEvents.stream().filter(ua -> ua.getType() == var).count();
             
             PrintWriterUtils.println(resultCurrent, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
             

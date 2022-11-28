@@ -160,7 +160,7 @@ public class PrintUtils {
      * to a (set of) hostname(s) using the provided {@link DnsMap}.
      *
      * For example, the resulting string will be "123, 456, 192.168.1.42, domain.com" if the first packet of the pair
-     * has a length of 123, the second packet of the pair has a length of 456, the first packet of the pair the pair has
+     * has a length of 123, the second packet of the pair has a length of 4toSummaryString56, the first packet of the pair the pair has
      * a source IP of '192.168.1.42' that cannot be resolved to a hostname, and the second packet of the pair has an IP
      * that resolves to 'domain.com'.
      *
@@ -176,6 +176,12 @@ public class PrintUtils {
         // Note: use optional for second item in pair as there might not be one.
         Optional<String> secondSrc = packetPair.getSecond().map(pkt -> PcapPacketUtils.getSourceIp(pkt));
 
+        // if(ipHostnameMappings==null){
+        //     System.out.println("Got a null");
+        // }
+        // else{
+        //     System.out.println("No null");
+        // }
         // If possible, map source IPs to hostnames.
         Set<String> firstHostnames = ipHostnameMappings.getHostnamesForIp(firstSrc);
         Optional<Set<String>> secondHostnames = secondSrc.map(src -> ipHostnameMappings.getHostnamesForIp(src));

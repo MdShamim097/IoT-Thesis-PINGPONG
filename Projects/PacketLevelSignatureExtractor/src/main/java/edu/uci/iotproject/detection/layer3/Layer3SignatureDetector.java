@@ -183,6 +183,35 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
 
         List<Layer3SignatureDetector> Detector = new ArrayList<>();
         final List<UserAction> detectedEvents = new ArrayList<>(); //---updated on 27/11/2022
+        final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).
+                withLocale(Locale.US).withZone(ZoneId.of("America/Los_Angeles"));
+        // Outputs information about a detected event to std.out
+        final Consumer<UserAction> outputter = ua -> {   //-------difference with layer2
+            String eventDescription;
+            int index=ua.getType();
+
+            if(index<0 || index>= n){
+                throw new AssertionError("unhandled event type");
+            }
+
+            eventDescription=eventNames.get(index);
+            // switch (ua.getType()) {
+            //     case TOGGLE_ON:
+            //         eventDescription = "ON";
+            //         break;
+            //     case TOGGLE_OFF:
+            //         eventDescription = "OFF";
+            //         break;
+            //     default:
+            //         throw new AssertionError("unhandled event type");
+            // }
+            // TODO: Uncomment the following if we want the old style print-out messages
+            // String output = String.format("%s",
+            // dateTimeFormatter.format(ua.getTimestamp()));
+            // System.out.println(output);
+            PrintWriterUtils.println(ua, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
+        };
+
         for(int i=0;i<n;i++)
         {
             final int var=i;
@@ -204,8 +233,8 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
             
             // final List<UserAction> detectedEvents = new ArrayList<>();
             currentDetector.addObserver((signature, match) -> {
-                UserAction event = new UserAction(var, match.get(0).get(0).getTimestamp());
-                PrintWriterUtils.println(event, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
+                PcapPacket firstPkt = match.get(0).get(0);
+                UserAction event = new UserAction(var, firstPkt.getTimestamp());
                 detectedEvents.add(event);
             });
 
@@ -220,35 +249,6 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
             Detector.add(currentDetector);
         }
 
-        final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).
-                withLocale(Locale.US).withZone(ZoneId.of("America/Los_Angeles"));
-
-        // Outputs information about a detected event to std.out
-        final Consumer<UserAction> outputter = ua -> {   //-------difference with layer2
-            String eventDescription;
-            int index=ua.getType();
-
-            if(index<0 || index> n){
-                throw new AssertionError("unhandled event type");
-            }
-
-            eventDescription=eventNames.get(index);
-            // switch (ua.getType()) {
-            //     case TOGGLE_ON:
-            //         eventDescription = "ON";
-            //         break;
-            //     case TOGGLE_OFF:
-            //         eventDescription = "OFF";
-            //         break;
-            //     default:
-            //         throw new AssertionError("unhandled event type");
-            // }
-            // TODO: Uncomment the following if we want the old style print-out messages
-            // String output = String.format("%s",
-            // dateTimeFormatter.format(ua.getTimestamp()));
-            // System.out.println(output);
-            PrintWriterUtils.println(ua, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
-        };
 
         // Let's create observers that construct a UserAction representing the detected event.
         // final List<UserAction> detectedEvents = new ArrayList<>();

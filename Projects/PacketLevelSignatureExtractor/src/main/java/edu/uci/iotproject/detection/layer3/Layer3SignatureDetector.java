@@ -219,7 +219,7 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
             handle = Pcaps.openOffline(pcapFile);
         }
         PcapHandleReader reader = new PcapHandleReader(handle, p -> true);
-        boolean []isRangeBased = new isRangeBased[n];
+        boolean []isRangeBased = new boolean[n];
         for(int i=0;i<n;i++)
         {
             final int var=i;
@@ -257,6 +257,7 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
         {
             boolean isRangeBasedForCurrent = isRangeBased[i];
             // -------difference with layer2 ( for line 273-283)
+            Layer3SignatureDetector currentDetector=Detector.get(i);
             if(isRangeBasedForCurrent){
                 currentDetector.mClusterMatchers.forEach(cm -> cm.performDetectionRangeBased());
             }

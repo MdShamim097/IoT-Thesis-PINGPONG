@@ -212,6 +212,14 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
             PrintWriterUtils.println(ua, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
         };
 
+        PcapHandle handle;
+        try {
+            handle = Pcaps.openOffline(pcapFile, PcapHandle.TimestampPrecision.NANO);
+        } catch (PcapNativeException pne) {
+            handle = Pcaps.openOffline(pcapFile);
+        }
+        PcapHandleReader reader = new PcapHandleReader(handle, p -> true);
+        boolean []isRangeBased = new isRangeBased[n];
         for(int i=0;i<n;i++)
         {
             final int var=i;
@@ -238,18 +246,25 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
                 detectedEvents.add(event);
             });
 
-            //-------difference with layer2 ( for line 273-283)
+            reader.addPacketListener(currentDetector);
+
+            isRangeBased[i] = isRangeBasedForCurrent;
+            Detector.add(currentDetector);
+        }
+
+        reader.readFromHandle();
+        for(int i=0;i<n;i++)
+        {
+            boolean isRangeBasedForCurrent = isRangeBased[i];
+            // -------difference with layer2 ( for line 273-283)
             if(isRangeBasedForCurrent){
                 currentDetector.mClusterMatchers.forEach(cm -> cm.performDetectionRangeBased());
             }
             else{
                 currentDetector.mClusterMatchers.forEach(cm -> cm.performDetectionConservative());
             }
-
-            Detector.add(currentDetector);
         }
-
-
+        
         // Let's create observers that construct a UserAction representing the detected event.
         // final List<UserAction> detectedEvents = new ArrayList<>();
         // onDetector.addObserver((searched, match) -> {
@@ -264,19 +279,6 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
         //     detectedEvents.add(event);
         // });
 
-        PcapHandle handle;
-        try {
-            handle = Pcaps.openOffline(pcapFile, PcapHandle.TimestampPrecision.NANO);
-        } catch (PcapNativeException pne) {
-            handle = Pcaps.openOffline(pcapFile);
-        }
-        PcapHandleReader reader = new PcapHandleReader(handle, p -> true);
-        for(int i=0;i<n;i++)
-        {
-            Layer3SignatureDetector curr = Detector.get(i);
-            reader.addPacketListener(curr);
-        }
-        reader.readFromHandle();
 
         // // TODO: need a better way of triggering detection than this...
         // if (isRangeBasedForOn) {

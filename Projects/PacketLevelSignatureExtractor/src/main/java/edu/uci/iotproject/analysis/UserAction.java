@@ -14,6 +14,8 @@ public class UserAction {
     private static volatile DateTimeFormatter TIMESTAMP_FORMATTER = DateTimeFormatter.ISO_ZONED_DATE_TIME.
             withZone(ZoneId.of("America/Los_Angeles"));
 
+    private String mName;
+
     /**
      * Sets the {@link DateTimeFormatter} used when outputting a user action as a string and parsing a user action from
      * a string.
@@ -54,6 +56,20 @@ public class UserAction {
     public UserAction(int typeOfAction, Instant timeOfAction) {
         mType = typeOfAction;
         mTimestamp = timeOfAction;
+    }
+
+    public UserAction(int typeOfAction, String typeName , Instant timeOfAction) {
+        mType = typeOfAction;
+        mTimestamp = timeOfAction;
+        mName=typeName;
+    }
+
+    public void setName(String typeName){
+        mName=typeName;
+    }
+
+    public String getName(){
+        return mName;
     }
 
     /**
@@ -105,6 +121,6 @@ public class UserAction {
 
     @Override
     public String toString() {
-       return String.format("%d @ %s", mType, TIMESTAMP_FORMATTER.format(mTimestamp));
+       return String.format("%s @ %s", mName, TIMESTAMP_FORMATTER.format(mTimestamp)); //-------changed on 02/12/2022
     }
 }

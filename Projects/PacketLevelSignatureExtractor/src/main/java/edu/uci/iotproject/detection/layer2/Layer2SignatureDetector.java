@@ -242,6 +242,7 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
         for(int i=0;i<n;i++)
         { 
             final int var=i;
+            final String name=eventNames.get(i);
             List<List<List<List<PcapPacket>>>> otherSignatures = new ArrayList<>();
             for(int j=0;j<n;j++)
             {
@@ -265,7 +266,7 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
             // final List<UserAction> detectedEvents = new ArrayList<>();
            
             currentDetector.addObserver((signature, match) -> {
-                UserAction event = new UserAction(var, match.get(0).get(0).getTimestamp());
+                UserAction event = new UserAction(var, name , match.get(0).get(0).getTimestamp()); //-------changed on 02/12/2022
                 PrintWriterUtils.println(event, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
                 detectedEvents.add(event);
             });

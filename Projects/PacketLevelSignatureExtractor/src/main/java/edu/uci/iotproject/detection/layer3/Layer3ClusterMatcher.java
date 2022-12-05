@@ -49,7 +49,7 @@ public class Layer3ClusterMatcher extends AbstractClusterMatcher implements Pack
      * The packet inclusion time for signature.
      */
     private int mInclusionTimeMillis;
-
+    private int mInclusionPacketNumbers;
     /**
      * Relaxed matching
      */
@@ -69,7 +69,7 @@ public class Layer3ClusterMatcher extends AbstractClusterMatcher implements Pack
      *                          {@code cluster}, i.e., when the examined traffic is classified as pertaining to
      *                          {@code cluster}.
      */
-    public Layer3ClusterMatcher(List<List<PcapPacket>> cluster, String routerWanIp, int inclusionTimeMillis,
+    public Layer3ClusterMatcher(List<List<PcapPacket>> cluster, String routerWanIp, int inclusionTimeMillis,//int inclusionPacketNumbers,
                                 boolean isRangeBased, double eps, int delta, Set<Integer> packetSet,
                                 ClusterMatcherObserver... detectionObservers) {
         super(cluster, isRangeBased);
@@ -100,6 +100,10 @@ public class Layer3ClusterMatcher extends AbstractClusterMatcher implements Pack
 				mTcpReassembler = new TcpReassembler(mRouterWanIp);
         mInclusionTimeMillis =
                 inclusionTimeMillis == 0 ? TriggerTrafficExtractor.INCLUSION_WINDOW_MILLIS : inclusionTimeMillis;
+        /*
+        mInclusionPacketNumbers = 
+                inclusionPacketNumbers == 0 ? TriggerTrafficExtractor.INCLUSION_NUMBER_OF_PACKETS : inclusionPacketNumbers;
+         */
         mDelta = delta;
         mPacketSet = packetSet;
     }

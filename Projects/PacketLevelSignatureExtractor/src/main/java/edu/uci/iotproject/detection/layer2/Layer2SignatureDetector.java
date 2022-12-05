@@ -378,7 +378,7 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
     private final List<SignatureDetectorObserver> mObservers = new ArrayList<>();
 
     private int mInclusionTimeMillis;
-
+    private mInclusionPackets;
     /**
      * Skipped-packet analysis.
      */
@@ -388,16 +388,17 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
 
 
     public Layer2SignatureDetector(List<List<List<PcapPacket>>> searchedSignature, String trainingRouterWlanMac,
-                                   String routerWlanMac, int signatureDuration, boolean isRangeBased, double eps,
+                                   String routerWlanMac, int signatureDuration, //int signatureLength, 
+                                   boolean isRangeBased, double eps,
                                    int limitSkippedPackets, String vpnClientMacAddress, int delta, Set<Integer> packetSet) {
-        this(searchedSignature, trainingRouterWlanMac, routerWlanMac, null, signatureDuration, isRangeBased,
-                eps, limitSkippedPackets, vpnClientMacAddress, delta, packetSet);
+        this(searchedSignature, trainingRouterWlanMac, routerWlanMac, null, signatureDuration, //signatureLength,
+                isRangeBased, eps, limitSkippedPackets, vpnClientMacAddress, delta, packetSet);
     }
 
     public Layer2SignatureDetector(List<List<List<PcapPacket>>> searchedSignature, String trainingRouterWlanMac,
                                    String routerWlanMac, List<Function<Layer2Flow, Boolean>> flowFilters,
-                                   int inclusionTimeMillis, boolean isRangeBased, double eps, int limitSkippedPackets,
-                                   String vpnClientMacAddress, int delta, Set<Integer> packetSet) {
+                                   int inclusionTimeMillis, int inclusionPacketNumbers,
+                                   boolean isRangeBased, double eps, int limitSkippedPackets, String vpnClientMacAddress, int delta, Set<Integer> packetSet) {
         if (flowFilters != null && flowFilters.size() != searchedSignature.size()) {
             throw new IllegalArgumentException("If flow filters are used, there must be a flow filter for each cluster " +
                     "of the signature.");
@@ -407,10 +408,10 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
         for (int i = 0; i < mSignature.size(); i++) {
             List<List<PcapPacket>> cluster = mSignature.get(i);
             Layer2ClusterMatcher clusterMatcher = flowFilters == null ?
-                    new Layer2ClusterMatcher(cluster, trainingRouterWlanMac, routerWlanMac, inclusionTimeMillis,
+                    new Layer2ClusterMatcher(cluster, trainingRouterWlanMac, routerWlanMac, inclusionTimeMillis, //inclusionPacketNumbers,
                             isRangeBased, eps, limitSkippedPackets, delta, packetSet) :
-                    new Layer2ClusterMatcher(cluster, trainingRouterWlanMac, routerWlanMac, flowFilters.get(i),
-                            inclusionTimeMillis, isRangeBased, eps, limitSkippedPackets, delta, packetSet);
+                    new Layer2ClusterMatcher(cluster, trainingRouterWlanMac, routerWlanMac, flowFilters.get(i), inclusionTimeMillis, //inclusionPacketNumbers,
+                            isRangeBased, eps, limitSkippedPackets, delta, packetSet);
             clusterMatcher.addObserver(this);
             clusterMatchers.add(clusterMatcher);
         }
@@ -433,6 +434,10 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
         mClusterMatchers.forEach(cm -> mFlowReassembler.addObserver(cm));
         mInclusionTimeMillis =
                 inclusionTimeMillis == 0 ? TriggerTrafficExtractor.INCLUSION_WINDOW_MILLIS : inclusionTimeMillis;
+        /*
+        mInclusionPackets =
+                inclusionPacketNumbers == 0 ? TriggerTrafficExtractor.INCLUSION_NUMBER_OF_PACKETS : inclusionPacketNumbers;
+        */
         mMaxSkippedPackets = 0;
         mSkippedPackets = new ArrayList<>();
     }

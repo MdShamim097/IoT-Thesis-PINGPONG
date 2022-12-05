@@ -24,6 +24,7 @@ public class Layer2RangeMatcher extends Layer2AbstractMatcher {
     private final List<PcapPacket> mUpperBound;
     private final double mEps;
     private int mInclusionTimeMillis;
+    private int mInclusionPackets;
     private int mSkippedPackets;
 
     /**
@@ -35,7 +36,8 @@ public class Layer2RangeMatcher extends Layer2AbstractMatcher {
      * @param routerWlanMac The target trace router's WLAN MAC (used for determining the direction of packets).
      */
     public Layer2RangeMatcher(List<PcapPacket> lowerBound, List<PcapPacket> upperBound,
-                              int inclusionTimeMillis, double eps, String trainingRouterWlanMac, String routerWlanMac) {
+                              int inclusionTimeMillis, //int inclusionPacketNumbers,
+                              double eps, String trainingRouterWlanMac, String routerWlanMac) {
         // TODO: Just use the lower bound since both lower and upper bounds' packets essentially have the same direction
         // TODO: for the same position in the array. Both arrays also have the same length.
         super(lowerBound, trainingRouterWlanMac, routerWlanMac);
@@ -44,6 +46,10 @@ public class Layer2RangeMatcher extends Layer2AbstractMatcher {
         mEps = eps;
         mInclusionTimeMillis =
                 inclusionTimeMillis == 0 ? TriggerTrafficExtractor.INCLUSION_WINDOW_MILLIS : inclusionTimeMillis;
+        /*
+        mInclusionPackets =
+                inclusionPacketNumbers == 0 ? TriggerTrafficExtractor.INCLUSION_NUMBER_OF_PACKETS : inclusionPacketNumbers;
+        */
         mSkippedPackets = 0;
     }
 

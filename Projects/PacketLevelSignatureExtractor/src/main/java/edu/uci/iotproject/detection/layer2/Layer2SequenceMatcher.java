@@ -24,7 +24,7 @@ public class Layer2SequenceMatcher extends Layer2AbstractMatcher {
     private final List<PcapPacket> mSequence;
 
     private int mInclusionTimeMillis;
-
+    private int mInclusionPackets;
     /**
      * Relaxed matching
      */
@@ -37,7 +37,8 @@ public class Layer2SequenceMatcher extends Layer2AbstractMatcher {
      * @param trainingRouterWlanMac The training router's WLAN MAC (used for determining the direction of packets).
      * @param routerWlanMac The target trace router's WLAN MAC (used for determining the direction of packets).
      */
-    public Layer2SequenceMatcher(List<PcapPacket> sequence, int inclusionTimeMillis, String trainingRouterWlanMac,
+    public Layer2SequenceMatcher(List<PcapPacket> sequence, int inclusionTimeMillis, int inclusionPacketNumbers, 
+                                 String trainingRouterWlanMac,
                                  String routerWlanMac, int delta, Set<Integer> packetSet) {
         super(sequence, trainingRouterWlanMac, routerWlanMac);
         mSequence = sequence;
@@ -55,6 +56,10 @@ public class Layer2SequenceMatcher extends Layer2AbstractMatcher {
         }
         mInclusionTimeMillis =
                 inclusionTimeMillis == 0 ? TriggerTrafficExtractor.INCLUSION_WINDOW_MILLIS : inclusionTimeMillis;
+        /*
+        mInclusionPackets = 
+                inclusionPacketNumbers == 0 ? TriggerTrafficExtractor.INCLUSION_NUMBER_OF_PACKETS : inclusionPacketNumbers;
+        */
         mDelta = delta;
         mPacketSet = packetSet;
     }

@@ -60,6 +60,7 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
                         "\n  SignatureFile: the file that contains the all signature to search for" +
                         "\n  resultsFile: where to write the results of the detection" +
                         "\n  signatureDuration: the maximum duration of signature detection" +
+                        //"\n  signatureLength: the maximum length of signature detection" +
                         "\n  epsilon: the epsilon value for the DBSCAN algorithm\n" +
                          "\n  eventTypes: Supported events for a device" +
                         "\n  eventsOccurred: Types of the events occurred during signature generation; input must be in 0-indexed number" +
@@ -82,6 +83,7 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
         // TODO: FOR PACKETS IN A SIGNATURE
 //        final int signatureDuration = Integer.parseInt(args[6]);    //------- difference with layer2
         final int signatureDuration = TriggerTrafficExtractor.INCLUSION_WINDOW_MILLIS;
+        final int signatureLength = TriggerTrafficExtractor.INCLUSION_NUMBER_OF_PACKETS;
         final double eps = Double.parseDouble(args[5]);
         final String eventTypes = args[6];
         //final String eventsOccurred = args[7]; // ----------we have an unused argumment in [7]
@@ -238,7 +240,8 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
 
             //WAN    //-------difference with layer2
             Layer3SignatureDetector currentDetector = new Layer3SignatureDetector(currentSignature, ROUTER_WAN_IP,
-                 signatureDuration, isRangeBasedForCurrent, eps, delta, packetSet);
+                 signatureDuration,//signatureLength,
+                 isRangeBasedForCurrent, eps, delta, packetSet);
             
             // final List<UserAction> detectedEvents = new ArrayList<>();
             currentDetector.addObserver((signature, match) -> {
@@ -353,7 +356,7 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
     private final List<SignatureDetectionObserver> mObservers = new ArrayList<>();
 
     private int mInclusionTimeMillis;
-
+    private int mInclusionPackets;
     /**
      * Remove duplicates in {@code List} of {@code UserAction} objects. We need to clean this up for user actions
      * that appear multiple times.
@@ -380,7 +383,8 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
     }
 
     public Layer3SignatureDetector(List<List<List<PcapPacket>>> searchedSignature, String routerWanIp,
-                                   int inclusionTimeMillis, boolean isRangeBased, double eps,
+                                   int inclusionTimeMillis, //int inclusionPacketNumbers,
+                                   boolean isRangeBased, double eps,
                                    int delta, Set<Integer> packetSet) {
         // note: doesn't protect inner lists from changes :'(
         mSignature = Collections.unmodifiableList(searchedSignature);
@@ -404,6 +408,10 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
         mClusterMatcherIds = Collections.unmodifiableMap(clusterMatcherIds);
         mInclusionTimeMillis =
                 inclusionTimeMillis == 0 ? TriggerTrafficExtractor.INCLUSION_WINDOW_MILLIS : inclusionTimeMillis;
+        /*
+        mInclusionPackets =
+                inclusionPacketNumbers == 0 ? TriggerTrafficExtractor.INCLUSION_NUMBER_OF_PACKETS : inclusionPacketNumbers;
+                */
     }
 
     public void addObserver(SignatureDetectionObserver observer) {

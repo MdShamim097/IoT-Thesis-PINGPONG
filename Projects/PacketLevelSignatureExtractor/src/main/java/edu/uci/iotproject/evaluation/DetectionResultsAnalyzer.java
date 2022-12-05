@@ -82,6 +82,12 @@ public class DetectionResultsAnalyzer {
                                 t.getTimestamp().isBefore(detectedEvent.getTimestamp()) &&
                                 t.getTimestamp().plusMillis(TriggerTrafficExtractor.INCLUSION_WINDOW_MILLIS).
                                         isAfter(detectedEvent.getTimestamp())
+                        /**
+                        //Not sure
+                        .filter(t -> t.getType() == detectedEvent.getType() &&
+                                t.getTimestamp().isBefore(detectedEvent.getTimestamp()))
+                        
+                         */
                         ).findFirst();
                 matchingTrigger.ifPresent(mt -> {
                     // We've consumed the trigger (matched it with a detected event), so remove it so we don't match with
@@ -99,6 +105,11 @@ public class DetectionResultsAnalyzer {
                                 t.getTimestamp().isBefore(detectedEvent.getTimestamp()) &&
                                 t.getTimestamp().plusMillis(TriggerTrafficExtractor.INCLUSION_WINDOW_MILLIS).
                                         isAfter(detectedEvent.getTimestamp())
+                        /**
+                        //Not sure
+                        .filter(t.getTimestamp().isBefore(detectedEvent.getTimestamp()))
+                        
+                         */
                         ).findFirst();
                 matchingTrigger.ifPresent(mt -> {
                     // We've consumed the trigger (matched it with a detected event), so remove it so we don't match with

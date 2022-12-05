@@ -117,6 +117,13 @@ public class Layer2RangeMatcher extends Layer2AbstractMatcher {
                     plusMillis(mInclusionTimeMillis))) {
                 return false;
             }
+
+            /*
+            if(getMatchedPacketsCount()>=mInclusionPackets){
+                return false;
+            }
+            */
+
             // If we made it here, it means that this packet has the expected length, direction, and obeys the timing
             // constraints, so we store it and advance.zzzz
             mMatchedPackets.add(packet);

@@ -20,13 +20,13 @@ public class TriggerTrafficExtractor implements PcapPacketFilter {
     private final String mDeviceIp;
 
     private int mTriggerIndex = 0;
-
     /**
      * The total number of packets marked for inclusion during one run of {@link #performExtraction(PacketListener...)}.
      */
     private long mIncludedPackets = 0;
 
     public static final int INCLUSION_WINDOW_MILLIS = 15_000;
+    public static final int INCLUSION_NUMBER_OF_PACKETS = 500;
     // TODO: Relax the inclusion time if needed
     //public static final int INCLUSION_WINDOW_MILLIS = 30_000;
 
@@ -79,6 +79,10 @@ public class TriggerTrafficExtractor implements PcapPacketFilter {
         boolean include = mTriggerTimes.stream().anyMatch(
                 trigger -> trigger.isBefore(packet.getTimestamp()) &&
                         packet.getTimestamp().isBefore(trigger.plusMillis(INCLUSION_WINDOW_MILLIS))
+                /*
+                trigger -> trigger.isBefore(packet.getTimestamp()) &&
+                        mIncludedPackets<INCLUSION_NUMBER_OF_PACKETS
+                 */
         );
         if (include) {
             mIncludedPackets++;

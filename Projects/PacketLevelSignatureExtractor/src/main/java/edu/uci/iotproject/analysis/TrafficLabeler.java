@@ -55,6 +55,15 @@ public class TrafficLabeler implements PacketListener {
                 // Communicate termination to binarySearch by returning 0 which indicates equality.
                 return 0;
             }
+
+            /*
+            if (key.getTimestamp().isAfter(intervalStart) && mPackets<TriggerTrafficExtractor.INCLUSION_NUMBER_OF_PACKETS) {
+                // Packet lies within specified interval after the current UserAction, so we're done.
+                // Communicate termination to binarySearch by returning 0 which indicates equality.
+                return 0;
+            }
+                */
+
             // If packet lies outside inclusion interval of current list item, continue search in lower or upper half of
             // list depending on whether the timestamp of the current list item is smaller or greater than that of the
             // packet.

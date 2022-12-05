@@ -392,6 +392,15 @@ public final class PcapPacketUtils {
                     else
                         count2++;
                 }
+                // For Pack count
+                /*
+                compare = p1.get(count1).get(0).getTimestamp().compareTo(p2.get(count2).get(0).getTimestamp());
+                    overlapChecking(compare, comparePrev, p1.get(count1), p2.get(count2),
+                            signatures.indexOf(p1), signatures.indexOf(p2));
+                    comparePrev = compare;
+                    count1++;
+                    count2++;
+                */
             }
             return compare;
         });

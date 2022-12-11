@@ -108,6 +108,7 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
         final String SignatureFile = args[2];
         final String resultsFile = args[3];
         final int signatureDuration = Integer.parseInt(args[4]);
+        final int signatureLength = Integer.parseInt(args[4]);
         final double eps = Double.parseDouble(args[5]);
         final String eventTypes = args[6];
         //final String eventsOccurred = args[7]; // ----------we have an unused argumment in [7]
@@ -257,10 +258,14 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
             List<Function<Layer2Flow, Boolean>> currentSignatureMacFilters = SignatureMacFilters.get(i);
 
             Layer2SignatureDetector currentDetector = currentSignatureMacFilters == null ?
-                    new Layer2SignatureDetector(currentSignature, TRAINING_ROUTER_WLAN_MAC, ROUTER_WLAN_MAC, signatureDuration,
+                    new Layer2SignatureDetector(currentSignature, TRAINING_ROUTER_WLAN_MAC, ROUTER_WLAN_MAC, 
+                            //signatureDuration,
+                            signatureLength,
                             isRangeBasedForCurrent, eps, MaxSkippedPackets[i], vpnClientMacAddress, delta, packetSet) :
                     new Layer2SignatureDetector(currentSignature, TRAINING_ROUTER_WLAN_MAC, ROUTER_WLAN_MAC,
-                            currentSignatureMacFilters, signatureDuration, isRangeBasedForCurrent, eps, MaxSkippedPackets[i],
+                            currentSignatureMacFilters,
+                            //signatureDuration,
+                            signatureLength, isRangeBasedForCurrent, eps, MaxSkippedPackets[i],
                             vpnClientMacAddress, delta, packetSet);
             
             // final List<UserAction> detectedEvents = new ArrayList<>();
@@ -388,16 +393,21 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
 
 
     public Layer2SignatureDetector(List<List<List<PcapPacket>>> searchedSignature, String trainingRouterWlanMac,
-                                   String routerWlanMac, int signatureDuration, //int signatureLength, 
+                                   String routerWlanMac,
+                                   //int signatureDuration,
+                                   int signatureLength, 
                                    boolean isRangeBased, double eps,
                                    int limitSkippedPackets, String vpnClientMacAddress, int delta, Set<Integer> packetSet) {
-        this(searchedSignature, trainingRouterWlanMac, routerWlanMac, null, signatureDuration, //signatureLength,
+        this(searchedSignature, trainingRouterWlanMac, routerWlanMac, null, 
+            //signatureDuration,
+                signatureLength,
                 isRangeBased, eps, limitSkippedPackets, vpnClientMacAddress, delta, packetSet);
     }
 
     public Layer2SignatureDetector(List<List<List<PcapPacket>>> searchedSignature, String trainingRouterWlanMac,
-                                   String routerWlanMac, List<Function<Layer2Flow, Boolean>> flowFilters,
-                                   int inclusionTimeMillis, int inclusionPacketNumbers,
+                            mInclusionPackets       String routerWlanMac, List<Function<Layer2Flow, Boolean>> flowFilters,
+                                   //int inclusionTimeMillis,
+                                   int inclusionPacketNumbers,
                                    boolean isRangeBased, double eps, int limitSkippedPackets, String vpnClientMacAddress, int delta, Set<Integer> packetSet) {
         if (flowFilters != null && flowFilters.size() != searchedSignature.size()) {
             throw new IllegalArgumentException("If flow filters are used, there must be a flow filter for each cluster " +
@@ -408,9 +418,13 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
         for (int i = 0; i < mSignature.size(); i++) {
             List<List<PcapPacket>> cluster = mSignature.get(i);
             Layer2ClusterMatcher clusterMatcher = flowFilters == null ?
-                    new Layer2ClusterMatcher(cluster, trainingRouterWlanMac, routerWlanMac, inclusionTimeMillis, //inclusionPacketNumbers,
+                    new Layer2ClusterMatcher(cluster, trainingRouterWlanMac, routerWlanMac,
+                            //inclusionTimeMillis,
+                            inclusionPacketNumbers,
                             isRangeBased, eps, limitSkippedPackets, delta, packetSet) :
-                    new Layer2ClusterMatcher(cluster, trainingRouterWlanMac, routerWlanMac, flowFilters.get(i), inclusionTimeMillis, //inclusionPacketNumbers,
+                    new Layer2ClusterMatcher(cluster, trainingRouterWlanMac, routerWlanMac, flowFilters.get(i),
+                            //inclusionTimeMillis,
+                            inclusionPacketNumbers,
                             isRangeBased, eps, limitSkippedPackets, delta, packetSet);
             clusterMatcher.addObserver(this);
             clusterMatchers.add(clusterMatcher);
@@ -432,12 +446,13 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
             mFlowReassembler = new Layer2FlowReassembler();
         }
         mClusterMatchers.forEach(cm -> mFlowReassembler.addObserver(cm));
+        /*
         mInclusionTimeMillis =
                 inclusionTimeMillis == 0 ? TriggerTrafficExtractor.INCLUSION_WINDOW_MILLIS : inclusionTimeMillis;
-        /*
+        */
         mInclusionPackets =
                 inclusionPacketNumbers == 0 ? TriggerTrafficExtractor.INCLUSION_NUMBER_OF_PACKETS : inclusionPacketNumbers;
-        */
+        
         mMaxSkippedPackets = 0;
         mSkippedPackets = new ArrayList<>();
     }
@@ -512,7 +527,8 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
             // Note: zero cost edges as this is just a dummy link to facilitate search from a common start node.
             for (Vertex v : vertices[0]) {
                 DefaultWeightedEdge edge = graph.addEdge(source, v);
-                graph.setEdgeWeight(edge, 0.0);
+                // graph.setEdgeWeight(edge, 0.0);
+                graph.setEdgeWeight(edge, 1.0);
             }
             // Similarly, all vertices that wrap the sequences detected by the last cluster matcher of the signature
             // are connected to the sink node.
@@ -539,7 +555,8 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
                                 // Unfortunately weights are double values, so must convert from long to double.
                                 // TODO: need nano second precision? If so, use d.toNanos().
                                 // TODO: risk of overflow when converting from long to double..?
-                                graph.setEdgeWeight(edge, Long.valueOf(d.toMillis()).doubleValue());
+                                //graph.setEdgeWeight(edge, Long.valueOf(d.toMillis()).doubleValue());
+                                graph.setEdgeWeight(edge, 1.0);
                             }
                             // Alternative version if we cannot assume that sequences are ordered by timestamp:
 //                            if (iv.sequence.stream().max(Comparator.comparing(PcapPacket::getTimestamp)).get()
@@ -560,7 +577,8 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
                 // the signature to span. For now we just use the inclusion window we defined for training purposes.
                 // Note however, that we must convert back from double to long as the weight is stored as a double in
                 // JGraphT's API.
-                if (((long)shortestPath.getWeight()) < mInclusionTimeMillis) {
+                if (((long)shortestPath.getWeight()) < mInclusionPackets) {
+                //if (((long)shortestPath.getWeight()) < mInclusionTimeMillis) {
                     // There's a signature match!
                     // Extract the match from the vertices
                     List<List<PcapPacket>> signatureMatch = new ArrayList<>();

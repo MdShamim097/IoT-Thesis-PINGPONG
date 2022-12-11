@@ -36,7 +36,8 @@ public class Layer2RangeMatcher extends Layer2AbstractMatcher {
      * @param routerWlanMac The target trace router's WLAN MAC (used for determining the direction of packets).
      */
     public Layer2RangeMatcher(List<PcapPacket> lowerBound, List<PcapPacket> upperBound,
-                              int inclusionTimeMillis, //int inclusionPacketNumbers,
+                              //int inclusionTimeMillis,
+                              int inclusionPacketNumbers,
                               double eps, String trainingRouterWlanMac, String routerWlanMac) {
         // TODO: Just use the lower bound since both lower and upper bounds' packets essentially have the same direction
         // TODO: for the same position in the array. Both arrays also have the same length.
@@ -44,12 +45,13 @@ public class Layer2RangeMatcher extends Layer2AbstractMatcher {
         mLowerBound = lowerBound;
         mUpperBound = upperBound;
         mEps = eps;
+        /*
         mInclusionTimeMillis =
                 inclusionTimeMillis == 0 ? TriggerTrafficExtractor.INCLUSION_WINDOW_MILLIS : inclusionTimeMillis;
-        /*
+        */
         mInclusionPackets =
                 inclusionPacketNumbers == 0 ? TriggerTrafficExtractor.INCLUSION_NUMBER_OF_PACKETS : inclusionPacketNumbers;
-        */
+        
         mSkippedPackets = 0;
     }
 
@@ -113,16 +115,17 @@ public class Layer2RangeMatcher extends Layer2AbstractMatcher {
             if (!packet.getTimestamp().isAfter(mMatchedPackets.get(getMatchedPacketsCount()-1).getTimestamp())) {
                 return false;
             }
+            /*
             if (packet.getTimestamp().isAfter(mMatchedPackets.get(0).getTimestamp().
                     plusMillis(mInclusionTimeMillis))) {
                 return false;
             }
-
-            /*
+            */
+            
             if(getMatchedPacketsCount()>=mInclusionPackets){
                 return false;
             }
-            */
+            
 
             // If we made it here, it means that this packet has the expected length, direction, and obeys the timing
             // constraints, so we store it and advance.zzzz

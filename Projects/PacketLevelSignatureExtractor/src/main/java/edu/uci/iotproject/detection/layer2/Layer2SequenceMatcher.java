@@ -37,7 +37,9 @@ public class Layer2SequenceMatcher extends Layer2AbstractMatcher {
      * @param trainingRouterWlanMac The training router's WLAN MAC (used for determining the direction of packets).
      * @param routerWlanMac The target trace router's WLAN MAC (used for determining the direction of packets).
      */
-    public Layer2SequenceMatcher(List<PcapPacket> sequence, int inclusionTimeMillis, int inclusionPacketNumbers, 
+    public Layer2SequenceMatcher(List<PcapPacket> sequence,
+                                //int inclusionTimeMillis,
+                                 int inclusionPacketNumbers, 
                                  String trainingRouterWlanMac,
                                  String routerWlanMac, int delta, Set<Integer> packetSet) {
         super(sequence, trainingRouterWlanMac, routerWlanMac);
@@ -54,12 +56,13 @@ public class Layer2SequenceMatcher extends Layer2AbstractMatcher {
                 mPacketDirections[i] = getPacketDirection(prevPkt, prevPktDirection, sequence.get(i));
             }
         }
+        /*
         mInclusionTimeMillis =
                 inclusionTimeMillis == 0 ? TriggerTrafficExtractor.INCLUSION_WINDOW_MILLIS : inclusionTimeMillis;
-        /*
+        */
         mInclusionPackets = 
                 inclusionPacketNumbers == 0 ? TriggerTrafficExtractor.INCLUSION_NUMBER_OF_PACKETS : inclusionPacketNumbers;
-        */
+        
         mDelta = delta;
         mPacketSet = packetSet;
     }
@@ -120,16 +123,17 @@ public class Layer2SequenceMatcher extends Layer2AbstractMatcher {
             }
 //            if (packet.getTimestamp().isAfter(mMatchedPackets.get(0).getTimestamp().
 //                            plusMillis(TriggerTrafficExtractor.INCLUSION_WINDOW_MILLIS))) {
+            /*
             if (packet.getTimestamp().isAfter(mMatchedPackets.get(0).getTimestamp().
                 plusMillis(mInclusionTimeMillis))) {
                 return false;
             }
-
-            /*
+            */
+            
             if(getMatchedPacketsCount()>=mInclusionPackets){
                 return false;
             }
-            */
+            
             
             // If we made it here, it means that this packet has the expected length, direction, and obeys the timing
             // constraints, so we store it and advance.

@@ -50,7 +50,8 @@ public class TrafficLabeler implements PacketListener {
             Instant intervalStart = listItem.getTimestamp();
             // End of inclusion interval is some arbitrary number of milliseconds after the user action.
             Instant intervalEnd = intervalStart.plusMillis(TriggerTrafficExtractor.INCLUSION_WINDOW_MILLIS);
-            if (key.getTimestamp().isAfter(intervalStart) && key.getTimestamp().isBefore(intervalEnd)) {
+            if (key.getTimestamp().isAfter(intervalStart)) {
+            //if (key.getTimestamp().isAfter(intervalStart) && key.getTimestamp().isBefore(intervalEnd)) {
                 // Packet lies within specified interval after the current UserAction, so we're done.
                 // Communicate termination to binarySearch by returning 0 which indicates equality.
                 return 0;

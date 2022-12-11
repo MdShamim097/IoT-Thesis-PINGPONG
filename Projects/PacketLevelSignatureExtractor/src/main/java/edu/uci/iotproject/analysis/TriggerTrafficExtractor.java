@@ -77,12 +77,13 @@ public class TriggerTrafficExtractor implements PcapPacketFilter {
         // New version. Simpler, but slower: the later a packet arrives, the more elements of mTriggerTimes will need to
         // be traversed.
         boolean include = mTriggerTimes.stream().anyMatch(
-                trigger -> trigger.isBefore(packet.getTimestamp()) &&
+                
+                /*trigger -> trigger.isBefore(packet.getTimestamp()) &&
                         packet.getTimestamp().isBefore(trigger.plusMillis(INCLUSION_WINDOW_MILLIS))
-                /*
+                */
                 trigger -> trigger.isBefore(packet.getTimestamp()) &&
                         mIncludedPackets<INCLUSION_NUMBER_OF_PACKETS
-                 */
+                
         );
         if (include) {
             mIncludedPackets++;

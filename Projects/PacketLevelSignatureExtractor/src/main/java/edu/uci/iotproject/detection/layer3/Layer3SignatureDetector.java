@@ -240,7 +240,8 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
 
             //WAN    //-------difference with layer2
             Layer3SignatureDetector currentDetector = new Layer3SignatureDetector(currentSignature, ROUTER_WAN_IP,
-                 signatureDuration,//signatureLength,
+                 //signatureDuration,
+                 signatureLength,
                  isRangeBasedForCurrent, eps, delta, packetSet);
             
             // final List<UserAction> detectedEvents = new ArrayList<>();
@@ -383,7 +384,8 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
     }
 
     public Layer3SignatureDetector(List<List<List<PcapPacket>>> searchedSignature, String routerWanIp,
-                                   int inclusionTimeMillis, //int inclusionPacketNumbers,
+                                   //int inclusionTimeMillis,
+                                   int inclusionPacketNumbers,
                                    boolean isRangeBased, double eps,
                                    int delta, Set<Integer> packetSet) {
         // note: doesn't protect inner lists from changes :'(
@@ -391,7 +393,9 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
         // Generate corresponding/appropriate ClusterMatchers based on the provided signature
         List<Layer3ClusterMatcher> clusterMatchers = new ArrayList<>();
         for (List<List<PcapPacket>> cluster : mSignature) {
-            clusterMatchers.add(new Layer3ClusterMatcher(cluster, routerWanIp, inclusionTimeMillis,
+            clusterMatchers.add(new Layer3ClusterMatcher(cluster, routerWanIp,
+                    //inclusionTimeMillis,
+                    inclusionPacketNumbers,
                     isRangeBased, eps, delta, packetSet, this));
         }
         mClusterMatchers = Collections.unmodifiableList(clusterMatchers);
@@ -406,12 +410,14 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
             clusterMatcherIds.put(mClusterMatchers.get(i), i);
         }
         mClusterMatcherIds = Collections.unmodifiableMap(clusterMatcherIds);
+        /*
         mInclusionTimeMillis =
                 inclusionTimeMillis == 0 ? TriggerTrafficExtractor.INCLUSION_WINDOW_MILLIS : inclusionTimeMillis;
-        /*
+        */
+        
         mInclusionPackets =
                 inclusionPacketNumbers == 0 ? TriggerTrafficExtractor.INCLUSION_NUMBER_OF_PACKETS : inclusionPacketNumbers;
-                */
+        
     }
 
     public void addObserver(SignatureDetectionObserver observer) {
@@ -464,7 +470,8 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
             // Note: zero cost edges as this is just a dummy link to facilitate search from a common start node.
             for (Vertex v : vertices[0]) {
                 DefaultWeightedEdge edge = graph.addEdge(source, v);
-                graph.setEdgeWeight(edge, 0.0);
+                // graph.setEdgeWeight(edge, 0.0);
+                graph.setEdgeWeight(edge, 1.0);
             }
             // Similarly, all vertices that wrap the sequences detected by the last Layer3ClusterMatcher of the signature
             // are connected to the sink node.
@@ -490,7 +497,8 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
                                 // Unfortunately weights are double values, so must convert from long to double.
                                 // TODO: need nano second precision? If so, use d.toNanos().
                                 // TODO: risk of overflow when converting from long to double..?
-                                graph.setEdgeWeight(edge, Long.valueOf(d.toMillis()).doubleValue());
+                                // graph.setEdgeWeight(edge, Long.valueOf(d.toMillis()).doubleValue());
+                                graph.setEdgeWeight(edge, 1.0);
                             }
                             // Alternative version if we cannot assume that sequences are ordered by timestamp:
 //                            if (iv.sequence.stream().max(Comparator.comparing(PcapPacket::getTimestamp)).get()
@@ -511,7 +519,8 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
                 // the signature to span. For now we just use the inclusion window we defined for training purposes.
                 // Note however, that we must convert back from double to long as the weight is stored as a double in
                 // JGraphT's API.
-                if (((long)shortestPath.getWeight()) < mInclusionTimeMillis) {
+                if (((long)shortestPath.getWeight()) < mInclusionPackets) {
+                // if (((long)shortestPath.getWeight()) < mInclusionTimeMillis) {
                     // There's a signature match!
                     // Extract the match from the vertices
                     List<List<PcapPacket>> signatureMatch = new ArrayList<>();

@@ -25,6 +25,8 @@ public class TrafficLabeler implements PacketListener {
      * The total number of packets labeled, i.e, the sum of the sizes of the values in {@link #mActionToTrafficMap}.
      */
     private long mPackets = 0;
+    private int packetNumbers[];
+    private int triggerCount=0;
 
     public TrafficLabeler(List<UserAction> userActions) {
         // Init map with empty lists (no packets have been mapped to UserActions at the onset).
@@ -38,6 +40,10 @@ public class TrafficLabeler implements PacketListener {
         // If performance is to be favored over safety, assign userActions to mActionsSorted directly.
         mActionsSorted = new ArrayList<>();
         mActionsSorted.addAll(userActions);
+        
+        triggerCount=userActions.size();
+        packetNumbers=new int[triggerCount];
+        
         Collections.sort(mActionsSorted, (ua1, ua2) -> ua1.getTimestamp().compareTo(ua2.getTimestamp()));
     }
 
@@ -45,37 +51,52 @@ public class TrafficLabeler implements PacketListener {
     @Override
     public void gotPacket(PcapPacket packet) {
         // Locate UserAction corresponding to packet, if any.
-        int index = Collections.binarySearch(mActionsSorted, new UserAction(0, packet.getTimestamp()), (listItem, key) -> {
-            // Start of inclusion interval is the time of the user action
-            Instant intervalStart = listItem.getTimestamp();
-            // End of inclusion interval is some arbitrary number of milliseconds after the user action.
-            Instant intervalEnd = intervalStart.plusMillis(TriggerTrafficExtractor.INCLUSION_WINDOW_MILLIS);
-            if (key.getTimestamp().isAfter(intervalStart)) {
-            //if (key.getTimestamp().isAfter(intervalStart) && key.getTimestamp().isBefore(intervalEnd)) {
-                // Packet lies within specified interval after the current UserAction, so we're done.
-                // Communicate termination to binarySearch by returning 0 which indicates equality.
-                return 0;
-            }
+        // int index = Collections.binarySearch(mActionsSorted, new UserAction(0, packet.getTimestamp()), (listItem, key) -> {
+        //     // Start of inclusion interval is the time of the user action
+        //     Instant intervalStart = listItem.getTimestamp();
+        //     // End of inclusion interval is some arbitrary number of milliseconds after the user action.
+        //     //Instant intervalEnd = intervalStart.plusMillis(TriggerTrafficExtractor.INCLUSION_WINDOW_MILLIS);
+        //     //if (key.getTimestamp().isAfter(intervalStart)) {
+                
+        //     // if (key.getTimestamp().isAfter(intervalStart) && key.getTimestamp().isBefore(intervalEnd)) {
+        //     //     System.out.println("Enetered into condition");
+        //     //     // Packet lies within specified interval after the current UserAction, so we're done.
+        //     //     // Communicate termination to binarySearch by returning 0 which indicates equality.
+        //     //     return 0;
+        //     // }
 
-            /*
-            if (key.getTimestamp().isAfter(intervalStart) && mPackets<TriggerTrafficExtractor.INCLUSION_NUMBER_OF_PACKETS) {
-                // Packet lies within specified interval after the current UserAction, so we're done.
-                // Communicate termination to binarySearch by returning 0 which indicates equality.
-                return 0;
-            }
-                */
+            
+        //     if (key.getTimestamp().isAfter(intervalStart)) {
+        //         // Packet lies within specified interval after the current UserAction, so we're done.
+        //         // Communicate termination to binarySearch by returning 0 which indicates equality.
+        //         return 0;
+        //     }
 
-            // If packet lies outside inclusion interval of current list item, continue search in lower or upper half of
-            // list depending on whether the timestamp of the current list item is smaller or greater than that of the
-            // packet.
-            return listItem.getTimestamp().compareTo(key.getTimestamp());
-        });
-        if (index >= 0) {
+        //     // If packet lies outside inclusion interval of current list item, continue search in lower or upper half of
+        //     // list depending on whether the timestamp of the current list item is smaller or greater than that of the
+        //     // packet.
+        //     return listItem.getTimestamp().compareTo(key.getTimestamp());
+        // });
+        // if (index >= 0) {
+        //     // Associate the packet to the its corresponding user action (located during the binary search above).
+        //     mActionToTrafficMap.get(mActionsSorted.get(index)).add(packet);
+        //     mPackets++;
+        // }
+        // Ignore packet if it is not found to be in temporal proximity of a user action.
+        int index=-1;
+        Instant packetTime=packet.getTimestamp();
+        for(int i=0;i<triggerCount;i++){
+            Instant triggeredTime=mActionsSorted.get(i).getTimestamp();
+            if(!triggeredTime.isBefore(packetTime)) break;
+            index=i;
+        }
+
+        if (index >= 0 && packetNumbers[index]<TriggerTrafficExtractor.INCLUSION_NUMBER_OF_PACKETS) {
             // Associate the packet to the its corresponding user action (located during the binary search above).
             mActionToTrafficMap.get(mActionsSorted.get(index)).add(packet);
             mPackets++;
+            packetNumbers[index]++;
         }
-        // Ignore packet if it is not found to be in temporal proximity of a user action.
     }
 
     /**

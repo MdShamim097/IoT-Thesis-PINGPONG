@@ -25,13 +25,20 @@ public class TriggerTrafficExtractor implements PcapPacketFilter {
      */
     private long mIncludedPackets = 0;
 
+    private int packetNumbers[];
+    private int triggerCount=0;
+
     public static final int INCLUSION_WINDOW_MILLIS = 15_000;
-    public static final int INCLUSION_NUMBER_OF_PACKETS = 500;
+    public static final int INCLUSION_NUMBER_OF_PACKETS = 90;
     // TODO: Relax the inclusion time if needed
     //public static final int INCLUSION_WINDOW_MILLIS = 30_000;
 
     public TriggerTrafficExtractor(String pcapFilePath, List<Instant> triggerTimes, String deviceIp) throws PcapNativeException, NotOpenException {
         mPcapFilePath = pcapFilePath;
+        
+        triggerCount=triggerTimes.size();
+        packetNumbers=new int[triggerCount];
+        
         // Ensure that trigger times are sorted in ascending as we rely on this fact in the logic that works out if a
         // packet is related to a trigger.
         Collections.sort(triggerTimes, (i1, i2) -> {
@@ -57,8 +64,9 @@ public class TriggerTrafficExtractor implements PcapPacketFilter {
         // Use the native support for BPF to immediately filter irrelevant traffic.
         handle.setFilter("ip host " + mDeviceIp, BpfProgram.BpfCompileMode.OPTIMIZE);
         PcapHandleReader pcapReader = new PcapHandleReader(handle, this, extractedPacketsConsumers);
-        pcapReader.readFromHandle();
-
+        System.out.println("Perform Extraction started");
+        pcapReader.readFromHandle(); 
+        System.out.println("Perform Extraction finished");
     }
 
     /**
@@ -76,17 +84,38 @@ public class TriggerTrafficExtractor implements PcapPacketFilter {
     public boolean shouldIncludePacket(PcapPacket packet) {
         // New version. Simpler, but slower: the later a packet arrives, the more elements of mTriggerTimes will need to
         // be traversed.
-        boolean include = mTriggerTimes.stream().anyMatch(
+        // boolean include = mTriggerTimes.stream().anyMatch(
                 
-                /*trigger -> trigger.isBefore(packet.getTimestamp()) &&
-                        packet.getTimestamp().isBefore(trigger.plusMillis(INCLUSION_WINDOW_MILLIS))
-                */
-                trigger -> trigger.isBefore(packet.getTimestamp()) &&
-                        mIncludedPackets<INCLUSION_NUMBER_OF_PACKETS
+        //         trigger -> trigger.isBefore(packet.getTimestamp()) &&  
+        //                 packet.getTimestamp().isBefore(trigger.plusMillis(INCLUSION_WINDOW_MILLIS))
                 
-        );
+        // );
+
+        //System.out.println("Entered in shouldIncludePacket");
+        boolean include=false;
+        int index=-1;
+        //System.out.println("Continue crossed, packet numbers "+ packetNumbers[0]+packetNumbers[1]+packetNumbers[2]);
+        for(int i=0;i<triggerCount;i++){
+            Instant trigger=mTriggerTimes.get(i);
+            //System.out.println("Time is "+trigger+" Size"+mTriggerTimes.size());
+            //System.out.println("Entered in "+i);
+            if(!trigger.isBefore(packet.getTimestamp())) break;
+            index=i;
+        }
+        System.out.println("Index value "+index);
+        if (index==-1){
+            return include;
+        }
+        else{
+            include=packetNumbers[index]<INCLUSION_NUMBER_OF_PACKETS;
+            if(include){
+                packetNumbers[index]++;
+            }
+        }
+
         if (include) {
             mIncludedPackets++;
+            //System.out.println("Number = "+mIncludedPackets);
         }
         return include;
 

@@ -1143,5 +1143,5 @@ EVENT_TYPES="$SIGNATURES_BASE_DIR/ring-alarm/timestamps/ring-alarm-apr-26-2019-e
 EVENTS_OCCURED="$SIGNATURES_BASE_DIR/ring-alarm/timestamps/ring-alarm-apr-26-2019-eventsOccured.txt"
 
 PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
-#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
 # ======================================================================================================================

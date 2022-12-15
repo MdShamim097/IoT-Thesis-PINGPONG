@@ -383,7 +383,7 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
     private final List<SignatureDetectorObserver> mObservers = new ArrayList<>();
 
     private int mInclusionTimeMillis;
-    private mInclusionPackets;
+    private int mInclusionPackets; // updated on 12/11/2022
     /**
      * Skipped-packet analysis.
      */
@@ -405,7 +405,7 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
     }
 
     public Layer2SignatureDetector(List<List<List<PcapPacket>>> searchedSignature, String trainingRouterWlanMac,
-                            mInclusionPackets       String routerWlanMac, List<Function<Layer2Flow, Boolean>> flowFilters,
+                             String routerWlanMac, List<Function<Layer2Flow, Boolean>> flowFilters,           // updated on 12/11/2022
                                    //int inclusionTimeMillis,
                                    int inclusionPacketNumbers,
                                    boolean isRangeBased, double eps, int limitSkippedPackets, String vpnClientMacAddress, int delta, Set<Integer> packetSet) {

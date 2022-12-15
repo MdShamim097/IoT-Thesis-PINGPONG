@@ -1,0 +1,10 @@
+src/main/java/edu/uci/iotproject/analysis/TrafficLabeler.java:63:            if (key.getTimestamp().isAfter(intervalStart) && mPackets<TriggerTrafficExtractor.INCLUSION_NUMBER_OF_PACKETS) {
+src/main/java/edu/uci/iotproject/analysis/TriggerTrafficExtractor.java:29:    public static final int INCLUSION_NUMBER_OF_PACKETS = 90;
+src/main/java/edu/uci/iotproject/analysis/TriggerTrafficExtractor.java:85:                // trigger -> trigger.isBefore(packet.getTimestamp()) && ( number_of_packtes < INCLUSION_NUMBER_OF_PACKETS )
+src/main/java/edu/uci/iotproject/detection/layer2/Layer2ClusterMatcher.java:111:                inclusionPacketNumbers == 0 ? TriggerTrafficExtractor.INCLUSION_NUMBER_OF_PACKETS : inclusionPacketNumbers;
+src/main/java/edu/uci/iotproject/detection/layer2/Layer2RangeMatcher.java:53:                inclusionPacketNumbers == 0 ? TriggerTrafficExtractor.INCLUSION_NUMBER_OF_PACKETS : inclusionPacketNumbers;
+src/main/java/edu/uci/iotproject/detection/layer2/Layer2SequenceMatcher.java:64:                inclusionPacketNumbers == 0 ? TriggerTrafficExtractor.INCLUSION_NUMBER_OF_PACKETS : inclusionPacketNumbers;
+src/main/java/edu/uci/iotproject/detection/layer2/Layer2SignatureDetector.java:454:                inclusionPacketNumbers == 0 ? TriggerTrafficExtractor.INCLUSION_NUMBER_OF_PACKETS : inclusionPacketNumbers;
+src/main/java/edu/uci/iotproject/detection/layer3/Layer3ClusterMatcher.java:108:                inclusionPacketNumbers == 0 ? TriggerTrafficExtractor.INCLUSION_NUMBER_OF_PACKETS : inclusionPacketNumbers;
+src/main/java/edu/uci/iotproject/detection/layer3/Layer3SignatureDetector.java:86:        final int signatureLength = TriggerTrafficExtractor.INCLUSION_NUMBER_OF_PACKETS;
+src/main/java/edu/uci/iotproject/detection/layer3/Layer3SignatureDetector.java:419:                inclusionPacketNumbers == 0 ? TriggerTrafficExtractor.INCLUSION_NUMBER_OF_PACKETS : inclusionPacketNumbers;

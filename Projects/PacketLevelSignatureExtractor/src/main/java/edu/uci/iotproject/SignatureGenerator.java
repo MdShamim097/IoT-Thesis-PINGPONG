@@ -187,6 +187,7 @@ public class SignatureGenerator {
         DnsMap dnsMap = new DnsMap();
         TcpReassembler tcpReassembler = new TcpReassembler();
         TrafficLabeler trafficLabeler = new TrafficLabeler(userActions);
+        System.out.println("Checkpoint started");
         tte.performExtraction(pkt -> {
             try {
                 outputter.dump(pkt);
@@ -196,7 +197,7 @@ public class SignatureGenerator {
         }, dnsMap, tcpReassembler, trafficLabeler);
         outputter.flush();
         outputter.close();
-
+        System.out.println("Checkpoint finished");
         if (tte.getPacketsIncludedCount() != trafficLabeler.getTotalPacketCount()) {
             // Sanity/debug check
             throw new AssertionError(String.format("mismatch between packet count in %s and %s",
@@ -233,6 +234,7 @@ public class SignatureGenerator {
                 trafficLabeler.getLabeledReassembledTcpTraffic();
         final Map<UserAction, Map<String, List<Conversation>>> userActionsToConvsByHostname =
                 trafficLabeler.getLabeledReassembledTcpTraffic(dnsMap);
+        //System.out.println("Size of userActionsToConvsByHostname: "+userActionsToConvsByHostname.size()); 
         PrintWriterUtils.println("Reassembled TCP conversations occurring shortly after each user event.",
                 resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
 
@@ -250,16 +252,21 @@ public class SignatureGenerator {
         for(int i=0;i<n;i++){
                 Map<String, Map<String, List<Conversation>>> currentMap = new HashMap<>();   
                 eventMaps.add(currentMap);  
+                //System.out.println("Size of currentMap: "+ currentMap.size());
         }
+        //System.out.println("Size of eventsMap :"+eventMaps.size());
 
         userActionsToConvsByHostname.forEach((ua, hostnameToConvs) -> {
             Map<String, Map<String, List<Conversation>>> outer = eventMaps.get(ua.getType()) ;
+            //System.out.println("Size of outer :"+outer.size()+" Type: "+ua.getType());
             hostnameToConvs.forEach((host, convs) -> {
                 Map<String, List<Conversation>> seqsToConvs = TcpConversationUtils.
                         groupConversationsByPacketSequence(convs, verbose);
                 outer.merge(host, seqsToConvs, (oldMap, newMap) -> {
+                        //System.out.println("Entered into outer.");
                     newMap.forEach((sequence, cs) -> oldMap.merge(sequence, cs, (list1, list2) -> {
                         list1.addAll(list2);
+                        //System.out.println("Size of list1 :"+list1.size());
                         return list1;
                     }));
                     return oldMap;
@@ -294,6 +301,7 @@ public class SignatureGenerator {
                 flatMap(List::stream). // flatten List<List<T>> to a List<T>
                 collect(Collectors.toList());
             Conversations.add(list);
+            //System.out.println("Size of list: "+list.size());
         }
 
         /*
@@ -316,6 +324,7 @@ public class SignatureGenerator {
                 flatMap(List::stream). // flatten List<List<>> to List<>
                 collect(Collectors.toList());
             Pairs.add(list);        //-------changed on 26/11/2022
+            
         }
 
         List<PcapPacketPair> l1=Pairs.get(0);  //-------changed on 28/11/2022
@@ -360,6 +369,7 @@ public class SignatureGenerator {
                 DBSCANClusterer<PcapPacketPair> Clusterer = new DBSCANClusterer<>(eps, minPts);
                 List<Cluster<PcapPacketPair>> currentCluster=Clusterer.cluster(Pairs.get(i)); //-------changed on 26/11/2022
                 Clusters.add(currentCluster);
+                //System.out.println("Size of current cluster: "+currentCluster.size());
         }
         // Sort the conversations as reference
         List<Conversation> sortedAllConversation = TcpConversationUtils.sortConversationList(allConversations);
@@ -405,6 +415,7 @@ public class SignatureGenerator {
                 // List<List<List<PcapPacket>>> ppListOfListReadCurr = new ArrayList<>();
                 List<List<List<PcapPacket>>> ppListOfListListCurr = new ArrayList<>();
                 List<List<List<PcapPacket>>> corePointRangeSignatureCurr = new ArrayList<>();
+                //System.out.println("Cluster "+i+" has "+Clusters.get(i).size());
                 for (Cluster<PcapPacketPair> c : Clusters.get(i)) {  //-------changed on 26/11/2022
                         PrintWriterUtils.println(String.format("<<< Cluster #%d (%d points) >>>", ++count, c.getPoints().size()),
                         resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
@@ -418,6 +429,7 @@ public class SignatureGenerator {
                         }
 
                 }
+                //System.out.println("Size of ppCurrent list: "+ppListOfListListCurr.size());
                 ppListOfListList.add(ppListOfListListCurr);
                 corePointRangeSignature.add(corePointRangeSignatureCurr);
         }
@@ -483,6 +495,7 @@ public class SignatureGenerator {
                 PrintWriterUtils.println(eventNames.get(i)+" Sequences: ", resultsWriter,
                         DUPLICATE_OUTPUT_TO_STD_OUT);
                 for(List<List<PcapPacket>> listOfList : ppListOfListListCurr) {
+                        System.out.println("Entered");
                         PrintWriterUtils.println(listOfList.get(0).get(0).length() + "...", resultsWriter,
                         DUPLICATE_OUTPUT_TO_STD_OUT);
                 }

@@ -212,7 +212,7 @@ public final class PcapPacketUtils {
             ppListOfList.add(ppList);
         }
         // Sort the list of lists based on the first packet's timestamp!
-        Collections.sort(ppListOfList, (p1, p2) -> p1.        get(0).getTimestamp().compareTo(p2.get(0).getTimestamp()));
+        Collections.sort(ppListOfList, (p1, p2) -> p1.get(0).getTimestamp().compareTo(p2.get(0).getTimestamp()));
         return ppListOfList;
     }
 
@@ -356,54 +356,54 @@ public final class PcapPacketUtils {
     public static List<List<List<PcapPacket>>> sortSequences(List<List<List<PcapPacket>>> signatures) {
         // TODO: This is the simplest solution!!! Might not cover all corner cases.
         // TODO: Sort the list of lists based on the first packet's timestamps!
-       Collections.sort(signatures, (p1, p2) -> {
-           //return p1.get(0).get(0).getTimestamp().compareTo(p2.get(0).get(0).getTimestamp());
-           int compare = p1.get(0).get(0).getTimestamp().compareTo(p2.get(0).get(0).getTimestamp());
-           return compare;
-       });
+    //    Collections.sort(signatures, (p1, p2) -> {
+    //        //return p1.get(0).get(0).getTimestamp().compareTo(p2.get(0).get(0).getTimestamp());
+    //        int compare = p1.get(0).get(0).getTimestamp().compareTo(p2.get(0).get(0).getTimestamp());
+    //        return compare;
+    //    });
         // TODO: The following is a more complete solution that covers corner cases.
         // Sort the list of lists based on one-to-one comparison between timestamps of signatures on both lists.
         // This also takes into account the fact that the number of signatures in the two lists could be different.
         // Additionally, this code forces the comparison between two signatures only if they occur in the
         // INCLUSION_WINDOW_MILLIS window; otherwise, it tries to find the right pair of signatures in the time window.
-        // Collections.sort(signatures, (p1, p2) -> {
-        //     int compare = 0;
-        //     int comparePrev = 0;
-        //     int count1 = 0;
-        //     int count2 = 0;
-        //     // Need to make sure that both are not out of bound!
-        //     while (count1 + 1 < p1.size() && count2 + 1 < p2.size()) {
-        //         long timestamp1 = p1.get(count1).get(0).getTimestamp().toEpochMilli();
-        //         long timestamp2 = p2.get(count2).get(0).getTimestamp().toEpochMilli();
-        //         // The two timestamps have to be within a 15-second window!
-        //         if (Math.abs(timestamp1 - timestamp2) < TriggerTrafficExtractor.INCLUSION_WINDOW_MILLIS) {
-        //             // If these two are within INCLUSION_WINDOW_MILLIS window then compare!
-        //             compare = p1.get(count1).get(0).getTimestamp().compareTo(p2.get(count2).get(0).getTimestamp());
-        //             overlapChecking(compare, comparePrev, p1.get(count1), p2.get(count2),
-        //                     signatures.indexOf(p1), signatures.indexOf(p2));
-        //             comparePrev = compare;
-        //             count1++;
-        //             count2++;
-        //         } else {
-        //             // If not within INCLUSION_WINDOW_MILLIS window then find the correct pair
-        //             // by incrementing one of them.
-        //             if (timestamp1 < timestamp2)
-        //                 count1++;
-        //             else
-        //                 count2++;
-        //         }
-        //         // For Pack count
-        //         /*
-        //         compare = p1.get(count1).get(0).getTimestamp().compareTo(p2.get(count2).get(0).getTimestamp());
-        //             overlapChecking(compare, comparePrev, p1.get(count1), p2.get(count2),
-        //                     signatures.indexOf(p1), signatures.indexOf(p2));
-        //             comparePrev = compare;
-        //             count1++;
-        //             count2++;
-        //         */
-        //     }
-        //     return compare;
-        // });
+        Collections.sort(signatures, (p1, p2) -> {
+            int compare = 0;
+            int comparePrev = 0;
+            int count1 = 0;
+            int count2 = 0;
+            // Need to make sure that both are not out of bound!
+            while (count1 + 1 < p1.size() && count2 + 1 < p2.size()) {
+                long timestamp1 = p1.get(count1).get(0).getTimestamp().toEpochMilli();
+                long timestamp2 = p2.get(count2).get(0).getTimestamp().toEpochMilli();
+                // The two timestamps have to be within a 15-second window!
+                if (Math.abs(timestamp1 - timestamp2) < TriggerTrafficExtractor.INCLUSION_WINDOW_MILLIS) {
+                    // If these two are within INCLUSION_WINDOW_MILLIS window then compare!
+                    compare = p1.get(count1).get(0).getTimestamp().compareTo(p2.get(count2).get(0).getTimestamp());
+                    overlapChecking(compare, comparePrev, p1.get(count1), p2.get(count2),
+                            signatures.indexOf(p1), signatures.indexOf(p2));
+                    comparePrev = compare;
+                    count1++;
+                    count2++;
+                } else {
+                    // If not within INCLUSION_WINDOW_MILLIS window then find the correct pair
+                    // by incrementing one of them.
+                    if (timestamp1 < timestamp2)
+                        count1++;
+                    else
+                        count2++;
+                }
+                // For Pack count
+                /*
+                compare = p1.get(count1).get(0).getTimestamp().compareTo(p2.get(count2).get(0).getTimestamp());
+                    overlapChecking(compare, comparePrev, p1.get(count1), p2.get(count2),
+                            signatures.indexOf(p1), signatures.indexOf(p2));
+                    comparePrev = compare;
+                    count1++;
+                    count2++;
+                */
+            }
+            return compare;
+        });
         return signatures;
     }
 

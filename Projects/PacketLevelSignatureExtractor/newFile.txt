@@ -1,1 +1,0 @@
-JAVACMD=java CLASSPATH=/mnt/e/PingPong/smart_home_traffic/Code/Projects/PacketLevelSignatureExtractor/gradle/wrapper/gradle-wrapper.jar DEFAULT_JVM_OPTS= JAVA_OPTS= GRADLE_OPTS= APP_BASE_NAME=gradlew

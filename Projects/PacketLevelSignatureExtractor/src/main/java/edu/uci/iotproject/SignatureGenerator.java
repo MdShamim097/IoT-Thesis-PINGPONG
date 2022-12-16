@@ -187,7 +187,7 @@ public class SignatureGenerator {
         DnsMap dnsMap = new DnsMap();
         TcpReassembler tcpReassembler = new TcpReassembler();
         TrafficLabeler trafficLabeler = new TrafficLabeler(userActions);
-        System.out.println("Checkpoint started");
+        //System.out.println("Checkpoint started");
         tte.performExtraction(pkt -> {
             try {
                 outputter.dump(pkt);
@@ -197,7 +197,7 @@ public class SignatureGenerator {
         }, dnsMap, tcpReassembler, trafficLabeler);
         outputter.flush();
         outputter.close();
-        System.out.println("Checkpoint finished");
+        //System.out.println("Checkpoint finished");
         if (tte.getPacketsIncludedCount() != trafficLabeler.getTotalPacketCount()) {
             // Sanity/debug check
             throw new AssertionError(String.format("mismatch between packet count in %s and %s",

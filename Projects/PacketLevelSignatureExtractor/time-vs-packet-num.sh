@@ -91,7 +91,7 @@ TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-quickru
 DEVICE_IP="192.168.1.229"
 TIMEZONE="-7"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
-getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 
 # PHONE SIDE
 DEVICE_IP="192.168.1.246"
@@ -109,7 +109,7 @@ TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-mode/ti
 DEVICE_IP="192.168.1.246"
 TIMEZONE="-7"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
-getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 
 # DEVICE SIDE
 # TODO: For some reason there is no OFF signature for the device side, so we do not report it for now
@@ -128,7 +128,7 @@ TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/dlink-plug/timestamps/dlink-plug-nov-7-2018
 DEVICE_IP="192.168.1.199"
 TIMEZONE="-7"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
-getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 
 # PHONE SIDE
 DEVICE_IP="192.168.1.246"
@@ -168,7 +168,7 @@ TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/dlink-siren/timestamps/dlink-siren-nov-9-20
 DEVICE_IP="192.168.1.246"
 TIMEZONE="-7"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
-getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 # ======================================================================================================================
 # IFTTT
 INPUT_PCAP="$SIGNATURES_BASE_DIR/dlink-siren/wlan1/dlink-siren.wlan1.ifttt.pcap"
@@ -192,7 +192,7 @@ TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/ecobee-thermostat/ecobee-thermostat-hvac/ti
 DEVICE_IP="192.168.1.130"
 TIMEZONE="-7"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
-getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 # ======================================================================================================================
 
 # =============================================== ECOBEE THERMOSTAT FAN ================================================
@@ -204,7 +204,7 @@ TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/ecobee-thermostat/ecobee-thermostat-fan/tim
 DEVICE_IP="192.168.1.130"
 TIMEZONE="-7"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
-getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 # ======================================================================================================================
 
 # ======================================================= HUE BULB =====================================================
@@ -217,7 +217,7 @@ TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/hue-bulb/timestamps/hue-bulb-sept-11-2019.t
 DEVICE_IP="192.168.1.100"
 TIMEZONE="-7"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
-getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 # ======================================================================================================================
 
 # ================================================== HUE BULB ON/OFF ===================================================
@@ -260,7 +260,7 @@ TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/kwikset-doorlock/timestamps/kwikset-doorloc
 DEVICE_IP="192.168.1.246"
 TIMEZONE="-7"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
-getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 # ======================================================================================================================
 
 # ================================================= NEST THERMOSTAT ====================================================
@@ -273,7 +273,7 @@ TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/nest-thermostat/timestamps/nest-thermostat-
 DEVICE_IP="192.168.1.246"
 TIMEZONE="-7"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
-getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 # ======================================================================================================================
 
 # ============================================== RACHIO SPRINKLER QUICK RUN ============================================
@@ -286,7 +286,7 @@ TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/rachio-sprinkler/rachio-sprinkler-quickrun/
 DEVICE_IP="192.168.1.143"
 TIMEZONE="-7"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
-getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 # ======================================================================================================================
 # REMOTE
 INPUT_PCAP="$SIGNATURES_BASE_DIR/rachio-sprinkler/rachio-sprinkler-quickrun/wlan1/rachio-sprinkler-quickrun.wlan1.remote.pcap"
@@ -321,7 +321,7 @@ TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/rachio-sprinkler/rachio-sprinkler-mode/time
 DEVICE_IP="192.168.1.143"
 TIMEZONE="-7"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
-getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 # ======================================================================================================================
 # REMOTE
 INPUT_PCAP="$SIGNATURES_BASE_DIR/rachio-sprinkler/rachio-sprinkler-mode/wlan1/rachio-sprinkler-mode.wlan1.remote.pcap"
@@ -345,7 +345,7 @@ TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/ring-alarm/timestamps/ring-alarm-apr-26-201
 DEVICE_IP="192.168.1.113"
 TIMEZONE="-7"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
-getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 # ======================================================================================================================
 # REMOTE
 INPUT_PCAP="$SIGNATURES_BASE_DIR/ring-alarm/wlan1/ring-alarm.wlan1.remote.pcap"
@@ -368,7 +368,7 @@ TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/roomba-vacuum-robot/timestamps/roomba-vacuu
 DEVICE_IP="192.168.1.246"
 TIMEZONE="-7"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
-getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 # ======================================================================================================================
 
 # =============================================== SENGLED BULB ON/OFF ==================================================
@@ -380,7 +380,7 @@ TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-onoff/timestamps/
 DEVICE_IP="192.168.1.246"
 TIMEZONE="-7"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
-getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 
 # LOCAL
 INPUT_PCAP="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-onoff/eth1/sengled-bulb-onoff.eth1.local.pcap"
@@ -401,7 +401,7 @@ TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-intensity/timesta
 DEVICE_IP="192.168.1.246"
 TIMEZONE="-7"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
-getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 
 # LOCAL
 INPUT_PCAP="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-intensity/eth1/sengled-bulb-intensity.eth1.local.pcap"
@@ -423,7 +423,7 @@ TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/st-plug/timestamps/st-plug-nov-12-2018.time
 DEVICE_IP="192.168.1.246"
 TIMEZONE="-7"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
-getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 # ======================================================================================================================
 
 # ================================================= TP LINK BULB ON/OFF ================================================
@@ -434,9 +434,10 @@ INPUT_PCAP="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-onoff/wlan1/tplink-bulb
 OUTPUT_PCAP="$OUTPUT_DIR/tplink-bulb/tplink-bulb-onoff/wlan1/tplink-bulb-onoff-processed.pcap"
 TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-onoff/timestamps/tplink-bulb-onoff-nov-16-2018.timestamps"
 DEVICE_IP="192.168.1.246"
-TIMEZONE="-7"
+TIMEZONE="-8"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
-getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
+
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 # ======================================================================================================================
 # IFTTT
 INPUT_PCAP="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-onoff/wlan1/tplink-bulb-onoff.wlan1.ifttt.pcap"
@@ -459,7 +460,7 @@ TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-color/timestamps/tp
 DEVICE_IP="192.168.1.246"
 TIMEZONE="-7"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
-getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 # ======================================================================================================================
 # IFTTT
 INPUT_PCAP="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-color/wlan1/tplink-bulb-color.wlan1.ifttt.pcap"
@@ -483,7 +484,7 @@ TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-intensity/timestamp
 DEVICE_IP="192.168.1.246"
 TIMEZONE="-7"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
-getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 # ======================================================================================================================
 # IFTTT
 INPUT_PCAP="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-intensity/wlan1/tplink-bulb-intensity.wlan1.ifttt.pcap"
@@ -507,7 +508,7 @@ TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/tplink-plug/timestamps/tplink-plug-nov-8-20
 DEVICE_IP="192.168.1.159"
 TIMEZONE="-7"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
-getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 
 
 # DEVICE SIDE OUTBOUND (contains only those packets that go through the WAN port, i.e., only the 556, 1293 sequence)
@@ -548,7 +549,7 @@ TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/wemo-insight-plug/timestamps/wemo-insight-p
 DEVICE_IP="192.168.1.246"
 TIMEZONE="-7"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
-getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 # ======================================================================================================================
 # IFTTT
 INPUT_PCAP="$SIGNATURES_BASE_DIR/wemo-insight-plug/wlan1/wemo-insight-plug.wlan1.ifttt.pcap"
@@ -571,7 +572,7 @@ TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/wemo-plug/timestamps/wemo-plug-nov-20-2018.
 DEVICE_IP="192.168.1.246"
 TIMEZONE="-7"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
-getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 # ======================================================================================================================
 # IFTTT
 INPUT_PCAP="$SIGNATURES_BASE_DIR/wemo-plug/wlan1/wemo-plug.wlan1.ifttt.pcap"

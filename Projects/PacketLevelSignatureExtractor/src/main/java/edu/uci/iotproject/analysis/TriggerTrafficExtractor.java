@@ -29,7 +29,7 @@ public class TriggerTrafficExtractor implements PcapPacketFilter {
     private int triggerCount=0;
 
     public static final int INCLUSION_WINDOW_MILLIS = 15_000;
-    public static final int INCLUSION_NUMBER_OF_PACKETS = 90;
+    public static final int INCLUSION_NUMBER_OF_PACKETS = 87;
     // TODO: Relax the inclusion time if needed
     //public static final int INCLUSION_WINDOW_MILLIS = 30_000;
 
@@ -64,9 +64,9 @@ public class TriggerTrafficExtractor implements PcapPacketFilter {
         // Use the native support for BPF to immediately filter irrelevant traffic.
         handle.setFilter("ip host " + mDeviceIp, BpfProgram.BpfCompileMode.OPTIMIZE);
         PcapHandleReader pcapReader = new PcapHandleReader(handle, this, extractedPacketsConsumers);
-        System.out.println("Perform Extraction started");
+        //System.out.println("Perform Extraction started");
         pcapReader.readFromHandle(); 
-        System.out.println("Perform Extraction finished");
+        //System.out.println("Perform Extraction finished");
     }
 
     /**
@@ -102,7 +102,7 @@ public class TriggerTrafficExtractor implements PcapPacketFilter {
             if(!trigger.isBefore(packet.getTimestamp())) break;
             index=i;
         }
-        System.out.println("Index value "+index);
+        //System.out.println("Index value "+index);
         if (index==-1){
             return include;
         }

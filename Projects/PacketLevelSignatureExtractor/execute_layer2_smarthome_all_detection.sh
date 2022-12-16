@@ -805,3 +805,37 @@ EVENTS_OCCURED="$SIGNATURES_BASE_DIR/ring-alarm/timestamps/ring-alarm-apr-26-201
 PROGRAM_ARGS="'$PCAP_FILE' '$ANALYSIS' '$SIGNATURE' '$RESULTS_FILE' '$SIGNATURE_DURATION' '$EPSILON' '$EVENT_TYPES' '$EVENTS_OCCURED'"
 #./gradlew run -DmainClass=edu.uci.iotproject.detection.layer2.Layer2SignatureDetector --args="$PROGRAM_ARGS"
 # ======================================================================================================================
+# ==================================================== AMAZON PLUG =====================================================
+PCAP_FILE="$PCAPS_BASE_DIR/amazon-plug/wlan1/amazon-plug.wlan1.detection.pcap"
+
+# DEVICE SIDE
+ON_ANALYSIS="$SIGNATURES_BASE_DIR/amazon-plug/analyses/amazon-plug-onClusters-device-side.cls"
+OFF_ANALYSIS="$SIGNATURES_BASE_DIR/amazon-plug/analyses/amazon-plug-offClusters-device-side.cls"
+ON_SIGNATURE="$SIGNATURES_BASE_DIR/amazon-plug/signatures/amazon-plug-onSignature-device-side.sig"
+OFF_SIGNATURE="$SIGNATURES_BASE_DIR/amazon-plug/signatures/amazon-plug-offSignature-device-side.sig"
+RESULTS_FILE="$OUTPUT_DIR/amazon-plug/amazon-plug.wlan1.detection.pcap___device-side.detectionresults"
+SIGNATURE_DURATION="4990"
+EPSILON="10.0"
+
+PROGRAM_ARGS="'$PCAP_FILE' '$ON_ANALYSIS' '$OFF_ANALYSIS' '$ON_SIGNATURE' '$OFF_SIGNATURE' '$RESULTS_FILE' '$SIGNATURE_DURATION' '$EPSILON'"
+#./gradlew run -DmainClass=edu.uci.iotproject.detection.layer2.Layer2SignatureDetector --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+
+# ================================================= TP LINK BULB ON/OFF ================================================
+# LOCAL
+PCAP_FILE="$PCAPS_BASE_DIR/tplink-bulb/tplink-bulb-onoff/wlan1/tplink-bulb-onoff.wlan1.detection.pcap"
+
+# Has no device side signature.
+
+# PHONE SIDE
+SIGNATURE="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-onoff/signatures/tplink-bulb-onoff-Signature-phone-side.sig"
+ANALYSIS="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-onoff/analyses/tplink-bulb-onoff-Clusters-phone-side.cls"
+RESULTS_FILE="$OUTPUT_DIR/tplink-bulb/tplink-bulb-onoff/tplink-bulb-onoff.wlan1.detection.pcap___phone-side.detectionresults"
+SIGNATURE_DURATION="87"
+EPSILON="10.0"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-onoff/timestamps/tplink-bulb-onoff-nov-16-2018-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-onoff/timestamps/tplink-bulb-onoff-nov-16-2018-eventsOccured.txt"
+
+PROGRAM_ARGS="'$PCAP_FILE' '$ANALYSIS' '$SIGNATURE' '$RESULTS_FILE' '$SIGNATURE_DURATION' '$EPSILON' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+./gradlew run -DmainClass=edu.uci.iotproject.detection.layer2.Layer2SignatureDetector --args="$PROGRAM_ARGS"
+# ======================================================================================================================

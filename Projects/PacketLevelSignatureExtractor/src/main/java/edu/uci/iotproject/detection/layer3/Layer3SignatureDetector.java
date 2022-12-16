@@ -514,6 +514,7 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
             DijkstraShortestPath<Vertex, DefaultWeightedEdge> dijkstra = new DijkstraShortestPath<>(graph);
             GraphPath<Vertex, DefaultWeightedEdge> shortestPath = dijkstra.getPath(source, sink);
             if (shortestPath != null) {
+                //System.out.println("Entered into Dijkstra with weight "+(long)shortestPath.getWeight());
                 // The total weight is the duration between the first packet of the first sequence and the last packet
                 // of the last sequence, so we simply have to compare the weight against the timeframe that we allow
                 // the signature to span. For now we just use the inclusion window we defined for training purposes.

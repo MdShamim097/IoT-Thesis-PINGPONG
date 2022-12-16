@@ -1145,24 +1145,6 @@ EVENTS_OCCURED="$SIGNATURES_BASE_DIR/ring-alarm/timestamps/ring-alarm-apr-26-201
 PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
 #./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
 # ======================================================================================================================
-# =================================================== AMAZON PLUG ======================================================
-# LOCAL
-INPUT_PCAP="$SIGNATURES_BASE_DIR/amazon-plug/wlan1/amazon-plug.wlan1.local.pcap"
-
-# Device Signature
-OUTPUT_PCAP="$OUTPUT_DIR/amazon-plug/wlan1/amazon-plug-processed.pcap"
-TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/amazon-plug/timestamps/amazon-plug-apr-16-2019.timestamps"
-DEVICE_IP="192.168.1.189"
-SIGNATURE="$OUTPUT_DIR/amazon-plug/signatures/amazon-plug-Signature-device-side.sig"
-ANALYSIS="$OUTPUT_DIR/amazon-plug/analyses/amazon-plug-Clusters-device-side.cls"
-EPSILON="10.0"
-DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/amazon-plug/timestamps/amazon-plug-apr-16-2019-deletedSequences.txt"
-EVENT_TYPES="$SIGNATURES_BASE_DIR/amazon-plug/timestamps/amazon-plug-apr-16-2019-eventTypes.txt"
-EVENTS_OCCURED="$SIGNATURES_BASE_DIR/amazon-plug/timestamps/amazon-plug-apr-16-2019-eventsOccured.txt"
-
-PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
-#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
-# ======================================================================================================================
 # ================================================= TP LINK BULB ON/OFF ================================================
 # LOCAL
 INPUT_PCAP="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-onoff/wlan1/tplink-bulb-onoff.wlan1.local.pcap"
@@ -1179,5 +1161,22 @@ EVENT_TYPES="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-onoff/timestamps/tplin
 EVENTS_OCCURED="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-onoff/timestamps/tplink-bulb-onoff-nov-16-2018-eventsOccured.txt"
 
 PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
-./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+# ================================================= ROOMBA VACUUM ROBOT ================================================
+INPUT_PCAP="$SIGNATURES_BASE_DIR/roomba-vacuum-robot/wlan1/roomba-vacuum-robot.wlan1.local.pcap"
+
+# Device Signature
+OUTPUT_PCAP="$OUTPUT_DIR/roomba-vacuum-robot/wlan1/roomba-vacuum-robot-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/roomba-vacuum-robot/timestamps/roomba-vacuum-robot-apr-25-2019.timestamps"
+DEVICE_IP="192.168.1.246"
+SIGNATURE="$OUTPUT_DIR/roomba-vacuum-robot/signatures/roomba-vacuum-robot-Signature-phone-side.sig"
+ANALYSIS="$OUTPUT_DIR/roomba-vacuum-robot/analyses/roomba-vacuum-robot-Clusters-phone-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/roomba-vacuum-robot/timestamps/roomba-vacuum-robot-apr-25-2019-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/roomba-vacuum-robot/timestamps/roomba-vacuum-robot-apr-25-2019-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/roomba-vacuum-robot/timestamps/roomba-vacuum-robot-apr-25-2019-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
 # ======================================================================================================================

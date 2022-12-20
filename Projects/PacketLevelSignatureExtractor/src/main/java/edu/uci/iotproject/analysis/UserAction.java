@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Set;
+import java.util.HashSet;
 
 /**
  * Models a user's action, such as toggling the smart plug on/off at a given time.
@@ -16,7 +17,7 @@ public class UserAction {
             withZone(ZoneId.of("America/Los_Angeles"));
 
     private String mName;
-    private Set<String> occurrences
+    private Set<String> occurrences;
     /**
      * Sets the {@link DateTimeFormatter} used when outputting a user action as a string and parsing a user action from
      * a string.

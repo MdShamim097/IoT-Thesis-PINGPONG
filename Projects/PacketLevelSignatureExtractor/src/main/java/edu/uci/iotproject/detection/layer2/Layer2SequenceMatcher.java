@@ -134,7 +134,6 @@ public class Layer2SequenceMatcher extends Layer2AbstractMatcher {
                 return false;
             }
             
-            
             // If we made it here, it means that this packet has the expected length, direction, and obeys the timing
             // constraints, so we store it and advance.
             mMatchedPackets.add(packet);

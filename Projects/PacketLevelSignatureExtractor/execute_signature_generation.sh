@@ -1180,3 +1180,166 @@ EVENTS_OCCURED="$SIGNATURES_BASE_DIR/roomba-vacuum-robot/timestamps/roomba-vacuu
 PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
 #./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
 # ======================================================================================================================
+# ==================================================== ARLO CAMERA =====================================================
+# LOCAL
+INPUT_PCAP="$SIGNATURES_BASE_DIR/arlo-camera/wlan1/arlo-camera.wlan1.local.pcap"
+
+# Has no device side signature.
+# PHONE SIDE
+OUTPUT_PCAP="$OUTPUT_DIR/arlo-camera/wlan1/arlo-camera-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/arlo-camera/timestamps/arlo-camera-nov-13-2018.timestamps"
+DEVICE_IP="192.168.1.246"
+SIGNATURE="$OUTPUT_DIR/arlo-camera/signatures/arlo-camera-Signature-phone-side.sig"
+ANALYSIS="$OUTPUT_DIR/arlo-camera/analyses/arlo-camera-Clusters-phone-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/arlo-camera/timestamps/arlo-camera-nov-13-2018-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/arlo-camera/timestamps/arlo-camera-nov-13-2018-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/arlo-camera/timestamps/arlo-camera-nov-13-2018-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+# ===================================================== WEMO PLUG ======================================================
+# LOCAL
+INPUT_PCAP="$SIGNATURES_BASE_DIR/wemo-plug/wlan1/wemo-plug.wlan1.local.pcap"
+
+# Has LAN signature.
+OUTPUT_PCAP="$OUTPUT_DIR/wemo-plug/wlan1/wemo-plug-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/wemo-plug/timestamps/wemo-plug-nov-20-2018.timestamps"
+DEVICE_IP="192.168.1.246"
+SIGNATURE="$OUTPUT_DIR/wemo-plug/signatures/wemo-plug-Signature-phone-side.sig"
+ANALYSIS="$OUTPUT_DIR/wemo-plug/analyses/wemo-plug-Clusters-phone-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/wemo-plug/timestamps/wemo-plug-nov-20-2018-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/wemo-plug/timestamps/wemo-plug-nov-20-2018-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/wemo-plug/timestamps/wemo-plug-nov-20-2018-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+
+# ================================================= NEST THERMOSTAT ====================================================
+INPUT_PCAP="$SIGNATURES_BASE_DIR/nest-thermostat/wlan1/nest-thermostat.wlan1.local.pcap"
+
+# Has no device side signature.
+# PHONE SIDE
+OUTPUT_PCAP="$OUTPUT_DIR/nest-thermostat/wlan1/nest-thermostat-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/nest-thermostat/timestamps/nest-thermostat-nov-15-2018.timestamps"
+DEVICE_IP="192.168.1.246"
+SIGNATURE="$OUTPUT_DIR/nest-thermostat/signatures/nest-thermostat-Signature-phone-side.sig"
+ANALYSIS="$OUTPUT_DIR/nest-thermostat/analyses/nest-thermostat-Clusters-phone-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/nest-thermostat/timestamps/nest-thermostat-nov-15-2018-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/nest-thermostat/timestamps/nest-thermostat-nov-15-2018-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/nest-thermostat/timestamps/nest-thermostat-nov-15-2018-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+# ==================================================== D-LINK PLUG =====================================================
+# LOCAL
+# DEVICE SIDE
+INPUT_PCAP="$SIGNATURES_BASE_DIR/dlink-plug/wlan1/dlink-plug.wlan1.local.pcap"
+OUTPUT_PCAP="$OUTPUT_DIR/dlink-plug/wlan1/dlink-plug-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/dlink-plug/timestamps/dlink-plug-nov-7-2018.timestamps"
+DEVICE_IP="192.168.1.199"
+SIGNATURE="$OUTPUT_DIR/dlink-plug/signatures/dlink-plug-Signature-device-side.sig"
+ANALYSIS="$OUTPUT_DIR/dlink-plug/analyses/dlink-plug-Clusters-device-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/dlink-plug/timestamps/dlink-plug-nov-7-2018-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/dlink-plug/timestamps/dlink-plug-nov-7-2018-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/dlink-plug/timestamps/dlink-plug-nov-7-2018-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+
+# =================================================== AMAZON PLUG ======================================================
+# LOCAL
+INPUT_PCAP="$SIGNATURES_BASE_DIR/amazon-plug/wlan1/amazon-plug.wlan1.local.pcap"
+
+# Device Signature
+OUTPUT_PCAP="$OUTPUT_DIR/amazon-plug/wlan1/amazon-plug-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/amazon-plug/timestamps/amazon-plug-apr-16-2019.timestamps"
+DEVICE_IP="192.168.1.189"
+SIGNATURE="$OUTPUT_DIR/amazon-plug/signatures/amazon-plug-Signature-device-side.sig"
+ANALYSIS="$OUTPUT_DIR/amazon-plug/analyses/amazon-plug-Clusters-device-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/amazon-plug/timestamps/amazon-plug-apr-16-2019-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/amazon-plug/timestamps/amazon-plug-apr-16-2019-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/amazon-plug/timestamps/amazon-plug-apr-16-2019-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+# ==================================================== D-LINK SIREN ====================================================
+# LOCAL
+INPUT_PCAP="$SIGNATURES_BASE_DIR/dlink-siren/wlan1/dlink-siren.wlan1.local.pcap"
+
+# Has no device side signature.
+# PHONE SIDE
+OUTPUT_PCAP="$OUTPUT_DIR/dlink-siren/wlan1/dlink-siren-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/dlink-siren/timestamps/dlink-siren-nov-9-2018.timestamps"
+DEVICE_IP="192.168.1.246"
+SIGNATURE="$OUTPUT_DIR/dlink-siren/signatures/dlink-siren-Signature-phone-side.sig"
+ANALYSIS="$OUTPUT_DIR/dlink-siren/analyses/dlink-siren-Clusters-phone-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/dlink-siren/timestamps/dlink-siren-nov-9-2018-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/dlink-siren/timestamps/dlink-siren-nov-9-2018-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/dlink-siren/timestamps/dlink-siren-nov-9-2018-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+# ================================================= KWIKSET DOORLOCK ===================================================
+INPUT_PCAP="$SIGNATURES_BASE_DIR/kwikset-doorlock/wlan1/kwikset-doorlock.wlan1.local.pcap"
+
+# Has no device side signature.
+# PHONE SIDE
+OUTPUT_PCAP="$OUTPUT_DIR/kwikset-doorlock/wlan1/kwikset-doorlock-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/kwikset-doorlock/timestamps/kwikset-doorlock-nov-10-2018.timestamps"
+DEVICE_IP="192.168.1.246"
+SIGNATURE="$OUTPUT_DIR/kwikset-doorlock/signatures/kwikset-doorlock-Signature-phone-side.sig"
+ANALYSIS="$OUTPUT_DIR/kwikset-doorlock/analyses/kwikset-doorlock-Clusters-phone-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/kwikset-doorlock/timestamps/kwikset-doorlock-nov-10-2018-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/kwikset-doorlock/timestamps/kwikset-doorlock-nov-10-2018-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/kwikset-doorlock/timestamps/kwikset-doorlock-nov-10-2018-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+# ==================================================== TP-LINK PLUG ====================================================
+# LOCAL
+# DEVICE SIDE (both the 112, 115 and 556, 1293 sequences)
+INPUT_PCAP="$SIGNATURES_BASE_DIR/tplink-plug/wlan1/tplink-plug.wlan1.local.pcap"
+
+# LAN signature.
+OUTPUT_PCAP="$OUTPUT_DIR/tplink-plug/wlan1/tplink-plug-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/tplink-plug/timestamps/tplink-plug-nov-8-2018.timestamps"
+DEVICE_IP="192.168.1.159"
+SIGNATURE="$OUTPUT_DIR/tplink-plug/signatures/tplink-plug-Signature-device-side.sig"
+ANALYSIS="$OUTPUT_DIR/tplink-plug/analyses/tplink-plug-Clusters-device-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/tplink-plug/timestamps/tplink-plug-nov-8-2018-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/tplink-plug/timestamps/tplink-plug-nov-8-2018-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/tplink-plug/timestamps/tplink-plug-nov-8-2018-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+
+# =============================================== SENGLED BULB ON/OFF ==================================================
+INPUT_PCAP="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-onoff/wlan1/sengled-bulb-onoff.wlan1.local.pcap"
+
+# Phone Signature
+OUTPUT_PCAP="$OUTPUT_DIR/sengled-bulb/sengled-bulb-onoff/wlan1/sengled-bulb-onoff-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-onoff/timestamps/sengled-bulb-onoff-apr-24-2019.timestamps"
+DEVICE_IP="192.168.1.246"
+SIGNATURE="$OUTPUT_DIR/sengled-bulb/sengled-bulb-onoff/signatures/sengled-bulb-onoff-Signature-phone-side.sig"
+ANALYSIS="$OUTPUT_DIR/sengled-bulb/sengled-bulb-onoff/analyses/sengled-bulb-onoff-Clusters-phone-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-onoff/timestamps/sengled-bulb-onoff-apr-24-2019-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-onoff/timestamps/sengled-bulb-onoff-apr-24-2019-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-onoff/timestamps/sengled-bulb-onoff-apr-24-2019-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"

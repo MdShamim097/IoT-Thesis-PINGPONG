@@ -121,8 +121,9 @@ public class Layer2RangeMatcher extends Layer2AbstractMatcher {
                 return false;
             }
             */
-            
+            //System.out.println("Value of getMatchedPacketsCount "+ getMatchedPacketsCount()+" mInclusionPackets "+mInclusionPackets);
             if(getMatchedPacketsCount()>=mInclusionPackets){
+                
                 return false;
             }
             
@@ -133,6 +134,7 @@ public class Layer2RangeMatcher extends Layer2AbstractMatcher {
             if (mMatchedPackets.size() == mLowerBound.size()) {
                 // TODO report (to observers?) that we are done?
             }
+            //System.out.println("Value of mMatchedPackets "+ mMatchedPackets.size());
             return true;
         }
         return false;

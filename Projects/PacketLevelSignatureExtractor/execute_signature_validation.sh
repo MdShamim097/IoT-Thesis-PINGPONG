@@ -910,7 +910,7 @@ PCAP_FILE="$SIGNATURES_BASE_DIR/ring-alarm/wlan1/ring-alarm.wlan1.local.pcap"
 ANALYSIS="$SIGNATURES_BASE_DIR/ring-alarm/analyses/ring-alarm-Clusters-device-side.cls"
 SIGNATURE="$SIGNATURES_BASE_DIR/ring-alarm/signatures/ring-alarm-Signature-device-side.sig"
 RESULTS_FILE="$OUTPUT_DIR/ring-alarm/ring-alarm.wlan1.validation.pcap___device-side.detectionresults"
-SIGNATURE_DURATION="665"
+SIGNATURE_DURATION="90"
 EPSILON="10.0"
 EVENT_TYPES="$SIGNATURES_BASE_DIR/ring-alarm/timestamps/ring-alarm-apr-26-2019-eventTypes.txt"
 EVENTS_OCCURED="$SIGNATURES_BASE_DIR/ring-alarm/timestamps/ring-alarm-apr-26-2019-eventsOccured.txt"
@@ -928,7 +928,7 @@ PCAP_FILE="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-onoff/wlan1/tplink-bulb-
 SIGNATURE="$OUTPUT_DIR/tplink-bulb/tplink-bulb-onoff/signatures/tplink-bulb-onoff-Signature-phone-side.sig"
 ANALYSIS="$OUTPUT_DIR/tplink-bulb/tplink-bulb-onoff/analyses/tplink-bulb-onoff-Clusters-phone-side.cls"
 RESULTS_FILE="$OUTPUT_DIR/tplink-bulb/tplink-bulb-onoff/tplink-bulb-onoff.wlan1.validation.pcap___phone-side.detectionresults"
-SIGNATURE_DURATION="87"
+SIGNATURE_DURATION="88"
 EPSILON="10.0"
 EVENT_TYPES="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-onoff/timestamps/tplink-bulb-onoff-nov-16-2018-eventTypes.txt"
 EVENTS_OCCURED="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-onoff/timestamps/tplink-bulb-onoff-nov-16-2018-eventsOccured.txt"
@@ -943,7 +943,7 @@ PCAP_FILE="$SIGNATURES_BASE_DIR/roomba-vacuum-robot/wlan1/roomba-vacuum-robot.wl
 ANALYSIS="$SIGNATURES_BASE_DIR/roomba-vacuum-robot/analyses/roomba-vacuum-robot-Clusters-phone-side.cls"
 SIGNATURE="$SIGNATURES_BASE_DIR/roomba-vacuum-robot/signatures/roomba-vacuum-robot-Signature-phone-side.sig"
 RESULTS_FILE="$OUTPUT_DIR/roomba-vacuum-robot/roomba-vacuum-robot.wlan1.validation.pcap___phone-side.detectionresults"
-SIGNATURE_DURATION="5959"
+SIGNATURE_DURATION="148"
 EPSILON="10.0"
 EVENT_TYPES="$SIGNATURES_BASE_DIR/roomba-vacuum-robot/timestamps/roomba-vacuum-robot-apr-25-2019-eventTypes.txt"
 EVENTS_OCCURED="$SIGNATURES_BASE_DIR/roomba-vacuum-robot/timestamps/roomba-vacuum-robot-apr-25-2019-eventsOccured.txt"
@@ -951,3 +951,152 @@ EVENTS_OCCURED="$SIGNATURES_BASE_DIR/roomba-vacuum-robot/timestamps/roomba-vacuu
 PROGRAM_ARGS="'$PCAP_FILE' '$ANALYSIS' '$SIGNATURE' '$RESULTS_FILE' '$SIGNATURE_DURATION' '$EPSILON' '$EVENT_TYPES' '$EVENTS_OCCURED'"
 #./gradlew run -DmainClass=edu.uci.iotproject.detection.layer3.Layer3SignatureDetector --args="$PROGRAM_ARGS"
 # ======================================================================================================================
+# ==================================================== ARLO CAMERA =====================================================
+# LOCAL
+PCAP_FILE="$SIGNATURES_BASE_DIR/arlo-camera/wlan1/arlo-camera.wlan1.local.pcap"
+
+# Has no device side signature.
+
+# PHONE SIDE
+SIGNATURE="$SIGNATURES_BASE_DIR/arlo-camera/signatures/arlo-camera-Signature-phone-side.sig"
+ANALYSIS="$SIGNATURES_BASE_DIR/arlo-camera/analyses/arlo-camera-Clusters-phone-side.cls"
+RESULTS_FILE="$OUTPUT_DIR/arlo-camera/arlo-camera.wlan1.validation.pcap___phone-side.detectionresults"
+SIGNATURE_DURATION="652"
+EPSILON="10.0"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/arlo-camera/timestamps/arlo-camera-nov-13-2018-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/arlo-camera/timestamps/arlo-camera-nov-13-2018-eventsOccured.txt"
+
+PROGRAM_ARGS="'$PCAP_FILE' '$ANALYSIS' '$SIGNATURE' '$RESULTS_FILE' '$SIGNATURE_DURATION' '$EPSILON' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.detection.layer3.Layer3SignatureDetector --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+
+# ===================================================== WEMO PLUG ======================================================
+# LOCAL
+PCAP_FILE="$SIGNATURES_BASE_DIR/wemo-plug/wlan1/wemo-plug.wlan1.local.pcap"
+
+# Has no device side signature.
+
+# PHONE SIDE
+SIGNATURE="$SIGNATURES_BASE_DIR/wemo-plug/signatures/wemo-plug-Signature-phone-side.sig"
+ANALYSIS="$SIGNATURES_BASE_DIR/wemo-plug/analyses/wemo-plug-Clusters-phone-side.cls"
+RESULTS_FILE="$OUTPUT_DIR/wemo-plug/wemo-plug.wlan1.validation.pcap___phone-side.detectionresults"
+SIGNATURE_DURATION="30"
+EPSILON="10.0"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/wemo-plug/timestamps/wemo-plug-nov-20-2018-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/wemo-plug/timestamps/wemo-plug-nov-20-2018-eventsOccured.txt"
+
+PROGRAM_ARGS="'$PCAP_FILE' '$ANALYSIS' '$SIGNATURE' '$RESULTS_FILE' '$SIGNATURE_DURATION' '$EPSILON' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.detection.layer3.Layer3SignatureDetector --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+# ================================================= NEST THERMOSTAT ====================================================
+PCAP_FILE="$SIGNATURES_BASE_DIR/nest-thermostat/wlan1/nest-thermostat.wlan1.local.pcap"
+
+# Has no device side signature.
+
+# PHONE SIDE
+SIGNATURE="$SIGNATURES_BASE_DIR/nest-thermostat/signatures/nest-thermostat-Signature-phone-side.sig"
+ANALYSIS="$SIGNATURES_BASE_DIR/nest-thermostat/analyses/nest-thermostat-Clusters-phone-side.cls"
+RESULTS_FILE="$OUTPUT_DIR/nest-thermostat/nest-thermostat.wlan1.validation.pcap___phone-side.detectionresults"
+SIGNATURE_DURATION="55"
+EPSILON="10.0"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/nest-thermostat/timestamps/nest-thermostat-nov-15-2018-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/nest-thermostat/timestamps/nest-thermostat-nov-15-2018-eventsOccured.txt"
+
+PROGRAM_ARGS="'$PCAP_FILE' '$ANALYSIS' '$SIGNATURE' '$RESULTS_FILE' '$SIGNATURE_DURATION' '$EPSILON' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.detection.layer3.Layer3SignatureDetector --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+# ==================================================== D-LINK PLUG =====================================================
+# LOCAL
+PCAP_FILE="$SIGNATURES_BASE_DIR/dlink-plug/wlan1/dlink-plug.wlan1.local.pcap"
+
+# DEVICE SIDE
+SIGNATURE="$SIGNATURES_BASE_DIR/dlink-plug/signatures/dlink-plug-Signature-device-side.sig"
+ANALYSIS="$SIGNATURES_BASE_DIR/dlink-plug/analyses/dlink-plug-Clusters-device-side.cls"
+RESULTS_FILE="$OUTPUT_DIR/dlink-plug/dlink-plug.wlan1.validation.pcap___device-side.detectionresults"
+SIGNATURE_DURATION="44"
+EPSILON="10.0"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/dlink-plug/timestamps/dlink-plug-nov-7-2018-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/dlink-plug/timestamps/dlink-plug-nov-7-2018-eventsOccured.txt"
+
+PROGRAM_ARGS="'$PCAP_FILE' '$ANALYSIS' '$SIGNATURE' '$RESULTS_FILE' '$SIGNATURE_DURATION' '$EPSILON' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.detection.layer3.Layer3SignatureDetector --args="$PROGRAM_ARGS"
+
+# ==================================================== AMAZON PLUG =====================================================
+# LOCAL
+PCAP_FILE="$SIGNATURES_BASE_DIR/amazon-plug/wlan1/amazon-plug.wlan1.local.pcap"
+
+# DEVICE SIDE
+SIGNATURE="$SIGNATURES_BASE_DIR/amazon-plug/signatures/amazon-plug-Signature-device-side.sig"
+ANALYSIS="$SIGNATURES_BASE_DIR/amazon-plug/analyses/amazon-plug-Clusters-device-side.cls"
+RESULTS_FILE="$OUTPUT_DIR/amazon-plug/amazon-plug.wlan1.validation.pcap___device-side.detectionresults"
+SIGNATURE_DURATION="87"
+EPSILON="10.0"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/amazon-plug/timestamps/amazon-plug-apr-16-2019-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/amazon-plug/timestamps/amazon-plug-apr-16-2019-eventsOccured.txt"
+
+PROGRAM_ARGS="'$PCAP_FILE' '$ANALYSIS' '$SIGNATURE' '$RESULTS_FILE' '$SIGNATURE_DURATION' '$EPSILON' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.detection.layer3.Layer3SignatureDetector --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+# ==================================================== D-LINK SIREN ====================================================
+# LOCAL
+PCAP_FILE="$SIGNATURES_BASE_DIR/dlink-siren/wlan1/dlink-siren.wlan1.local.pcap"
+
+# PHONE SIDE
+SIGNATURE="$SIGNATURES_BASE_DIR/dlink-siren/signatures/dlink-siren-Signature-phone-side.sig"
+ANALYSIS="$SIGNATURES_BASE_DIR/dlink-siren/analyses/dlink-siren-Clusters-phone-side.cls"
+RESULTS_FILE="$OUTPUT_DIR/dlink-siren/dlink-siren.wlan1.validation.pcap___phone-side.detectionresults"
+SIGNATURE_DURATION="26"
+EPSILON="10.0"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/dlink-siren/timestamps/dlink-siren-nov-9-2018-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/dlink-siren/timestamps/dlink-siren-nov-9-2018-eventsOccured.txt"
+
+PROGRAM_ARGS="'$PCAP_FILE' '$ANALYSIS' '$SIGNATURE' '$RESULTS_FILE' '$SIGNATURE_DURATION' '$EPSILON' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.detection.layer3.Layer3SignatureDetector --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+# ================================================= KWIKSET DOORLOCK ===================================================
+PCAP_FILE="$SIGNATURES_BASE_DIR/kwikset-doorlock/wlan1/kwikset-doorlock.wlan1.local.pcap"
+
+# Has no device side signature.
+
+# PHONE SIDE
+SIGNATURE="$SIGNATURES_BASE_DIR/kwikset-doorlock/signatures/kwikset-doorlock-Signature-phone-side.sig"
+ANALYSIS="$SIGNATURES_BASE_DIR/kwikset-doorlock/analyses/kwikset-doorlock-Clusters-phone-side.cls"
+RESULTS_FILE="$OUTPUT_DIR/kwikset-doorlock/kwikset-doorlock.wlan1.validation.pcap___phone-side.detectionresults"
+SIGNATURE_DURATION="38"
+EPSILON="10.0"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/kwikset-doorlock/timestamps/kwikset-doorlock-nov-10-2018-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/kwikset-doorlock/timestamps/kwikset-doorlock-nov-10-2018-eventsOccured.txt"
+
+PROGRAM_ARGS="'$PCAP_FILE' '$ANALYSIS' '$SIGNATURE' '$RESULTS_FILE' '$SIGNATURE_DURATION' '$EPSILON' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.detection.layer3.Layer3SignatureDetector --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+# ==================================================== TP-LINK PLUG ====================================================
+# LOCAL
+PCAP_FILE="$SIGNATURES_BASE_DIR/tplink-plug/wlan1/tplink-plug.wlan1.local.pcap"
+
+# PHONE SIDE (both the 112 and 115 sequences)
+SIGNATURE="$SIGNATURES_BASE_DIR/tplink-plug/signatures/tplink-plug-Signature-device-side.sig"
+ANALYSIS="$SIGNATURES_BASE_DIR/tplink-plug/analyses/tplink-plug-Clusters-device-side.cls"
+RESULTS_FILE="$OUTPUT_DIR/tplink-plug/tplink-plug.wlan1.validation.pcap___device-side.detectionresults"
+SIGNATURE_DURATION="69"
+EPSILON="10.0"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/tplink-plug/timestamps/tplink-plug-nov-8-2018-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/tplink-plug/timestamps/tplink-plug-nov-8-2018-eventsOccured.txt"
+
+PROGRAM_ARGS="'$PCAP_FILE' '$ANALYSIS' '$SIGNATURE' '$RESULTS_FILE' '$SIGNATURE_DURATION' '$EPSILON' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.detection.layer3.Layer3SignatureDetector --args="$PROGRAM_ARGS"
+# =============================================== SENGLED BULB ON/OFF ==================================================
+
+PCAP_FILE="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-onoff/wlan1/sengled-bulb-onoff.wlan1.local.pcap"
+
+# PHONE SIDE
+SIGNATURE="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-onoff/signatures/sengled-bulb-onoff-Signature-phone-side.sig"
+ANALYSIS="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-onoff/analyses/sengled-bulb-onoff-Clusters-phone-side.cls"
+RESULTS_FILE="$OUTPUT_DIR/sengled-bulb/sengled-bulb-onoff/sengled-bulb-onoff.wlan1.validation.pcap___phone-side.detectionresults"
+SIGNATURE_DURATION="18"
+EPSILON="10.0"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-onoff/timestamps/sengled-bulb-onoff-apr-24-2019-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-onoff/timestamps/sengled-bulb-onoff-apr-24-2019-eventsOccured.txt"
+
+PROGRAM_ARGS="'$PCAP_FILE' '$ANALYSIS' '$SIGNATURE' '$RESULTS_FILE' '$SIGNATURE_DURATION' '$EPSILON' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+./gradlew run -DmainClass=edu.uci.iotproject.detection.layer3.Layer3SignatureDetector --args="$PROGRAM_ARGS"

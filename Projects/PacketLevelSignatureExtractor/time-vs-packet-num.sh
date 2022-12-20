@@ -126,7 +126,7 @@ INPUT_PCAP="$SIGNATURES_BASE_DIR/dlink-plug/wlan1/dlink-plug.wlan1.local.pcap"
 OUTPUT_PCAP="$OUTPUT_DIR/dlink-plug/wlan1/dlink-plug-processed.pcap"
 TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/dlink-plug/timestamps/dlink-plug-nov-7-2018.timestamps"
 DEVICE_IP="192.168.1.199"
-TIMEZONE="-7"
+TIMEZONE="-8"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
 #getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 
@@ -166,7 +166,7 @@ INPUT_PCAP="$SIGNATURES_BASE_DIR/dlink-siren/wlan1/dlink-siren.wlan1.local.pcap"
 OUTPUT_PCAP="$OUTPUT_DIR/dlink-siren/wlan1/dlink-siren-processed.pcap"
 TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/dlink-siren/timestamps/dlink-siren-nov-9-2018.timestamps"
 DEVICE_IP="192.168.1.246"
-TIMEZONE="-7"
+TIMEZONE="-8"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
 #getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 # ======================================================================================================================
@@ -215,7 +215,7 @@ INPUT_PCAP="$SIGNATURES_BASE_DIR/hue-bulb/eth1/hue-bulb.eth1.local.pcap"
 OUTPUT_PCAP="$OUTPUT_DIR/hue-bulb/eth1/hue-bulb-processed.pcap"
 TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/hue-bulb/timestamps/hue-bulb-sept-11-2019.timestamps"
 DEVICE_IP="192.168.1.100"
-TIMEZONE="-7"
+TIMEZONE="-8"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
 #getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 # ======================================================================================================================
@@ -258,7 +258,7 @@ INPUT_PCAP="$SIGNATURES_BASE_DIR/kwikset-doorlock/wlan1/kwikset-doorlock.wlan1.l
 OUTPUT_PCAP="$OUTPUT_DIR/kwikset-doorlock/wlan1/kwikset-doorlock-processed.pcap"
 TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/kwikset-doorlock/timestamps/kwikset-doorlock-nov-10-2018.timestamps"
 DEVICE_IP="192.168.1.246"
-TIMEZONE="-7"
+TIMEZONE="-8"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
 #getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 # ======================================================================================================================
@@ -271,7 +271,7 @@ INPUT_PCAP="$SIGNATURES_BASE_DIR/nest-thermostat/wlan1/nest-thermostat.wlan1.loc
 OUTPUT_PCAP="$OUTPUT_DIR/nest-thermostat/wlan1/nest-thermostat-processed.pcap"
 TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/nest-thermostat/timestamps/nest-thermostat-nov-15-2018.timestamps"
 DEVICE_IP="192.168.1.246"
-TIMEZONE="-7"
+TIMEZONE="-8"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
 #getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 # ======================================================================================================================
@@ -506,7 +506,7 @@ INPUT_PCAP="$SIGNATURES_BASE_DIR/tplink-plug/wlan1/tplink-plug.wlan1.local.pcap"
 OUTPUT_PCAP="$OUTPUT_DIR/tplink-plug/wlan1/tplink-plug-processed.pcap"
 TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/tplink-plug/timestamps/tplink-plug-nov-8-2018.timestamps"
 DEVICE_IP="192.168.1.159"
-TIMEZONE="-7"
+TIMEZONE="-8"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
 #getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 
@@ -570,7 +570,7 @@ INPUT_PCAP="$SIGNATURES_BASE_DIR/wemo-plug/wlan1/wemo-plug.wlan1.local.pcap"
 OUTPUT_PCAP="$OUTPUT_DIR/wemo-plug/wlan1/wemo-plug-processed.pcap"
 TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/wemo-plug/timestamps/wemo-plug-nov-20-2018.timestamps"
 DEVICE_IP="192.168.1.246"
-TIMEZONE="-7"
+TIMEZONE="-8"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
 #getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 # ======================================================================================================================

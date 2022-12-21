@@ -48,6 +48,7 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
      * private static String ROUTER_WAN_IP = "128.195.205.105";
      */
     private static String ROUTER_WAN_IP = "128.195.55.242";
+    private static Set<String> occurrences=new HashSet<String>();
 
     public static void main(String[] args) throws PcapNativeException, NotOpenException, IOException {
         String errMsg = String.format("SPECTO version 1.0\n" +
@@ -245,6 +246,7 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
                  isRangeBasedForCurrent, eps, delta, packetSet);
             
             // final List<UserAction> detectedEvents = new ArrayList<>();
+
             currentDetector.addObserver((signature, match) -> {
                 PcapPacket firstPkt = match.get(0).get(0);
                 UserAction event = new UserAction(var, name ,firstPkt.getTimestamp()); //-------changed on 02/12/2022
@@ -303,7 +305,9 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
         Collections.sort(detectedEvents, Comparator.comparing(UserAction::getTimestamp));
 
         // Output the detected events
+        //System.out.println("before loop");
         detectedEvents.forEach(outputter);
+        // System.out.println("after loop");
 
         // String resultOn = "# Number of detected events of type " + UserAction.Type.TOGGLE_ON + ": " +
         //         detectedEvents.stream().filter(ua -> ua.getType() == UserAction.Type.TOGGLE_ON).count();
@@ -321,6 +325,12 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
             PrintWriterUtils.println(resultCurrent, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
             
         }  
+
+        for (UserAction ua : detectedEvents) {
+                String str=ua.getTimeAsString();
+                occurrences.add(str);
+        }
+        System.out.println("Number of duplicates of events: "+(detectedEvents.size()-occurrences.size()));
 
         // Flush output to results file and close it.
         resultsWriter.flush();

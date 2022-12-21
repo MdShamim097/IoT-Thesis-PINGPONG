@@ -3,8 +3,6 @@ package edu.uci.iotproject.analysis;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Set;
-import java.util.HashSet;
 
 /**
  * Models a user's action, such as toggling the smart plug on/off at a given time.
@@ -17,7 +15,6 @@ public class UserAction {
             withZone(ZoneId.of("America/Los_Angeles"));
 
     private String mName;
-    private Set<String> occurrences;
     /**
      * Sets the {@link DateTimeFormatter} used when outputting a user action as a string and parsing a user action from
      * a string.
@@ -58,14 +55,12 @@ public class UserAction {
     public UserAction(int typeOfAction, Instant timeOfAction) {
         mType = typeOfAction;
         mTimestamp = timeOfAction;
-        occurrences = new HashSet<String>();
     }
 
     public UserAction(int typeOfAction, String typeName , Instant timeOfAction) {
         mType = typeOfAction;
         mTimestamp = timeOfAction;
         mName=typeName;
-        occurrences = new HashSet<String>();
     }
 
     public void setName(String typeName){
@@ -126,14 +121,11 @@ public class UserAction {
     @Override
     public String toString() {
         String ss = TIMESTAMP_FORMATTER.format(mTimestamp);
-        if(occurrences.add(ss))
-        {
-            ss = ss+"# Unique";
-        }
-        else
-        {
-            ss = ss+"# Duplicate";
-        }
        return String.format("%s @ %s", mName, ss); //-------changed on 02/12/2022
+    }
+
+    public String getTimeAsString(){
+        String ss = TIMESTAMP_FORMATTER.format(mTimestamp);
+        return ss;
     }
 }

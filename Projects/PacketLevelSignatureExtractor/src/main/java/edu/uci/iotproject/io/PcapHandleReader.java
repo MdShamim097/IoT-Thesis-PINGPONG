@@ -71,8 +71,8 @@ public class PcapHandleReader {
         try {
             PcapPacket prevPacket = null;
             PcapPacket packet = null;
-
             while (!mTerminated) {
+            //System.out.println("Before while");
                 try {
                     packet = mHandle.getNextPacketEx();
                 } catch (TimeoutException te) {
@@ -95,6 +95,7 @@ public class PcapHandleReader {
                     throw new AssertionError("Packets not in ascending temporal order");
                     */
                 }
+                //System.out.println("Before loop");
                 if (mPacketFilter.shouldIncludePacket(packet)) {
                     // Packet accepted for inclusion; deliver it to observing client code.
                     for (PacketListener consumer : mPacketListeners) {
@@ -102,6 +103,7 @@ public class PcapHandleReader {
                     }
                 }
                 prevPacket = packet;
+            //System.out.println("After while");
             }
         } catch (EOFException eof) {
             // Reached end of file. All good.
@@ -112,6 +114,7 @@ public class PcapHandleReader {
                     String.format("[[[ %s: %d packets appeared out of order (with regards to their timestamps) ]]]",
                             getClass().getSimpleName(), outOfOrderPackets));
         }
+        //System.out.println("After loop");
         mHandle.close();
     }
 

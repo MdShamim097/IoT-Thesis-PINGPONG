@@ -48,6 +48,8 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
     // TODO: We can remove the following constants if we do remove router's MAC filtering for directions
     private static String TRAINING_ROUTER_WLAN_MAC = null;
     private static String ROUTER_WLAN_MAC = null;
+    private static Set<String> occurrences=new HashSet<String>();
+
     //private static String TRAINING_ROUTER_WLAN_MAC = "b0:b9:8a:73:69:8e";
     //private static String ROUTER_WLAN_MAC = "00:c1:b1:14:eb:31";
 
@@ -240,6 +242,7 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
         // Update the signature with ranges if it is range-based
         List<Layer2SignatureDetector> Detector = new ArrayList<>();
         final List<UserAction> detectedEvents = new ArrayList<>(); //---updated on 27/11/2022
+        //System.out.println("before loop");
         for(int i=0;i<n;i++)
         { 
             final int var=i;
@@ -278,6 +281,7 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
             
             Detector.add(currentDetector);
         }
+        // System.out.println("after loop");
         // if (isRangeBasedForOff) {
         //     offSignature = PcapPacketUtils.useRangeBasedMatching(offSignature, offClusterAnalysis);
         // }
@@ -292,7 +296,6 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
         //     PrintWriterUtils.println(event, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
         //     detectedEvents.add(event);
         // });
-
         // Load the PCAP file
         PcapHandle handle;
         try {
@@ -307,7 +310,15 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
             reader.addPacketListener(curr);
         }
         // Parse the file
+        //System.out.println("Before loop");
         reader.readFromHandle();
+        //System.out.println("Size of detected events: "+detectedEvents.size());
+        for (UserAction ua : detectedEvents) {
+                String str=ua.getTimeAsString();
+                occurrences.add(str);
+        }
+        System.out.println("Number of duplicates of events: "+(detectedEvents.size()-occurrences.size()));
+        //System.out.println("After loop");
 
         // String resultOff = "# Number of detected events of type " + UserAction.Type.TOGGLE_OFF + ": " +
         //         detectedEvents.stream().filter(ua -> ua.getType() == UserAction.Type.TOGGLE_OFF).count();
@@ -315,7 +326,7 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
         //         Integer.toString(offDetector.getMaxSkippedPackets());
         // PrintWriterUtils.println(resultOn, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
         // PrintWriterUtils.println(resultOff, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
-
+        
         for(int i=0;i<n;i++)
         {
             final int var=i;
@@ -335,6 +346,7 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
                 } 
             }
         }
+        
         // Perform the skipped packet analysis if needed
         // if (onMaxSkippedPackets != -1 && offMaxSkippedPackets != -1) {
         //     PrintWriterUtils.println(onMaximumSkippedPackets, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
@@ -415,6 +427,7 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
         }
         mSignature = Collections.unmodifiableList(searchedSignature);
         List<Layer2ClusterMatcher> clusterMatchers = new ArrayList<>();
+        //System.out.println("before loop");
         for (int i = 0; i < mSignature.size(); i++) {
             List<List<PcapPacket>> cluster = mSignature.get(i);
             Layer2ClusterMatcher clusterMatcher = flowFilters == null ?
@@ -429,6 +442,7 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
             clusterMatcher.addObserver(this);
             clusterMatchers.add(clusterMatcher);
         }
+        //System.out.println("after loop");
         mClusterMatchers = Collections.unmodifiableList(clusterMatchers);
         mPendingMatches = new List[mClusterMatchers.size()];
         for (int i = 0; i < mPendingMatches.length; i++) {

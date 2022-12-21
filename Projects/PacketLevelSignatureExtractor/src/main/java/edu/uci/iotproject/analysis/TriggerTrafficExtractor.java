@@ -29,7 +29,7 @@ public class TriggerTrafficExtractor implements PcapPacketFilter {
     private int triggerCount=0;
 
     public static final int INCLUSION_WINDOW_MILLIS = 15_000;
-    public static final int INCLUSION_NUMBER_OF_PACKETS = 40; 
+    public static final int INCLUSION_NUMBER_OF_PACKETS = 26; 
     // TODO: Relax the inclusion time if needed
     //public static final int INCLUSION_WINDOW_MILLIS = 30_000;
 

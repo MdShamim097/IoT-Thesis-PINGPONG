@@ -916,7 +916,7 @@ SIGNATURE="$SIGNATURES_BASE_DIR/nest-thermostat/signatures/nest-thermostat-Signa
 ANALYSIS="$SIGNATURES_BASE_DIR/nest-thermostat/analyses/nest-thermostat-Clusters-phone-side.cls"
 RESULTS_FILE="$OUTPUT_DIR/nest-thermostat/nest-thermostat.eth0.detection.pcap___phone-side.detectionresults"
 SIGNATURE_DURATION="55"
-EPSILON="10.0"
+EPSILON="5.0"
 EVENT_TYPES="$SIGNATURES_BASE_DIR/nest-thermostat/timestamps/nest-thermostat-nov-15-2018-eventTypes.txt"
 EVENTS_OCCURED="$SIGNATURES_BASE_DIR/nest-thermostat/timestamps/nest-thermostat-nov-15-2018-eventsOccured.txt"
 
@@ -1015,6 +1015,102 @@ SIGNATURE_DURATION="36"
 EPSILON="10.0"
 EVENT_TYPES="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-onoff/timestamps/sengled-bulb-onoff-apr-24-2019-eventTypes.txt"
 EVENTS_OCCURED="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-onoff/timestamps/sengled-bulb-onoff-apr-24-2019-eventsOccured.txt"
+
+PROGRAM_ARGS="'$PCAP_FILE' '$ANALYSIS' '$SIGNATURE' '$RESULTS_FILE' '$SIGNATURE_DURATION' '$EPSILON' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.detection.layer3.Layer3SignatureDetector --args="$PROGRAM_ARGS"
+
+# =============================================== ECOBEE THERMOSTAT HVAC ===============================================
+PCAP_FILE="$PCAPS_BASE_DIR/ecobee-thermostat/ecobee-thermostat-hvac/eth0/ecobee-thermostat-hvac.eth0.detection.pcap"
+
+# PHONE SIDE
+SIGNATURE="$SIGNATURES_BASE_DIR/ecobee-thermostat/ecobee-thermostat-hvac/signatures/ecobee-thermostat-hvac-Signature-phone-side.sig"
+ANALYSIS="$SIGNATURES_BASE_DIR/ecobee-thermostat/ecobee-thermostat-hvac/analyses/ecobee-thermostat-hvac-Clusters-phone-side.cls"
+RESULTS_FILE="$OUTPUT_DIR/ecobee-thermostat/ecobee-thermostat-hvac/ecobee-thermostat-hvac.eth0.detection.pcap___phone-side.detectionresults"
+SIGNATURE_DURATION="410"
+EPSILON="10.0"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/ecobee-thermostat/ecobee-thermostat-hvac/timestamps/ecobee-thermostat-hvac-apr-17-2019-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/ecobee-thermostat/ecobee-thermostat-hvac/timestamps/ecobee-thermostat-hvac-apr-17-2019-eventsOccured.txt"
+
+PROGRAM_ARGS="'$PCAP_FILE' '$ANALYSIS' '$SIGNATURE' '$RESULTS_FILE' '$SIGNATURE_DURATION' '$EPSILON' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.detection.layer3.Layer3SignatureDetector --args="$PROGRAM_ARGS"
+
+# ======================================================================================================================
+
+# =============================================== ECOBEE THERMOSTAT FAN ================================================
+PCAP_FILE="$PCAPS_BASE_DIR/ecobee-thermostat/ecobee-thermostat-fan/eth0/ecobee-thermostat-fan.eth0.detection.pcap"
+
+# PHONE SIDE
+SIGNATURE="$SIGNATURES_BASE_DIR/ecobee-thermostat/ecobee-thermostat-fan/signatures/ecobee-thermostat-fan-Signature-phone-side.sig"
+ANALYSIS="$SIGNATURES_BASE_DIR/ecobee-thermostat/ecobee-thermostat-fan/analyses/ecobee-thermostat-fan-Clusters-phone-side.cls"
+RESULTS_FILE="$OUTPUT_DIR/ecobee-thermostat/ecobee-thermostat-fan/ecobee-thermostat-fan.eth0.detection.pcap___phone-side.detectionresults"
+SIGNATURE_DURATION="285"
+EPSILON="10.0"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/ecobee-thermostat/ecobee-thermostat-fan/timestamps/ecobee-thermostat-fan-apr-18-2019-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/ecobee-thermostat/ecobee-thermostat-fan/timestamps/ecobee-thermostat-fan-apr-18-2019-eventsOccured.txt"
+
+PROGRAM_ARGS="'$PCAP_FILE' '$ANALYSIS' '$SIGNATURE' '$RESULTS_FILE' '$SIGNATURE_DURATION' '$EPSILON' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.detection.layer3.Layer3SignatureDetector --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+
+# ============================================== BLOSSOM SPRINKLER MODE ================================================
+PCAP_FILE="$PCAPS_BASE_DIR/blossom-sprinkler/blossom-sprinkler-mode/eth0/blossom-sprinkler-mode.eth0.detection.pcap"
+
+# PHONE SIDE
+SIGNATURE="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-mode/signatures/blossom-sprinkler-mode-Signature-phone-side.sig"
+ANALYSIS="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-mode/analyses/blossom-sprinkler-mode-Clusters-phone-side.cls"
+RESULTS_FILE="$OUTPUT_DIR/blossom-sprinkler/blossom-sprinkler-mode/blossom-sprinkler-mode.eth0.detection.pcap___phone-side.detectionresults"
+SIGNATURE_DURATION="65"
+EPSILON="10.0"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-mode/timestamps/blossom-sprinkler-mode-apr-15-2019-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-mode/timestamps/blossom-sprinkler-mode-apr-15-2019-eventsOccured.txt"
+
+PROGRAM_ARGS="'$PCAP_FILE' '$ANALYSIS' '$SIGNATURE' '$RESULTS_FILE' '$SIGNATURE_DURATION' '$EPSILON' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.detection.layer3.Layer3SignatureDetector --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+# ================================================= RACHIO SPRINKLER MODE ==============================================
+# LOCAL
+PCAP_FILE="$PCAPS_BASE_DIR/rachio-sprinkler/rachio-sprinkler-mode/eth0/rachio-sprinkler-mode.eth0.detection.pcap"
+
+# DEVICE SIDE
+SIGNATURE="$SIGNATURES_BASE_DIR/rachio-sprinkler/rachio-sprinkler-mode/signatures/rachio-sprinkler-mode-Signature-device-side.sig"
+ANALYSIS="$SIGNATURES_BASE_DIR/rachio-sprinkler/rachio-sprinkler-mode/analyses/rachio-sprinkler-mode-Clusters-device-side.cls"
+RESULTS_FILE="$OUTPUT_DIR/rachio-sprinkler/rachio-sprinkler-mode/rachio-sprinkler-mode.eth0.detection.pcap___device-side.detectionresults"
+SIGNATURE_DURATION="6"
+EPSILON="10.0"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/rachio-sprinkler/rachio-sprinkler-mode/timestamps/rachio-sprinkler-mode-apr-18-2019-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/rachio-sprinkler/rachio-sprinkler-mode/timestamps/rachio-sprinkler-mode-apr-18-2019-eventsOccured.txt"
+
+PROGRAM_ARGS="'$PCAP_FILE' '$ANALYSIS' '$SIGNATURE' '$RESULTS_FILE' '$SIGNATURE_DURATION' '$EPSILON' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.detection.layer3.Layer3SignatureDetector --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+# ====================================================== ST PLUG =======================================================
+PCAP_FILE="$PCAPS_BASE_DIR/st-plug/eth0/st-plug.eth0.detection.pcap"
+
+# Has no device side signature.
+
+# PHONE SIDE
+SIGNATURE="$SIGNATURES_BASE_DIR/st-plug/signatures/st-plug-Signature-phone-side.sig"
+ANALYSIS="$SIGNATURES_BASE_DIR/st-plug/analyses/st-plug-Clusters-phone-side.cls"
+RESULTS_FILE="$OUTPUT_DIR/st-plug/st-plug.eth0.detection.pcap___phone-side.detectionresults"
+SIGNATURE_DURATION="27"
+EPSILON="10.0"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/st-plug/timestamps/st-plug-nov-12-2018-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/st-plug/timestamps/st-plug-nov-12-2018-eventsOccured.txt"
+
+PROGRAM_ARGS="'$PCAP_FILE' '$ANALYSIS' '$SIGNATURE' '$RESULTS_FILE' '$SIGNATURE_DURATION' '$EPSILON' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.detection.layer3.Layer3SignatureDetector --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+# ============================================= BLOSSOM SPRINKLER QUICK RUN ============================================
+PCAP_FILE="$PCAPS_BASE_DIR/blossom-sprinkler/blossom-sprinkler-quickrun/eth0/blossom-sprinkler-quickrun.eth0.detection.pcap"
+
+# DEVICE SIDE
+SIGNATURE="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-quickrun/signatures/blossom-sprinkler-quickrun-Signature-device-side.sig"
+ANALYSIS="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-quickrun/analyses/blossom-sprinkler-quickrun-Clusters-device-side.cls"
+RESULTS_FILE="$OUTPUT_DIR/blossom-sprinkler/blossom-sprinkler-quickrun/blossom-sprinkler-quickrun.eth0.detection.pcap___device-side.detectionresults"
+SIGNATURE_DURATION="40"
+EPSILON="10.0"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-quickrun/timestamps/blossom-sprinkler-quickrun-jan-14-2019-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-quickrun/timestamps/blossom-sprinkler-quickrun-jan-14-2019-eventsOccured.txt"
 
 PROGRAM_ARGS="'$PCAP_FILE' '$ANALYSIS' '$SIGNATURE' '$RESULTS_FILE' '$SIGNATURE_DURATION' '$EPSILON' '$EVENT_TYPES' '$EVENTS_OCCURED'"
 #./gradlew run -DmainClass=edu.uci.iotproject.detection.layer3.Layer3SignatureDetector --args="$PROGRAM_ARGS"

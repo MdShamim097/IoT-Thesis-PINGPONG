@@ -95,7 +95,7 @@ OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
 
 # PHONE SIDE
 DEVICE_IP="192.168.1.246"
-TIMEZONE="-7"
+TIMEZONE="-8"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
 #getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 # ======================================================================================================================
@@ -421,7 +421,7 @@ INPUT_PCAP="$SIGNATURES_BASE_DIR/st-plug/wlan1/st-plug.wlan1.local.pcap"
 OUTPUT_PCAP="$OUTPUT_DIR/st-plug/wlan1/st-plug-processed.pcap"
 TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/st-plug/timestamps/st-plug-nov-12-2018.timestamps"
 DEVICE_IP="192.168.1.246"
-TIMEZONE="-7"
+TIMEZONE="-8"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
 #getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 # ======================================================================================================================

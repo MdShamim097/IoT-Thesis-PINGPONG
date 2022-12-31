@@ -1178,7 +1178,7 @@ EVENT_TYPES="$SIGNATURES_BASE_DIR/roomba-vacuum-robot/timestamps/roomba-vacuum-r
 EVENTS_OCCURED="$SIGNATURES_BASE_DIR/roomba-vacuum-robot/timestamps/roomba-vacuum-robot-apr-25-2019-eventsOccured.txt"
 
 PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
-./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
 # ======================================================================================================================
 # ==================================================== ARLO CAMERA =====================================================
 # LOCAL
@@ -1228,7 +1228,7 @@ TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/nest-thermostat/timestamps/nest-thermostat-
 DEVICE_IP="192.168.1.246"
 SIGNATURE="$OUTPUT_DIR/nest-thermostat/signatures/nest-thermostat-Signature-phone-side.sig"
 ANALYSIS="$OUTPUT_DIR/nest-thermostat/analyses/nest-thermostat-Clusters-phone-side.cls"
-EPSILON="10.0"
+EPSILON="5.0"
 DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/nest-thermostat/timestamps/nest-thermostat-nov-15-2018-deletedSequences.txt"
 EVENT_TYPES="$SIGNATURES_BASE_DIR/nest-thermostat/timestamps/nest-thermostat-nov-15-2018-eventTypes.txt"
 EVENTS_OCCURED="$SIGNATURES_BASE_DIR/nest-thermostat/timestamps/nest-thermostat-nov-15-2018-eventsOccured.txt"
@@ -1340,6 +1340,110 @@ EPSILON="10.0"
 DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-onoff/timestamps/sengled-bulb-onoff-apr-24-2019-deletedSequences.txt"
 EVENT_TYPES="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-onoff/timestamps/sengled-bulb-onoff-apr-24-2019-eventTypes.txt"
 EVENTS_OCCURED="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-onoff/timestamps/sengled-bulb-onoff-apr-24-2019-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+
+# =============================================== ECOBEE THERMOSTAT HVAC ===============================================
+INPUT_PCAP="$SIGNATURES_BASE_DIR/ecobee-thermostat/ecobee-thermostat-hvac/wlan1/ecobee-thermostat-hvac.wlan1.local.pcap"
+
+# Phone Signature
+OUTPUT_PCAP="$OUTPUT_DIR/ecobee-thermostat/ecobee-thermostat-hvac/wlan1/ecobee-thermostat-hvac-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/ecobee-thermostat/ecobee-thermostat-hvac/timestamps/ecobee-thermostat-hvac-apr-17-2019.timestamps"
+DEVICE_IP="192.168.1.130"
+SIGNATURE="$OUTPUT_DIR/ecobee-thermostat/ecobee-thermostat-hvac/signatures/ecobee-thermostat-hvac-Signature-phone-side.sig"
+ANALYSIS="$OUTPUT_DIR/ecobee-thermostat/ecobee-thermostat-hvac/analyses/ecobee-thermostat-hvac-Clusters-phone-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/ecobee-thermostat/ecobee-thermostat-hvac/timestamps/ecobee-thermostat-hvac-apr-17-2019-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/ecobee-thermostat/ecobee-thermostat-hvac/timestamps/ecobee-thermostat-hvac-apr-17-2019-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/ecobee-thermostat/ecobee-thermostat-hvac/timestamps/ecobee-thermostat-hvac-apr-17-2019-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+
+# =============================================== ECOBEE THERMOSTAT FAN ================================================
+INPUT_PCAP="$SIGNATURES_BASE_DIR/ecobee-thermostat/ecobee-thermostat-fan/wlan1/ecobee-thermostat-fan.wlan1.local.pcap"
+
+# Phone Signature
+OUTPUT_PCAP="$OUTPUT_DIR/ecobee-thermostat/ecobee-thermostat-fan/wlan1/ecobee-thermostat-fan-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/ecobee-thermostat/ecobee-thermostat-fan/timestamps/ecobee-thermostat-fan-apr-18-2019.timestamps"
+DEVICE_IP="192.168.1.130"
+SIGNATURE="$OUTPUT_DIR/ecobee-thermostat/ecobee-thermostat-fan/signatures/ecobee-thermostat-fan-Signature-phone-side.sig"
+ANALYSIS="$OUTPUT_DIR/ecobee-thermostat/ecobee-thermostat-fan/analyses/ecobee-thermostat-fan-Clusters-phone-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/ecobee-thermostat/ecobee-thermostat-fan/timestamps/ecobee-thermostat-fan-apr-18-2019-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/ecobee-thermostat/ecobee-thermostat-fan/timestamps/ecobee-thermostat-fan-apr-18-2019-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/ecobee-thermostat/ecobee-thermostat-fan/timestamps/ecobee-thermostat-fan-apr-18-2019-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+# =============================================== BLOSSOM SPRINKLER MODE ===============================================
+INPUT_PCAP="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-mode/wlan1/blossom-sprinkler-mode.wlan1.local.pcap"
+
+# PHONE SIDE
+OUTPUT_PCAP="$OUTPUT_DIR/blossom-sprinkler/blossom-sprinkler-mode/wlan1/blossom-sprinkler-mode-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-mode/timestamps/blossom-sprinkler-mode-apr-15-2019.timestamps"
+DEVICE_IP="192.168.1.246"
+SIGNATURE="$OUTPUT_DIR/blossom-sprinkler/blossom-sprinkler-mode/signatures/blossom-sprinkler-mode-Signature-phone-side.sig"
+ANALYSIS="$OUTPUT_DIR/blossom-sprinkler/blossom-sprinkler-mode/analyses/blossom-sprinkler-mode-Clusters-phone-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-mode/timestamps/blossom-sprinkler-mode-apr-15-2019-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-mode/timestamps/blossom-sprinkler-mode-apr-15-2019-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-mode/timestamps/blossom-sprinkler-mode-apr-15-2019-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+# ================================================= RACHIO SPRINKLER MODE ==============================================
+# LOCAL
+INPUT_PCAP="$SIGNATURES_BASE_DIR/rachio-sprinkler/rachio-sprinkler-mode/wlan1/rachio-sprinkler-mode.wlan1.local.pcap"
+
+# Device Signature
+OUTPUT_PCAP="$OUTPUT_DIR/rachio-sprinkler/rachio-sprinkler-mode/wlan1/rachio-sprinkler-mode-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/rachio-sprinkler/rachio-sprinkler-mode/timestamps/rachio-sprinkler-mode-apr-18-2019.timestamps"
+DEVICE_IP="192.168.1.143"
+SIGNATURE="$OUTPUT_DIR/rachio-sprinkler/rachio-sprinkler-mode/signatures/rachio-sprinkler-mode-Signature-device-side.sig"
+ANALYSIS="$OUTPUT_DIR/rachio-sprinkler/rachio-sprinkler-mode/analyses/rachio-sprinkler-mode-Clusters-device-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/rachio-sprinkler/rachio-sprinkler-mode/timestamps/rachio-sprinkler-mode-apr-18-2019-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/rachio-sprinkler/rachio-sprinkler-mode/timestamps/rachio-sprinkler-mode-apr-18-2019-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/rachio-sprinkler/rachio-sprinkler-mode/timestamps/rachio-sprinkler-mode-apr-18-2019-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+# ====================================================== ST PLUG =======================================================
+INPUT_PCAP="$SIGNATURES_BASE_DIR/st-plug/wlan1/st-plug.wlan1.local.pcap"
+
+# Has no device side signature.
+# PHONE SIDE
+OUTPUT_PCAP="$OUTPUT_DIR/st-plug/wlan1/st-plug-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/st-plug/timestamps/st-plug-nov-12-2018.timestamps"
+DEVICE_IP="192.168.1.246"
+SIGNATURE="$OUTPUT_DIR/st-plug/signatures/st-plug-Signature-phone-side.sig"
+ANALYSIS="$OUTPUT_DIR/st-plug/analyses/st-plug-Clusters-phone-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/st-plug/timestamps/st-plug-nov-12-2018-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/st-plug/timestamps/st-plug-nov-12-2018-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/st-plug/timestamps/st-plug-nov-12-2018-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+
+# ============================================= BLOSSOM SPRINKLER QUICK RUN ============================================
+# DEVICE SIDE
+INPUT_PCAP="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-quickrun/wlan1/blossom-sprinkler-quickrun.wlan1.local.pcap"
+OUTPUT_PCAP="$OUTPUT_DIR/blossom-sprinkler/blossom-sprinkler-quickrun/wlan1/blossom-sprinkler-quickrun-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-quickrun/timestamps/blossom-sprinkler-quickrun-jan-14-2019.timestamps"
+DEVICE_IP="192.168.1.229"
+SIGNATURE="$OUTPUT_DIR/blossom-sprinkler/blossom-sprinkler-quickrun/signatures/blossom-sprinkler-quickrun-Signature-device-side.sig"
+ANALYSIS="$OUTPUT_DIR/blossom-sprinkler/blossom-sprinkler-quickrun/analyses/blossom-sprinkler-quickrun-Clusters-device-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-quickrun/timestamps/blossom-sprinkler-quickrun-jan-14-2019-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-quickrun/timestamps/blossom-sprinkler-quickrun-jan-14-2019-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-quickrun/timestamps/blossom-sprinkler-quickrun-jan-14-2019-eventsOccured.txt"
 
 PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
 #./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"

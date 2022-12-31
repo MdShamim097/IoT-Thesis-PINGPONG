@@ -26,7 +26,7 @@ import java.time.Duration;
 import java.util.*;
 import java.util.function.Function;
 import java.util.regex.Pattern;
-
+import java.time.Instant;
 /**
  * Performs layer 2 signature detection.
  *
@@ -242,6 +242,8 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
         // Update the signature with ranges if it is range-based
         List<Layer2SignatureDetector> Detector = new ArrayList<>();
         final List<UserAction> detectedEvents = new ArrayList<>(); //---updated on 27/11/2022
+        boolean blank=true;
+        Instant last;
         //System.out.println("before loop");
         for(int i=0;i<n;i++)
         { 
@@ -274,9 +276,20 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
             // final List<UserAction> detectedEvents = new ArrayList<>();
            
             currentDetector.addObserver((signature, match) -> {
+                Instant curr=match.get(0).get(0).getTimestamp();
                 UserAction event = new UserAction(var, name , match.get(0).get(0).getTimestamp()); //-------changed on 02/12/2022
                 PrintWriterUtils.println(event, resultsWriter, DUPLICATE_OUTPUT_TO_STD_OUT);
-                detectedEvents.add(event);
+                if(blank)
+                {
+                    blank=false;
+                    last=curr;
+                    detectedEvents.add(event);
+                }
+                else if(!curr.isBefore(last))
+                {
+                    last=curr;
+                    detectedEvents.add(event);
+                }
             });
             
             Detector.add(currentDetector);

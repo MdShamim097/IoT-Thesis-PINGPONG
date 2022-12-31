@@ -49,7 +49,9 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
     private static String TRAINING_ROUTER_WLAN_MAC = null;
     private static String ROUTER_WLAN_MAC = null;
     private static Set<String> occurrences=new HashSet<String>();
-
+    private static boolean blank=true;
+    private static Instant last;
+    
     //private static String TRAINING_ROUTER_WLAN_MAC = "b0:b9:8a:73:69:8e";
     //private static String ROUTER_WLAN_MAC = "00:c1:b1:14:eb:31";
 
@@ -242,8 +244,7 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
         // Update the signature with ranges if it is range-based
         List<Layer2SignatureDetector> Detector = new ArrayList<>();
         final List<UserAction> detectedEvents = new ArrayList<>(); //---updated on 27/11/2022
-        boolean blank=true;
-        Instant last;
+  
         //System.out.println("before loop");
         for(int i=0;i<n;i++)
         { 
@@ -285,7 +286,7 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
                     last=curr;
                     detectedEvents.add(event);
                 }
-                else if(!curr.isBefore(last))
+                else if(last.isBefore(curr))
                 {
                     last=curr;
                     detectedEvents.add(event);
@@ -325,12 +326,15 @@ public class Layer2SignatureDetector implements PacketListener, ClusterMatcherOb
         // Parse the file
         //System.out.println("Before loop");
         reader.readFromHandle();
+        System.out.println("------------------------------");
         //System.out.println("Size of detected events: "+detectedEvents.size());
         for (UserAction ua : detectedEvents) {
-                String str=ua.getTimeAsString();
-                occurrences.add(str);
+                String str=ua.toString();
+                //occurrences.add(str);
+                System.out.println(str);
         }
-        System.out.println("Number of duplicates of events: "+(detectedEvents.size()-occurrences.size()));
+        
+        System.out.println("Number of detected events: "+detectedEvents.size());
         //System.out.println("After loop");
 
         // String resultOff = "# Number of detected events of type " + UserAction.Type.TOGGLE_OFF + ": " +

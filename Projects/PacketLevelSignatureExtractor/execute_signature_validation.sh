@@ -943,7 +943,7 @@ PCAP_FILE="$SIGNATURES_BASE_DIR/roomba-vacuum-robot/wlan1/roomba-vacuum-robot.wl
 ANALYSIS="$SIGNATURES_BASE_DIR/roomba-vacuum-robot/analyses/roomba-vacuum-robot-Clusters-phone-side.cls"
 SIGNATURE="$SIGNATURES_BASE_DIR/roomba-vacuum-robot/signatures/roomba-vacuum-robot-Signature-phone-side.sig"
 RESULTS_FILE="$OUTPUT_DIR/roomba-vacuum-robot/roomba-vacuum-robot.wlan1.validation.pcap___phone-side.detectionresults"
-SIGNATURE_DURATION="148"
+SIGNATURE_DURATION="87"
 EPSILON="10.0"
 EVENT_TYPES="$SIGNATURES_BASE_DIR/roomba-vacuum-robot/timestamps/roomba-vacuum-robot-apr-25-2019-eventTypes.txt"
 EVENTS_OCCURED="$SIGNATURES_BASE_DIR/roomba-vacuum-robot/timestamps/roomba-vacuum-robot-apr-25-2019-eventsOccured.txt"
@@ -1084,7 +1084,7 @@ EVENT_TYPES="$SIGNATURES_BASE_DIR/tplink-plug/timestamps/tplink-plug-nov-8-2018-
 EVENTS_OCCURED="$SIGNATURES_BASE_DIR/tplink-plug/timestamps/tplink-plug-nov-8-2018-eventsOccured.txt"
 
 PROGRAM_ARGS="'$PCAP_FILE' '$ANALYSIS' '$SIGNATURE' '$RESULTS_FILE' '$SIGNATURE_DURATION' '$EPSILON' '$EVENT_TYPES' '$EVENTS_OCCURED'"
-#./gradlew run -DmainClass=edu.uci.iotproject.detection.layer3.Layer3SignatureDetector --args="$PROGRAM_ARGS"
+./gradlew run -DmainClass=edu.uci.iotproject.detection.layer3.Layer3SignatureDetector --args="$PROGRAM_ARGS"
 # =============================================== SENGLED BULB ON/OFF ==================================================
 
 PCAP_FILE="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-onoff/wlan1/sengled-bulb-onoff.wlan1.local.pcap"

@@ -330,7 +330,7 @@ public class Layer3SignatureDetector implements PacketListener, ClusterMatcherOb
                 String str=ua.getTimeAsString();
                 occurrences.add(str);
         }
-        System.out.println("Number of duplicates of events: "+(detectedEvents.size()-occurrences.size()));
+        System.out.println("Number of duplicates events: "+(detectedEvents.size()-occurrences.size()));
 
         // Flush output to results file and close it.
         resultsWriter.flush();

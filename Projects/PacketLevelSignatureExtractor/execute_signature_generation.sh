@@ -1228,7 +1228,7 @@ TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/nest-thermostat/timestamps/nest-thermostat-
 DEVICE_IP="192.168.1.246"
 SIGNATURE="$OUTPUT_DIR/nest-thermostat/signatures/nest-thermostat-Signature-phone-side.sig"
 ANALYSIS="$OUTPUT_DIR/nest-thermostat/analyses/nest-thermostat-Clusters-phone-side.cls"
-EPSILON="5.0"
+EPSILON="10.0"
 DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/nest-thermostat/timestamps/nest-thermostat-nov-15-2018-deletedSequences.txt"
 EVENT_TYPES="$SIGNATURES_BASE_DIR/nest-thermostat/timestamps/nest-thermostat-nov-15-2018-eventTypes.txt"
 EVENTS_OCCURED="$SIGNATURES_BASE_DIR/nest-thermostat/timestamps/nest-thermostat-nov-15-2018-eventsOccured.txt"
@@ -1379,22 +1379,6 @@ EVENTS_OCCURED="$SIGNATURES_BASE_DIR/ecobee-thermostat/ecobee-thermostat-fan/tim
 PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
 #./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
 # ======================================================================================================================
-# =============================================== BLOSSOM SPRINKLER MODE ===============================================
-INPUT_PCAP="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-mode/wlan1/blossom-sprinkler-mode.wlan1.local.pcap"
-
-# PHONE SIDE
-OUTPUT_PCAP="$OUTPUT_DIR/blossom-sprinkler/blossom-sprinkler-mode/wlan1/blossom-sprinkler-mode-processed.pcap"
-TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-mode/timestamps/blossom-sprinkler-mode-apr-15-2019.timestamps"
-DEVICE_IP="192.168.1.246"
-SIGNATURE="$OUTPUT_DIR/blossom-sprinkler/blossom-sprinkler-mode/signatures/blossom-sprinkler-mode-Signature-phone-side.sig"
-ANALYSIS="$OUTPUT_DIR/blossom-sprinkler/blossom-sprinkler-mode/analyses/blossom-sprinkler-mode-Clusters-phone-side.cls"
-EPSILON="10.0"
-DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-mode/timestamps/blossom-sprinkler-mode-apr-15-2019-deletedSequences.txt"
-EVENT_TYPES="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-mode/timestamps/blossom-sprinkler-mode-apr-15-2019-eventTypes.txt"
-EVENTS_OCCURED="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-mode/timestamps/blossom-sprinkler-mode-apr-15-2019-eventsOccured.txt"
-
-PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
-#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
 # ================================================= RACHIO SPRINKLER MODE ==============================================
 # LOCAL
 INPUT_PCAP="$SIGNATURES_BASE_DIR/rachio-sprinkler/rachio-sprinkler-mode/wlan1/rachio-sprinkler-mode.wlan1.local.pcap"
@@ -1444,6 +1428,354 @@ EPSILON="10.0"
 DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-quickrun/timestamps/blossom-sprinkler-quickrun-jan-14-2019-deletedSequences.txt"
 EVENT_TYPES="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-quickrun/timestamps/blossom-sprinkler-quickrun-jan-14-2019-eventTypes.txt"
 EVENTS_OCCURED="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-quickrun/timestamps/blossom-sprinkler-quickrun-jan-14-2019-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+
+# ================================================== WEMO INSIGHT PLUG =================================================
+INPUT_PCAP="$SIGNATURES_BASE_DIR/wemo-insight-plug/wlan1/wemo-insight-plug.wlan1.local.pcap"
+
+# Has LAN signature.
+OUTPUT_PCAP="$OUTPUT_DIR/wemo-insight-plug/wlan1/wemo-insight-plug-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/wemo-insight-plug/timestamps/wemo-insight-plug-nov-21-2018.timestamps"
+DEVICE_IP="192.168.1.246"
+SIGNATURE="$OUTPUT_DIR/wemo-insight-plug/signatures/wemo-insight-plug-Signature-phone-side.sig"
+ANALYSIS="$OUTPUT_DIR/wemo-insight-plug/analyses/wemo-insight-plug-Clusters-phone-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/wemo-insight-plug/timestamps/wemo-insight-plug-nov-21-2018-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/wemo-insight-plug/timestamps/wemo-insight-plug-nov-21-2018-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/wemo-insight-plug/timestamps/wemo-insight-plug-nov-21-2018-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+# =============================================== BLOSSOM SPRINKLER MODE ===============================================
+INPUT_PCAP="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-mode/wlan1/blossom-sprinkler-mode.wlan1.local.pcap"
+
+# PHONE SIDE
+OUTPUT_PCAP="$OUTPUT_DIR/blossom-sprinkler/blossom-sprinkler-mode/wlan1/blossom-sprinkler-mode-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-mode/timestamps/blossom-sprinkler-mode-apr-15-2019.timestamps"
+DEVICE_IP="192.168.1.246"
+SIGNATURE="$OUTPUT_DIR/blossom-sprinkler/blossom-sprinkler-mode/signatures/blossom-sprinkler-mode-Signature-phone-side.sig"
+ANALYSIS="$OUTPUT_DIR/blossom-sprinkler/blossom-sprinkler-mode/analyses/blossom-sprinkler-mode-Clusters-phone-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-mode/timestamps/blossom-sprinkler-mode-apr-15-2019-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-mode/timestamps/blossom-sprinkler-mode-apr-15-2019-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/blossom-sprinkler/blossom-sprinkler-mode/timestamps/blossom-sprinkler-mode-apr-15-2019-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+
+
+# ============================================== RACHIO SPRINKLER QUICK RUN ============================================
+# LOCAL
+INPUT_PCAP="$SIGNATURES_BASE_DIR/rachio-sprinkler/rachio-sprinkler-quickrun/wlan1/rachio-sprinkler-quickrun.wlan1.local.pcap"
+
+# Device Signature
+OUTPUT_PCAP="$OUTPUT_DIR/rachio-sprinkler/rachio-sprinkler-quickrun/wlan1/rachio-sprinkler-quickrun-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/rachio-sprinkler/rachio-sprinkler-quickrun/timestamps/rachio-sprinkler-quickrun-apr-18-2019.timestamps"
+DEVICE_IP="192.168.1.143"
+SIGNATURE="$OUTPUT_DIR/rachio-sprinkler/rachio-sprinkler-quickrun/signatures/rachio-sprinkler-quickrun-Signature-device-side.sig"
+ANALYSIS="$OUTPUT_DIR/rachio-sprinkler/rachio-sprinkler-quickrun/analyses/rachio-sprinkler-quickrun-Clusters-device-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/rachio-sprinkler/rachio-sprinkler-quickrun/timestamps/rachio-sprinkler-quickrun-apr-18-2019-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/rachio-sprinkler/rachio-sprinkler-quickrun/timestamps/rachio-sprinkler-quickrun-apr-18-2019-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/rachio-sprinkler/rachio-sprinkler-quickrun/timestamps/rachio-sprinkler-quickrun-apr-18-2019-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+
+# ================================================= TP LINK BULB COLOR =================================================
+# LOCAL
+INPUT_PCAP="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-color/wlan1/tplink-bulb-color.wlan1.local.pcap"
+
+# No signature found for both phone and device sides
+OUTPUT_PCAP="$OUTPUT_DIR/tplink-bulb/tplink-bulb-color/wlan1/tplink-bulb-color-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-color/timestamps/tplink-bulb-color-apr-12-2019.timestamps"
+DEVICE_IP="192.168.1.246"
+SIGNATURE="$OUTPUT_DIR/tplink-bulb/tplink-bulb-color/signatures/tplink-bulb-color-Signature-phone-side.sig"
+ANALYSIS="$OUTPUT_DIR/tplink-bulb/tplink-bulb-color/analyses/tplink-bulb-color-Clusters-phone-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-color/timestamps/tplink-bulb-color-apr-12-2019-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-color/timestamps/tplink-bulb-color-apr-12-2019-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-color/timestamps/tplink-bulb-color-apr-12-2019-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+
+# =============================================== TP LINK BULB INTENSITY ===============================================
+# LOCAL
+INPUT_PCAP="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-intensity/wlan1/tplink-bulb-intensity.wlan1.local.pcap"
+# No signature found for both phone and device sides
+OUTPUT_PCAP="$OUTPUT_DIR/tplink-bulb/tplink-bulb-intensity/wlan1/tplink-bulb-intensity-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-intensity/timestamps/tplink-bulb-intensity-apr-29-2019.timestamps"
+DEVICE_IP="192.168.1.246"
+SIGNATURE="$OUTPUT_DIR/tplink-bulb/tplink-bulb-intensity/signatures/tplink-bulb-intensity-Signature-phone-side.sig"
+ANALYSIS="$OUTPUT_DIR/tplink-bulb/tplink-bulb-intensity/analyses/tplink-bulb-intensity-Clusters-phone-side.cls"
+OFF_ANALYSIS="$OUTPUT_DIR/tplink-bulb/tplink-bulb-intensity/analyses/tplink-bulb-intensity-offClusters-phone-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-intensity/timestamps/tplink-bulb-intensity-apr-29-2019-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-intensity/timestamps/tplink-bulb-intensity-apr-29-2019-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-intensity/timestamps/tplink-bulb-intensity-apr-29-2019-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+
+
+# =============================================== SENGLED BULB INTENSITY ===============================================
+INPUT_PCAP="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-intensity/wlan1/sengled-bulb-intensity.wlan1.local.pcap"
+
+# Phone Signature
+OUTPUT_PCAP="$OUTPUT_DIR/sengled-bulb/sengled-bulb-intensity/wlan1/sengled-bulb-intensity-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-intensity/timestamps/sengled-bulb-intensity-apr-17-2019.timestamps"
+DEVICE_IP="192.168.1.246"
+SIGNATURE="$OUTPUT_DIR/sengled-bulb/sengled-bulb-intensity/signatures/sengled-bulb-intensity-Signature-phone-side.sig"
+ANALYSIS="$OUTPUT_DIR/sengled-bulb/sengled-bulb-intensity/analyses/sengled-bulb-intensity-Clusters-phone-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-intensity/timestamps/sengled-bulb-intensity-apr-17-2019-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-intensity/timestamps/sengled-bulb-intensity-apr-17-2019-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-intensity/timestamps/sengled-bulb-intensity-apr-17-2019-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+
+
+# =============================================== SENGLED BULB ALL ===============================================
+INPUT_PCAP="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-all/wlan1/sengled-bulb-all.wlan1.local.pcap"
+
+# Phone Signature
+OUTPUT_PCAP="$OUTPUT_DIR/sengled-bulb/sengled-bulb-all/wlan1/sengled-bulb-all-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-all/timestamps/sengled-bulb-all.timestamps"
+DEVICE_IP="192.168.1.246"
+SIGNATURE="$OUTPUT_DIR/sengled-bulb/sengled-bulb-all/signatures/sengled-bulb-all-Signature-phone-side.sig"
+ANALYSIS="$OUTPUT_DIR/sengled-bulb/sengled-bulb-all/analyses/sengled-bulb-all-Clusters-phone-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-all/timestamps/sengled-bulb-all-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-all/timestamps/sengled-bulb-all-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-all/timestamps/sengled-bulb-all-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+# =============================================== TP LINK BULB ALL ===============================================
+# LOCAL
+INPUT_PCAP="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-all/wlan1/tplink-bulb-all.wlan1.local.pcap"
+# No signature found for both phone and device sides
+OUTPUT_PCAP="$OUTPUT_DIR/tplink-bulb/tplink-bulb-all/wlan1/tplink-bulb-all-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-all/timestamps/tplink-bulb-all.timestamps"
+DEVICE_IP="192.168.1.246"
+SIGNATURE="$OUTPUT_DIR/tplink-bulb/tplink-bulb-all/signatures/tplink-bulb-all-Signature-phone-side.sig"
+ANALYSIS="$OUTPUT_DIR/tplink-bulb/tplink-bulb-all/analyses/tplink-bulb-all-Clusters-phone-side.cls"
+OFF_ANALYSIS="$OUTPUT_DIR/tplink-bulb/tplink-bulb-all/analyses/tplink-bulb-all-offClusters-phone-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-all/timestamps/tplink-bulb-all-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-all/timestamps/tplink-bulb-all-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-all/timestamps/tplink-bulb-all-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+# ============================================== RACHIO SPRINKLER ALL ============================================
+# LOCAL
+INPUT_PCAP="$SIGNATURES_BASE_DIR/rachio-sprinkler/rachio-sprinkler-all/wlan1/rachio-sprinkler-all.wlan1.local.pcap"
+
+# Device Signature
+OUTPUT_PCAP="$OUTPUT_DIR/rachio-sprinkler/rachio-sprinkler-all/wlan1/rachio-sprinkler-all-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/rachio-sprinkler/rachio-sprinkler-all/timestamps/rachio-sprinkler-all.timestamps"
+DEVICE_IP="192.168.1.143"
+SIGNATURE="$OUTPUT_DIR/rachio-sprinkler/rachio-sprinkler-all/signatures/rachio-sprinkler-all-Signature-device-side.sig"
+ANALYSIS="$OUTPUT_DIR/rachio-sprinkler/rachio-sprinkler-all/analyses/rachio-sprinkler-all-Clusters-device-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/rachio-sprinkler/rachio-sprinkler-all/timestamps/rachio-sprinkler-all-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/rachio-sprinkler/rachio-sprinkler-all/timestamps/rachio-sprinkler-all-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/rachio-sprinkler/rachio-sprinkler-all/timestamps/rachio-sprinkler-all-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+
+# TODO: Mon(IoT)r PUBLIC DATASET
+# TODO: Use PCAP files in the public-dataset folder
+# TODO: For the TP-Link plug and WeMo Insight plug, the PCAP files in this folder are the results of retraining in December 2019
+# ==================================================== TP-LINK PLUG ====================================================
+INPUT_PCAP="$SIGNATURES_BASE_DIR/tplink-plug/wlan1/tplink-plug.wlan1.local.pcap"
+
+OUTPUT_PCAP="$OUTPUT_DIR/tplink-plug/wlan1/tplink-plug-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/tplink-plug/timestamps/tplink-plug-retraining-dec-25-2019.timestamps"
+DEVICE_IP="192.168.1.160"
+SIGNATURE="$OUTPUT_DIR/tplink-plug/signatures/tplink-plug-Signature-device-side.sig"
+ANALYSIS="$OUTPUT_DIR/tplink-plug/analyses/tplink-plug-Clusters-device-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/tplink-plug/timestamps/tplink-plug-retraining-dec-25-2019-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/tplink-plug/timestamps/tplink-plug-retraining-dec-25-2019-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/tplink-plug/timestamps/tplink-plug-retraining-dec-25-2019-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+# ================================================== WEMO INSIGHT PLUG =================================================
+INPUT_PCAP="$SIGNATURES_BASE_DIR/wemo-insight-plug/wlan1/wemo-insight-plug.wlan1.local.pcap"
+
+OUTPUT_PCAP="$OUTPUT_DIR/wemo-insight-plug/wlan1/wemo-insight-plug-processed.pcap"
+#TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/wemo-insight-plug/timestamps/wemo-insight-plug-retraining-jan-9-2020.timestamps"
+# The format 192.168.10 is needed to generate packet length 260
+DEVICE_IP="192.168.10.246"
+SIGNATURE="$OUTPUT_DIR/wemo-insight-plug/signatures/wemo-insight-plug-Signature-phone-side.sig"
+ANALYSIS="$OUTPUT_DIR/wemo-insight-plug/analyses/wemo-insight-plug-Clusters-phone-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/wemo-insight-plug/timestamps/wemo-insight-plug-retraining-jan-9-2020-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/wemo-insight-plug/timestamps/wemo-insight-plug-retraining-jan-9-2020-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/wemo-insight-plug/timestamps/wemo-insight-plug-retraining-jan-9-2020-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+# Mon(IoT)r DATASET
+# ================================================= BLINK CAMERA WATCH =================================================
+INPUT_PCAP="$SIGNATURES_BASE_DIR/blink-camera/blink-camera-watch/wlan1/blink-camera-watch.wlan1.local.pcap"
+
+OUTPUT_PCAP="$OUTPUT_DIR/blink-camera/blink-camera-watch/wlan1/blink-camera-watch-processed.pcap"
+#TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/blink-camera/blink-camera-watch/timestamps/blink-camera-watch-retraining-dec-23-2019.timestamps"
+DEVICE_IP="192.168.1.228"
+SIGNATURE="$OUTPUT_DIR/blink-camera/blink-camera-watch/signatures/blink-camera-watch-Signature-device-side.sig"
+ANALYSIS="$OUTPUT_DIR/blink-camera/blink-camera-watch/analyses/blink-camera-watch-Clusters-device-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/blink-camera/blink-camera-watch/timestamps/blink-camera-watch-retraining-dec-23-2019-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/blink-camera/blink-camera-watch/timestamps/blink-camera-watch-retraining-dec-23-2019-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/blink-camera/blink-camera-watch/timestamps/blink-camera-watch-retraining-dec-23-2019-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+
+# ================================================= BLINK CAMERA PHOTO =================================================
+INPUT_PCAP="$SIGNATURES_BASE_DIR/blink-camera/blink-camera-photo/wlan1/blink-camera-photo.wlan1.local.pcap"
+OUTPUT_PCAP="$OUTPUT_DIR/blink-camera/blink-camera-photo/wlan1/blink-camera-photo-processed.pcap"
+#TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/blink-camera/blink-camera-photo/timestamps/blink-camera-photo-retraining-dec-24-2019.timestamps"
+DEVICE_IP="192.168.1.228"
+SIGNATURE="$OUTPUT_DIR/blink-camera/blink-camera-photo/signatures/blink-camera-photo-Signature-device-side.sig"
+ANALYSIS="$OUTPUT_DIR/blink-camera/blink-camera-photo/analyses/blink-camera-photo-Clusters-device-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/blink-camera/blink-camera-photo/timestamps/blink-camera-photo-retraining-dec-24-2019-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/blink-camera/blink-camera-photo/timestamps/blink-camera-photo-retraining-dec-24-2019-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/blink-camera/blink-camera-photo/timestamps/blink-camera-photo-retraining-dec-24-2019-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+# =============================================== SENGLED BULB ON/OFF ==================================================
+# LOCAL
+INPUT_PCAP="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-onoff/eth1/sengled-bulb-onoff.eth1.local.pcap"
+
+# Device Signature
+DEVICE_IP="192.168.1.201"
+SIGNATURE="$OUTPUT_DIR/sengled-bulb/sengled-bulb-onoff/signatures/sengled-bulb-onoff-Signature-device-side.sig"
+ANALYSIS="$OUTPUT_DIR/sengled-bulb/sengled-bulb-onoff/analyses/sengled-bulb-onoff-Clusters-device-side.cls"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-onoff/timestamps/sengled-bulb-onoff-apr-24-2019.timestamps"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-onoff/timestamps/sengled-bulb-onoff-apr-24-2019-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-onoff/timestamps/sengled-bulb-onoff-apr-24-2019-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-onoff/timestamps/sengled-bulb-onoff-apr-24-2019-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+# ==============Mon(IoT)r
+# ================================================= TP LINK BULB ON/OFF ================================================
+INPUT_PCAP="$SIGNATURES_BASE_DIR/tplink-bulb-mon/wlan1/tplink-bulb-mon.pcap"
+
+# Has LAN signature.
+OUTPUT_PCAP="$OUTPUT_DIR/tplink-bulb-mon/wlan1/tplink-bulb-mon-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/tplink-bulb-mon/timestamps/tplink-bulb-mon.timestamps"
+DEVICE_IP="192.168.10.146"
+SIGNATURE="$OUTPUT_DIR/tplink-bulb-mon/signatures/tplink-bulb-mon-Signature-phone-side.sig"
+ANALYSIS="$OUTPUT_DIR/tplink-bulb-mon/analyses/tplink-bulb-mon-Clusters-phone-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/tplink-bulb-mon/timestamps/tplink-bulb-mon-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/tplink-bulb-mon/timestamps/tplink-bulb-mon-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/tplink-bulb-mon/timestamps/tplink-bulb-mon-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+# ================================================== WEMO INSIGHT PLUG =================================================
+INPUT_PCAP="$SIGNATURES_BASE_DIR/wemo-insight-plug-mon/wlan1/wemo-insight-plug-mon.pcap"
+
+# Has LAN signature.
+OUTPUT_PCAP="$OUTPUT_DIR/wemo-insight-plug-mon/wlan1/wemo-insight-plug-mon-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/wemo-insight-plug-mon/timestamps/wemo-insight-plug-mon.timestamps"
+DEVICE_IP="192.168.10.143"
+SIGNATURE="$OUTPUT_DIR/wemo-insight-plug-mon/signatures/wemo-insight-plug-Signature-phone-side.sig"
+ANALYSIS="$OUTPUT_DIR/wemo-insight-plug-mon/analyses/wemo-insight-plug-Clusters-phone-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/wemo-insight-plug-mon/timestamps/wemo-insight-plug-mon-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/wemo-insight-plug-mon/timestamps/wemo-insight-plug-mon-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/wemo-insight-plug-mon/timestamps/wemo-insight-plug-mon-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+# ================================================= BLINK CAMERA WATCH =================================================
+INPUT_PCAP="$SIGNATURES_BASE_DIR/blink-camera-mon/blink-camera-watch/wlan1/blink-camera-watch-mon.pcap"
+
+OUTPUT_PCAP="$OUTPUT_DIR/blink-camera-mon/blink-camera-watch/wlan1/blink-camera-watch-mon-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/blink-camera-mon/blink-camera-watch/timestamps/blink-camera-watch-mon.timestamps"
+DEVICE_IP="192.168.10.208"
+SIGNATURE="$OUTPUT_DIR/blink-camera-mon/blink-camera-watch/signatures/blink-camera-watch-Signature-device-side.sig"
+ANALYSIS="$OUTPUT_DIR/blink-camera-mon/blink-camera-watch/analyses/blink-camera-watch-Clusters-device-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/blink-camera-mon/blink-camera-watch/timestamps/blink-camera-watch-mon-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/blink-camera-mon/blink-camera-watch/timestamps/blink-camera-watch-mon-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/blink-camera-mon/blink-camera-watch/timestamps/blink-camera-watch-mon-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+# ======================================================================================================================
+# ================================================= BLINK CAMERA PHOTO =================================================
+INPUT_PCAP="$SIGNATURES_BASE_DIR/blink-camera-mon/blink-camera-photo/wlan1/blink-camera-photo-mon.pcap"
+OUTPUT_PCAP="$OUTPUT_DIR/blink-camera-mon/blink-camera-photo/wlan1/blink-camera-photo-mon-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/blink-camera-mon/blink-camera-photo/timestamps/blink-camera-photo-mon.timestamps"
+DEVICE_IP="192.168.10.208"
+SIGNATURE="$OUTPUT_DIR/blink-camera-mon/blink-camera-photo/signatures/blink-camera-photo-Signature-device-side.sig"
+ANALYSIS="$OUTPUT_DIR/blink-camera-mon/blink-camera-photo/analyses/blink-camera-photo-Clusters-device-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/blink-camera-mon/blink-camera-photo/timestamps/blink-camera-photo-mon-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/blink-camera-mon/blink-camera-photo/timestamps/blink-camera-photo-mon-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/blink-camera-mon/blink-camera-photo/timestamps/blink-camera-photo-mon-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+# ==================================================== TP-LINK PLUG ====================================================
+# DEVICE SIDE (both the 112, 115 and 556, 1293 sequences)
+INPUT_PCAP="$SIGNATURES_BASE_DIR/tplink-plug-mon/wlan1/tplink-plug-mon.pcap"
+
+# LAN signature.
+OUTPUT_PCAP="$OUTPUT_DIR/tplink-plug-mon/wlan1/tplink-plug-mon-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/tplink-plug-mon/timestamps/tplink-plug-mon.timestamps"
+DEVICE_IP="192.168.10.247"
+SIGNATURE="$OUTPUT_DIR/tplink-plug-mon/signatures/tplink-plug-Signature-device-side.sig"
+ANALYSIS="$OUTPUT_DIR/tplink-plug-mon/analyses/tplink-plug-Clusters-device-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/tplink-plug-mon/timestamps/tplink-plug-mon-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/tplink-plug-mon/timestamps/tplink-plug-mon-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/tplink-plug-mon/timestamps/tplink-plug-mon-eventsOccured.txt"
+
+PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
+#./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"
+# =============================================== SENGLED BULB ON/OFF ==================================================
+INPUT_PCAP="$SIGNATURES_BASE_DIR/sengled-bulb-mon/wlan1/sengled-bulb-mon.pcap"
+
+# Phone Signature
+OUTPUT_PCAP="$OUTPUT_DIR/sengled-bulb-mon/wlan1/sengled-bulb-mon-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/sengled-bulb-mon/timestamps/sengled-bulb-mon.timestamps"
+DEVICE_IP="192.168.10.202"
+SIGNATURE="$OUTPUT_DIR/sengled-bulb-mon/signatures/sengled-bulb-onoff-Signature-phone-side.sig"
+ANALYSIS="$OUTPUT_DIR/sengled-bulb-mon/analyses/sengled-bulb-onoff-Clusters-phone-side.cls"
+EPSILON="10.0"
+DELETED_SEQUENCES="$SIGNATURES_BASE_DIR/sengled-bulb-mon/timestamps/sengled-bulb-mon-deletedSequences.txt"
+EVENT_TYPES="$SIGNATURES_BASE_DIR/sengled-bulb-mon/timestamps/sengled-bulb-mon-eventTypes.txt"
+EVENTS_OCCURED="$SIGNATURES_BASE_DIR/sengled-bulb-mon/timestamps/sengled-bulb-mon-eventsOccured.txt"
 
 PROGRAM_ARGS="'$INPUT_PCAP' '$OUTPUT_PCAP' '$TIMESTAMP_FILE' '$DEVICE_IP' '$SIGNATURE' '$ANALYSIS' '$EPSILON' '$DELETED_SEQUENCES' '$EVENT_TYPES' '$EVENTS_OCCURED'"
 #./gradlew run -DmainClass=edu.uci.iotproject.SignatureGenerator --args="$PROGRAM_ARGS"

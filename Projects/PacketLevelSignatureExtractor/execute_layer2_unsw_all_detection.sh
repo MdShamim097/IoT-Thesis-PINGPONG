@@ -22,4 +22,3 @@ for PCAP_FILE in $UNSW_TRACES_DIR/*.pcap; do
     ./execute_layer2_unb_all_detection.sh $PCAP_FILE $SIGNATURES_BASE_DIR $OUTPUT_DIR/$OUTPUT_SUB_DIR
 done
 
-

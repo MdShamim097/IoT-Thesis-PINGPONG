@@ -215,7 +215,7 @@ INPUT_PCAP="$SIGNATURES_BASE_DIR/hue-bulb/eth1/hue-bulb.eth1.local.pcap"
 OUTPUT_PCAP="$OUTPUT_DIR/hue-bulb/eth1/hue-bulb-processed.pcap"
 TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/hue-bulb/timestamps/hue-bulb-sept-11-2019.timestamps"
 DEVICE_IP="192.168.1.100"
-TIMEZONE="-8"
+TIMEZONE="-7"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
 #getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 # ======================================================================================================================
@@ -524,7 +524,7 @@ INPUT_PCAP="$SIGNATURES_BASE_DIR/tplink-plug/wlan1/tplink-plug.wlan1.remote.pcap
 OUTPUT_PCAP="$OUTPUT_DIR/tplink-plug/wlan1/tplink-plug-processed.pcap"
 TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/tplink-plug/timestamps/tplink-plug-dec-2-2019.timestamps"
 DEVICE_IP="192.168.1.159"
-TIMEZONE="-7"
+TIMEZONE="-8"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
 #getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 # ======================================================================================================================
@@ -547,7 +547,7 @@ INPUT_PCAP="$SIGNATURES_BASE_DIR/wemo-insight-plug/wlan1/wemo-insight-plug.wlan1
 OUTPUT_PCAP="$OUTPUT_DIR/wemo-insight-plug/wlan1/wemo-insight-plug-processed.pcap"
 TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/wemo-insight-plug/timestamps/wemo-insight-plug-nov-21-2018.timestamps"
 DEVICE_IP="192.168.1.246"
-TIMEZONE="-7"
+TIMEZONE="-8"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
 #getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 # ======================================================================================================================
@@ -688,7 +688,7 @@ INPUT_PCAP="$SIGNATURES_BASE_DIR/blink-camera/blink-camera-watch/wlan1/blink-cam
 OUTPUT_PCAP="$OUTPUT_DIR/blink-camera/blink-camera-watch/wlan1/blink-camera-watch-processed.pcap"
 TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/blink-camera/blink-camera-watch/timestamps/blink-camera-watch-retraining-dec-23-2019.timestamps"
 DEVICE_IP="192.168.1.228"
-TIMEZONE="-7"
+TIMEZONE="-8"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
 #getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 # ======================================================================================================================
@@ -699,7 +699,121 @@ INPUT_PCAP="$SIGNATURES_BASE_DIR/blink-camera/blink-camera-photo/wlan1/blink-cam
 OUTPUT_PCAP="$OUTPUT_DIR/blink-camera/blink-camera-photo/wlan1/blink-camera-photo-processed.pcap"
 TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/blink-camera/blink-camera-photo/timestamps/blink-camera-photo-retraining-dec-24-2019.timestamps"
 DEVICE_IP="192.168.1.228"
+TIMEZONE="-8"
+OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
+# ======================================================================================================================
+# =============================================== SENGLED BULB ALL ==================================================
+INPUT_PCAP="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-all/wlan1/sengled-bulb-all.wlan1.local.pcap"
+
+# Phone Signature
+OUTPUT_PCAP="$OUTPUT_DIR/sengled-bulb/sengled-bulb-all/wlan1/sengled-bulb-all-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/sengled-bulb/sengled-bulb-all/timestamps/sengled-bulb-all.timestamps"
+DEVICE_IP="192.168.1.246"
+TIMEZONE="-7"
+OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
+
+# ======================================================================================================================
+
+# ================================================= TP LINK BULB ALL ================================================
+# LOCAL
+INPUT_PCAP="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-all/wlan1/tplink-bulb-all.wlan1.local.pcap"
+
+# Has LAN signature.
+OUTPUT_PCAP="$OUTPUT_DIR/tplink-bulb/tplink-bulb-all/wlan1/tplink-bulb-all-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/tplink-bulb/tplink-bulb-all/timestamps/tplink-bulb-all.timestamps"
+DEVICE_IP="192.168.1.246"
+TIMEZONE="-7"
+OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
+
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
+# ======================================================================================================================
+# ============================================== RACHIO SPRINKLER ALL ============================================
+# LOCAL
+INPUT_PCAP="$SIGNATURES_BASE_DIR/rachio-sprinkler/rachio-sprinkler-all/wlan1/rachio-sprinkler-all.wlan1.local.pcap"
+
+# Device Signature
+OUTPUT_PCAP="$OUTPUT_DIR/rachio-sprinkler/rachio-sprinkler-all/wlan1/rachio-sprinkler-all-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/rachio-sprinkler/rachio-sprinkler-all/timestamps/rachio-sprinkler-all.timestamps"
+DEVICE_IP="192.168.1.143"
 TIMEZONE="-7"
 OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
 #getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
 # ======================================================================================================================
+
+# TODO: Mon(IoT)r PUBLIC DATASET
+# TODO: Use PCAP files in the public-dataset folder
+# TODO: For the TP-Link plug and WeMo Insight plug, the PCAP files in this folder are the results of retraining in December 2019
+# ==================================================== TP-LINK PLUG ====================================================
+INPUT_PCAP="$SIGNATURES_BASE_DIR/tplink-plug/wlan1/tplink-plug.wlan1.local.pcap"
+
+OUTPUT_PCAP="$OUTPUT_DIR/tplink-plug/wlan1/tplink-plug-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/tplink-plug/timestamps/tplink-plug-retraining-dec-25-2019.timestamps"
+DEVICE_IP="192.168.1.160"
+TIMEZONE="-8"
+OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
+# ======================================================================================================================
+# ==================================================Mon(IoT)r================================================
+# ================================================== WEMO INSIGHT PLUG =================================================
+INPUT_PCAP="$SIGNATURES_BASE_DIR/wemo-insight-plug-mon/wlan1/wemo-insight-plug-mon.pcap"
+
+# Has LAN signature.
+OUTPUT_PCAP="$OUTPUT_DIR/wemo-insight-plug-mon/wlan1/wemo-insight-plug-mon-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/wemo-insight-plug-mon/timestamps/wemo-insight-plug-mon.timestamps"
+DEVICE_IP="192.168.10.143"
+TIMEZONE="-7"
+OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
+# ======================================================================================================================
+# ================================================= BLINK CAMERA WATCH =================================================
+INPUT_PCAP="$SIGNATURES_BASE_DIR/blink-camera-mon/blink-camera-watch/wlan1/blink-camera-watch-mon.pcap"
+OUTPUT_PCAP="$OUTPUT_DIR/blink-camera-mon/blink-camera-watch/wlan1/blink-camera-watch-mon-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/blink-camera-mon/blink-camera-watch/timestamps/blink-camera-watch-mon.timestamps"
+DEVICE_IP="192.168.10.208"
+TIMEZONE="-7"
+OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
+# ======================================================================================================================
+# ================================================= BLINK CAMERA PHOTO =================================================
+INPUT_PCAP="$SIGNATURES_BASE_DIR/blink-camera-mon/blink-camera-photo/wlan1/blink-camera-photo-mon.pcap"
+OUTPUT_PCAP="$OUTPUT_DIR/blink-camera-mon/blink-camera-photo/wlan1/blink-camera-photo-mon-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/blink-camera-mon/blink-camera-photo/timestamps/blink-camera-photo-mon.timestamps"
+DEVICE_IP="192.168.10.208"
+TIMEZONE="-7"
+OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
+# ======================================================================================================================
+# ==================================================== TP-LINK PLUG ====================================================
+INPUT_PCAP="$SIGNATURES_BASE_DIR/tplink-plug-mon/wlan1/tplink-plug-mon.pcap"
+OUTPUT_PCAP="$OUTPUT_DIR/tplink-plug-mon/wlan1/tplink-plug-mon-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/tplink-plug-mon/timestamps/tplink-plug-mon.timestamps"
+DEVICE_IP="192.168.10.247"
+TIMEZONE="-7"
+OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
+# ======================================================================================================================
+# ================================================= TP LINK BULB ON/OFF ================================================
+# LOCAL
+INPUT_PCAP="$SIGNATURES_BASE_DIR/tplink-bulb-mon/wlan1/tplink-bulb-mon.pcap"
+
+# Has LAN signature.
+OUTPUT_PCAP="$OUTPUT_DIR/tplink-bulb-mon/wlan1/tplink-bulb-mon-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/tplink-bulb-mon/timestamps/tplink-bulb-mon.timestamps"
+DEVICE_IP="192.168.10.146"
+TIMEZONE="-7"
+OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
+
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
+# ======================================================================================================================
+# =============================================== SENGLED BULB ON/OFF ==================================================
+INPUT_PCAP="$SIGNATURES_BASE_DIR/sengled-bulb-mon/wlan1/sengled-bulb-mon.pcap"
+
+# Phone Signature
+OUTPUT_PCAP="$OUTPUT_DIR/sengled-bulb-mon/wlan1/sengled-bulb-mon-processed.pcap"
+TIMESTAMP_FILE="$SIGNATURES_BASE_DIR/sengled-bulb-mon/timestamps/sengled-bulb-mon.timestamps"
+DEVICE_IP="192.168.10.202"
+TIMEZONE="-7"
+OUTPUT_FILE="${TIMESTAMP_FILE%.*}-stats.txt"
+#getMax $INPUT_PCAP $TIMESTAMP_FILE $DEVICE_IP $TIMEZONE > $OUTPUT_FILE
